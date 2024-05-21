@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+{% block title %}
+<title>Equipamentos</title>
+{% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="{% static 'js/dropdown_login.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% block style %}
+    <link rel="stylesheet" href="{% static 'css/appbar_style.css' %}">
+    {% endblock %}
+    <link rel="icon" href="{% static 'imgs/Logo_inatel.jpg' %}" type="image/jpg">
+</head>
+<body>
+    <div class="app-bar">
+        <div class="logo">Almoxarifado Inatel</div>
+        {% block menu %}
+        <div class="menu">
+            <a href="{% url 'home_page' %}" class="active" >Home</a>
+            <a href="{% url 'equipamentos' %}" class="" >Equipamentos</a>
+            <a href="#">Reservas</a>
+            <a href="#">Contato</a>
+        </div>
+        {%endblock%}
+        <div class="account" onclick="toggleDropdown()">
+            <img src="{% static 'imgs/account_icon.png' %}" alt="Conta">
+            <div id="dropdown-menu" class="dropdown">
+                <a href="#">Login Funcionário</a>
+                <a href="#">Login Aluno</a>
+            </div>
+        </div>
+    </div>
+
+    {% block content %}
+        <div class="content">   
+            <h3>Seu Conteudo Aqui!</h3>
+        </div>
+    {% endblock %} 
+
+</body>
+</html>

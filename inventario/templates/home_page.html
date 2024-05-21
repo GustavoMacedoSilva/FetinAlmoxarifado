@@ -1,0 +1,120 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Bar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8ff;
+        }
+        .app-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #0096d6;
+            color: white;
+        }
+        .app-bar .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        .app-bar .menu {
+            display: flex;
+            gap: 15px;
+        }
+        .app-bar .menu a {
+            color: white;
+            text-decoration: none;
+            font-size: 1em;
+        }
+        .app-bar .menu a:hover {
+            color: rgb(0, 255, 221);
+            transform: translateY(-2px);
+        }
+        .app-bar .menu a.active {
+            color: rgb(0, 255, 221);
+            transform: translateY(-2px);
+        }
+        .app-bar .account {
+            position: relative;
+        }
+        .app-bar .account img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: white;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+        .dropdown a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown a:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+    <script>
+        function toggleDropdown() {
+            var dropdown = document.getElementById("dropdown-menu");
+            if (dropdown.style.display === "block") {
+                dropdown.style.display = "none";
+            } else {
+                dropdown.style.display = "block";
+            }
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.matches('.account img')) {
+                var dropdowns = document.getElementsByClassName("dropdown");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.style.display === "block") {
+                        openDropdown.style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div class="app-bar">
+        <div class="logo">Almoxarifado Inatel</div>
+        <div class="menu">
+            <a href="{% url 'home_page' %}" class="active">Home</a>
+            <a href="{% url 'equipamentos' %}">Equipamentos</a>
+            <a href="#">Reservas</a>
+            <a href="#">Contato</a>
+        </div>
+        <div class="account" onclick="toggleDropdown()">
+            <img src="{% static 'imgs/account_icon.png' %}" alt="Conta">
+            <div id="dropdown-menu" class="dropdown">
+                <a href="#">Login Funcionário</a>
+                <a href="#">Login Aluno</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <h1>Bem-vindo ao almoxarifado Inatel!</h1>
+        <p>Aqui você pode encontrar informações sobre nossos serviços e muito mais.</p>
+    </div>
+
+</body>
+</html>

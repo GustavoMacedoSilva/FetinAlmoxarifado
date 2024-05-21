@@ -1,0 +1,39 @@
+{% extends "includes/base.html" %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+    {% block title %}
+    <title>Equipamentos</title>
+    {% endblock %}
+    {% block style %}
+    <link rel="stylesheet" href="{% static 'css/equipamento.css' %}">
+    {% endblock %}
+<body>
+    {% block menu %}
+    <div class="menu">
+        <a href="{% url 'home_page' %}" class="" >Home</a>
+        <a href="{% url 'equipamentos' %}" class="active" >Equipamentos</a>
+        <a href="#">Reservas</a>
+        <a href="#">Contato</a>
+    </div>
+    {% endblock %}
+    {% block content %}
+    <div class="sidebar">
+        <a href="#">Opção 1</a>
+        <a href="#">Opção 2</a>
+        <a href="#">Opção 3</a>
+        <a href="#">Opção 4</a>
+    </div>
+    
+    <div class="content">
+        <div class="search-bar">
+            <input type="text" placeholder="Buscar Equipamentos...">
+            <button>Buscar</button>
+        </div>
+        <h1>Equipamentos</h1>
+        <p>Conteúdo sobre os equipamentos disponíveis.</p>
+    </div>
+    {% endblock %}
+</body>
+</html>
