@@ -1,18 +1,25 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
+<!-- Bloco de Titulo da Pagina -->
 {% block title %}
 <title>Equipamentos</title>
 {% endblock %}
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="{% static 'js/dropdown_login.js' %}"></script>
+    <!-- icone da pagina -->
+    <link rel="icon" href="{% static 'imgs/Logo_inatel.jpg' %}" type="image/jpg">
+
+    <!-- Importacoes de CSS -->
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     {% block style %}
-    <link rel="stylesheet" href="{% static 'css/appbar_style.css' %}">
+    
     {% endblock %}
-    <link rel="icon" href="{% static 'imgs/Logo_inatel.jpg' %}" type="image/jpg">
+    
+    
 </head>
 <body>
     <div class="app-bar">
@@ -39,6 +46,12 @@
             <h3>Seu Conteudo Aqui!</h3>
         </div>
     {% endblock %} 
+    
+    <!-- Importacoes de Js -->
+    <script src="{% static 'js/dropdown_login.js' %}"></script>
+    {% block script %}
+
+    {% endblock %}
 
 </body>
 </html>
