@@ -4,7 +4,8 @@ from emprestimos.models import Emprestimo
 # Create your models here.
 
 class Componente(models.Model):
-    nome = models.CharField(max_length=50, primary_key=True)
+    id = models.AutoField(primary_key=True, unique=True)
+    nome = models.CharField(max_length=50)
     unidade_de_medida = models.CharField(max_length=50, verbose_name='Unidade de Medida')
     valor = models.DecimalField(decimal_places=4, max_digits=16)
     localizacao = models.CharField(max_length=50, verbose_name='Localização')

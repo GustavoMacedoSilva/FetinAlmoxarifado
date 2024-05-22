@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-<title>Equipamentos</title>
+<title>Componentes</title>
 {% endblock %}
 
 {% block style %}
@@ -14,22 +14,21 @@
 {% block content %}
 {% include "includes/sideBar.html" %}
 <div class="content">
-    <h3>Lista de Equipamentos</h3>
+    <h3>Lista de Componentes</h3>
     <hr>
     <div class="table-responsive">
         <table class="table table-striped">
             <tr>
-                <th>Id</th>
                 <th>Nome</th>
-                <th>Descrição</th>
+                <th>Valor</th>
+                <th>Unidade de Medida</th>
                 <th>Opções</th>
             </tr>
-
-            {% for equipamento in object_list %}
+            {% for componente in object_list %}
             <tr>
-                <td>{{ equipamento.id }}</td>
-                <td>{{ equipamento.nome }}</td>
-                <td>{{ equipamento.descricao }}</td>
+                <td>{{ componente.nome }}</td>
+                <td>{{ componente.valor }}</td>
+                <td>{{ componente.unidade_de_medida }}</td>
                 <td>
                     <a href="" class="btn btn-success btn-sm" title="Reservar">
                         Reservar
@@ -43,7 +42,7 @@
             </tr>
             {% empty %}
             <tr>
-                <td colspan="4">Nenhum equipamento encontrado</td>
+                <td colspan="4">Nenhum componente encontrado</td>
             </tr>
             {% endfor %}
 
@@ -56,7 +55,6 @@
     <script src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>
     <script> 
         activePage("equipamentos");
-        activePage("Lista-Equipamentos");
+        activePage("Lista-Componentes");
     </script>
 {% endblock %}
-
