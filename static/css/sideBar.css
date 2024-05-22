@@ -22,6 +22,11 @@
 .sidebar a:hover {
     background-color: #007bbd;
 }
+
+.sidebar a.active {
+    background-color: #007bbd;
+}
+
 .content {
     
     margin-left: 220px;

@@ -7,6 +7,11 @@ function toggleDropdown() {
     }
 }
 
+function activePage(pageID){
+    let page = document.getElementById(pageID);
+    page.classList.add("active");
+}
+
 window.onclick = function(event) {
     if (!event.target.matches('.account img')) {
         var dropdowns = document.getElementsByClassName("dropdown");

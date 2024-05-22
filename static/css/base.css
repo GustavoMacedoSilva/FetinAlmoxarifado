@@ -1,9 +1,13 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: Nunito sans, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
     margin: 0;
     padding: 0;
     background-color: #f0f8ff;
 }
+
 .app-bar {
     display: flex;
     justify-content: space-between;
