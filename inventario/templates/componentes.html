@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="{% static 'css/sideBar.css' %}">
 <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.min.css' %}">
 <link rel="stylesheet" href="{% static 'fa/css/all.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/datatables.min.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -17,44 +18,85 @@
     <h3>Lista de Componentes</h3>
     <hr>
     <div class="table-responsive">
-        <table class="table table-striped">
-            <tr>
-                <th>Nome</th>
-                <th>Valor</th>
-                <th>Unidade de Medida</th>
-                <th>Opções</th>
-            </tr>
-            {% for componente in object_list %}
-            <tr>
-                <td>{{ componente.nome }}</td>
-                <td>{{ componente.valor }}</td>
-                <td>{{ componente.unidade_de_medida }}</td>
-                <td>
-                    <a href="" class="btn btn-success btn-sm" title="Reservar">
-                        Reservar
-                        <i class="fa fa-bookmark" aria-hidden="true"></i>
-                    </a>
-                    <a href="" class="btn btn-primary btn-sm" title="Visualizar">
-                        Visualizar
-                        <i class="fa-regular fa-eye"></i>
-                    </a>
-                </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="4">Nenhum componente encontrado</td>
-            </tr>
-            {% endfor %}
+        <table class="table table-striped" id="tabela-componentes">
+            
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Valor</th>
+                    <th>Unidade de Medida</th>
+                    <th>Opções</th>
+                </tr>
+            </thead>
 
-        </table>
+            <tbody>
+                {% for componente in object_list %}
+                <tr>
+                    <td>{{ componente.nome }}</td>
+                    <td>{{ componente.valor }}</td>
+                    <td>{{ componente.unidade_de_medida }}</td>
+                    <td>
+                        <a href="" class="btn btn-success btn-sm" title="Reservar">
+                            Reservar
+                            <i class="fa fa-bookmark" aria-hidden="true"></i>
+                        </a>
+                        <a href="" class="btn btn-primary btn-sm" title="Visualizar">
+                            Visualizar
+                            <i class="fa-regular fa-eye"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">Nenhum componente encontrado</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+                
+            </table>
+        </div>
     </div>
-</div>
-{% endblock %}
+    {% endblock %}
 
 {% block script %}
     <script src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/datatables.min.js' %}"></script>
     <script> 
-        activePage("equipamentos");
+        activePage("inventario");
         activePage("Lista-Componentes");
+        $(document).ready(function(){
+            //usa o plugin datatables para colocar campos de pesquisa, e ordenacao na tabela
+            $("#tabela-componentes").DataTable({
+                // aplica traducao para portugues nos campos da tabela
+                responsive: true,
+                // "bSort": false,
+                "aaSorting": [],
+                "pageLength": 50,
+                "language": {
+                    "decimal": "",
+                    "emptyTable": "Sem dados disponíveis",
+                    "info": "",
+                    "infoEmpty": "",
+                    "infoFiltered": "",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "",
+                    "loadingRecords": "A carregar dados...",
+                    "processing": "A processar...",
+                    "search": "Procurar:",
+                    "zeroRecords": "Não foram encontrados resultados",
+                    "paginate": {
+                        "first": "Primeiro",
+                        "last": "Último",
+                        "next": "Seguinte",
+                        "previous": "Anterior"
+                    },
+                    "aria": {
+                        "sortAscending": ": ordem crescente",
+                        "sortDescending": ": ordem decrescente"
+                    }
+                }
+            });
+        });
     </script>
 {% endblock %}

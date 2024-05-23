@@ -24,11 +24,12 @@
     
 </head>
 <body>
+    <!-- Barra de opcoes no topo da tela -->
     <div class="app-bar">
         <div class="logo">Almoxarifado Inatel</div>
         <div class="menu">
             <a href="{% url 'home_page' %}" id="home">Home</a>
-            <a href="{% url 'Listar-Equipamentos' %}" id="equipamentos">Inventário</a>
+            <a href="{% url 'Listar-Equipamentos' %}" id="inventario">Inventário</a>
             <a href="#">Reservas</a>
             <a href="#">Contato</a>
         </div>
@@ -50,6 +51,7 @@
     {% endblock %} 
     
     <!-- Importacoes de Js -->
+    <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
     <script src="{% static 'js/base.js' %}"></script>
     {% block script %}
 
