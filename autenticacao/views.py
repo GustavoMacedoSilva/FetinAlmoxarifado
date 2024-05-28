@@ -8,8 +8,8 @@ from django.contrib.auth.forms import UserCreationForm
 # Create your views here.
 
 
-def loginPage(request):
-    page = 'login'
+def loginAlmoxarife(request):
+    page = 'almoxarife'
 
     if request.user.is_authenticated:
         return redirect('home_page')
@@ -35,6 +35,10 @@ def loginPage(request):
 
     return render(request, 'login_register.html', context)
 
+def loginAluno(request):
+    page = 'aluno'
+    context = {'page': page}
+    return render(request, 'login_register.html', context)
 
 def logoutUser(request):
     logout(request)

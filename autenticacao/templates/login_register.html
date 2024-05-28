@@ -1,11 +1,8 @@
 {%extends "includes/base.html"%}
 
-{%block style%}
-<link rel="stylesheet" href="{% static 'css/base.css' %}">
-{%endblock style%}
 {% block content %}
 
-{% if page == 'login' %}
+{% if page == 'almoxarife' %}
 
 <div>
     <form method="POST" action="">
@@ -23,13 +20,8 @@
 </div>
 {%else%}
 <div>
-    <form method="POST" action="">
-        {% csrf_token %}
-
-        <input type="submit" value="Registrar"/>
-    </form>
-    <p>Já possui uma conta?</p>
-    <a href="{% url 'login' %}">Logar</a>
+    <d1>Bem Vindo Aluno</d1>
+    <a href="{%url 'home_page'%}">Voltar</a>
 </div>
 {%endif%}
 
