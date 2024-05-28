@@ -1,0 +1,36 @@
+{%extends "includes/base.html"%}
+
+{%block style%}
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
+{%endblock style%}
+{% block content %}
+
+{% if page == 'login' %}
+
+<div>
+    <form method="POST" action="">
+        {% csrf_token %}
+
+        <label>Usuario:</label>
+        <input type="text" name="username" placeholder="Usuario"/>
+
+        <label>Senha:</label>
+        <input type="password" name="password" placeholder="Senha"/>
+
+        <input type="submit" value="Login"/>
+    </form>
+    <a href="{%url 'home_page'%}">Voltar</a>
+</div>
+{%else%}
+<div>
+    <form method="POST" action="">
+        {% csrf_token %}
+
+        <input type="submit" value="Registrar"/>
+    </form>
+    <p>Já possui uma conta?</p>
+    <a href="{% url 'login' %}">Logar</a>
+</div>
+{%endif%}
+
+{% endblock content %}

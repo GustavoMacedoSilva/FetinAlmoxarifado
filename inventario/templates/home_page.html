@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>App Bar</title>
+    <title>Home</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -106,14 +106,14 @@
             <img src="{% static 'imgs/account_icon.png' %}" alt="Conta">
             <div id="dropdown-menu" class="dropdown">
                 <a href="#">Login Funcionário</a>
-                <a href="#">Login Aluno</a>
+                <a href="{% url 'login' %}">Login Aluno</a>
             </div>
         </div>
     </div>
 
     <div class="content">
         <h1>Bem-vindo ao almoxarifado Inatel!</h1>
-        <p>Aqui você pode encontrar informações sobre nossos serviços e muito mais.</p>
+        <p>Aqui você pode encontrar informações sobre nossos serviços, pegar empréstimos de equipamentos e componentes e ver informações sobre os tais.</p>
     </div>
 
 </body>
