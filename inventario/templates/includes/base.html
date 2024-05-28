@@ -28,7 +28,7 @@
     <div class="app-bar">
         <div class="logo">Almoxarifado Inatel</div>
         <div class="menu">
-            <a href="{% url 'home_page' %}" id="home">Home</a>
+            <a href="{% url 'home_page' %}">Home</a>
             <a href="{% url 'Listar-Equipamentos' %}" id="inventario">Inventário</a>
             <a href="#">Reservas</a>
             <a href="#">Contato</a>
@@ -37,7 +37,7 @@
             <img src="{% static 'imgs/account_icon.png' %}" alt="Conta">
             <div id="dropdown-menu" class="dropdown">
                 <a href="#">Login Funcionário</a>
-                <a href="#">Login Aluno</a>
+                <a href="{% url 'login' %}">Login Aluno</a>
             </div>
         </div>
     </div>

@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'inventario.apps.InventarioConfig',
     'autenticacao.apps.AutenticacaoConfig',
     'emprestimos.apps.EmprestimosConfig',
-    'usermanagement.apps.UsermanagementConfig'
 ]
 
 MIDDLEWARE = [
