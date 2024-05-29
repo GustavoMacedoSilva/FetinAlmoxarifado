@@ -34,7 +34,7 @@ def loginAlmoxarife(request):
 
     context = {'page': page}
 
-    return render(request, 'login_register.html', context)
+    return render(request, 'autenticacao/login_register.html', context)
 
 def loginAluno(request):
     page = 'aluno'
