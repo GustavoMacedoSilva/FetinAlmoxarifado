@@ -16,6 +16,13 @@
 
         <input type="submit" value="Login"/>
     </form>
+    {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
     <a href="{%url 'home_page'%}">Voltar</a>
 </div>
 {%else%}

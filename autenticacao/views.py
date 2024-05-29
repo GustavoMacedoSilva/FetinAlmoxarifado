@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Aluno, Funcionario
+from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 
@@ -15,21 +16,21 @@ def loginAlmoxarife(request):
         return redirect('home_page')
     
     if request.method == 'POST':
-        nome = request.POST.get('username')
-        senha = request.POST.get('password')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
 
         try:
-            aluno = Aluno.objects.get(nome=nome)
+            user = User.objects.get(username=username)
         except:
             messages.error(request, 'Usuario não existe')
 
-        aluno = authenticate(request, nome=nome, senha=senha)
+        user = authenticate(request, username=username, password=password)
 
-        if aluno is not None:
-            login(request, aluno)
+        if user is not None:
+            login(request, user)
             return redirect('home_page')
         else:
-            messages.error(request, 'Usuario ou senha não existe')
+            messages.error(request, 'Usuario ou senha está incorreta')
 
     context = {'page': page}
 

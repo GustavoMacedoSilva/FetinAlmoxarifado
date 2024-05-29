@@ -9,4 +9,5 @@ urlpatterns = [
     path('componentes/', ComponenteList.as_view(), name='Listar-Componentes'),
     path('login/almoxarife', loginAlmoxarife, name='loginAlmoxarife'),
     path('login/aluno/', loginAluno, name='loginAluno'),
+    path('logout/', logoutUser, name='logout'),
 ]
