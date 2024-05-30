@@ -1,35 +1,84 @@
-{%extends "base.html"%}
+
+{%block style%}
+<style>
+    .login{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        margin: 20px auto;
+        width: 300px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+    }
+    .form_container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    .usuario{
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+    }
+    .senha{
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+    }
+    .loginButton{
+        background-color: #0096d6;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .loginButton:hover{
+        background-color: #0096d6;
+    }
+</style>
+{%endblock%}
 
 {% block content %}
 
 {% if page == 'almoxarife' %}
+<footer>
 
-<div>
-    <form method="POST" action="">
-        {% csrf_token %}
-
-        <label>Usuario:</label>
-        <input type="text" name="username" placeholder="Usuario"/>
-
-        <label>Senha:</label>
-        <input type="password" name="password" placeholder="Senha"/>
-
-        <input type="submit" value="Login"/>
-    </form>
-    {% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
-    <a href="{%url 'home_page'%}">Voltar</a>
-</div>
-{%else%}
-<div>
-    <d1>Bem Vindo Aluno</d1>
-    <a href="{%url 'home_page'%}">Voltar</a>
-</div>
-{%endif%}
+    <div class="login">
+        <form class="form_container" method="POST" action="">
+            {% csrf_token %}
+            
+            <br>
+            <label class="usuario">Usuario:</label>
+            <input type="text" name="username" placeholder="Usuario"/>
+            
+            <label class="senha">Senha:</label>
+            <input type="password" name="password" placeholder="Senha"/>
+            
+            <input class="loginButton" type="submit" value="Login"/>
+        </form>
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <a href="{%url 'home_page'%}">Voltar</a>
+    </div>
+</footer>
+    {%else%}
+    <div>
+        <d1>Bem Vindo Aluno</d1>
+        <a href="{%url 'home_page'%}">Voltar</a>
+    </div>
+    {%endif%}
 
 {% endblock content %}
