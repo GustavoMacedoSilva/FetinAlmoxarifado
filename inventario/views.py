@@ -1,4 +1,4 @@
-from django.views.generic import TemplateView, CreateView
+from django.views.generic import TemplateView, CreateView, UpdateView
 from django.views.generic.list import ListView
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
@@ -30,6 +30,19 @@ class EquipamentoCreate(CreateView):
     success_url = reverse_lazy('Listar-Equipamentos')
 
 class ComponenteCreate(CreateView):
+    model = Componente
+    fields = ['id','nome','unidade_de_medida','valor','localizacao']
+    template_name = 'cadastros/create_form.html'
+    success_url = reverse_lazy('Listar-Componentes')
+
+########## Updates ##########
+class EquipamentoUpdate(UpdateView):
+    model = Equipamento
+    fields = ['id','nome','descricao','empretimo']
+    template_name = 'cadastros/create_form.html'
+    success_url = reverse_lazy('Listar-Equipamentos')
+
+class ComponenteUpdate(UpdateView):
     model = Componente
     fields = ['id','nome','unidade_de_medida','valor','localizacao']
     template_name = 'cadastros/create_form.html'
