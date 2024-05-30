@@ -35,13 +35,22 @@
     .loginButton{
         background-color: #0096d6;
         color: #fff;
-        padding: 10px 20px;
+        padding: 9px 20px;
         border: none;
         border-radius: 5px;
         cursor: pointer;
     }
     .loginButton:hover{
         background-color: #0096d6;
+    }
+    .voltar{
+        background-color: #0096d6;
+        color:white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor:pointer;
+        text-decoration: none;
     }
 </style>
 {%endblock%}
@@ -71,13 +80,13 @@
             {% endfor %}
         </ul>
         {% endif %}
-        <a href="{%url 'home_page'%}">Voltar</a>
+        <a class="voltar" href="{%url 'home_page'%}">Voltar</a>
     </div>
 </footer>
     {%else%}
     <div>
         <d1>Bem Vindo Aluno</d1>
-        <a href="{%url 'home_page'%}">Voltar</a>
+        <a class="voltar" href="{%url 'home_page'%}">Voltar</a>
     </div>
     {%endif%}
 
