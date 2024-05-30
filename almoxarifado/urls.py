@@ -20,8 +20,9 @@ from inventario.views import HomeView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', HomeView.as_view(), name='home_page'),
+    #importando urls dos aplicativos 
     path('inventario/', include('inventario.urls')),
     path('login/',include('autenticacao.urls')),
-    path('emprestimos/',include('emprestimos.urls')),
-    path('', HomeView.as_view(), name='home_page')
+    path('emprestimos/',include('emprestimos.urls'))
 ]

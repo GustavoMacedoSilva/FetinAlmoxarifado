@@ -2,20 +2,26 @@
 {% load static %}
 
 {% block title %}
-<title>Componentes</title>
+<title>Inventario</title>
 {% endblock %}
 
 {% block style %}
-<link rel="stylesheet" href="{% static 'css/sideBar.css' %}">
 <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.min.css' %}">
 <link rel="stylesheet" href="{% static 'fa/css/all.min.css' %}">
 <link rel="stylesheet" href="{% static 'css/datatables.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/tables.css' %}">
 {% endblock %}
 
 {% block content %}
 {% include "includes/sideBar.html" %}
 <div class="content">
-    <h3>Lista de Componentes</h3>
+    <div class="container-fluid">
+        <h3>Lista de Componentes</h3>
+        <a href="{% url 'Cadastrar-Componente' %}" class="btn btn-success btn-sm" title="Cadastrar">
+            <i class="fa-regular fa-square-plus"></i>
+            Cadastrar novo componente
+        </a>
+    </div>
     <hr>
     <div class="table-responsive">
         <table class="table table-striped" id="tabela-componentes">
@@ -37,20 +43,20 @@
                     <td>{{ componente.unidade_de_medida }}</td>
                     <td>
                         <a href="" class="btn btn-success btn-sm" title="Reservar">
-                            Reservar
                             <i class="fa fa-bookmark" aria-hidden="true"></i>
+                            Reservar
                         </a>
                         <a href="" class="btn btn-primary btn-sm" title="Visualizar">
-                            Visualizar
                             <i class="fa-regular fa-eye"></i>
+                            Visualizar
                         </a>
                         <a href="" class="btn btn-warning btn-sm" title="Editar">
-                            Editar
                             <i class="fa-regular fa-pen-to-square"></i>
+                            Editar
                         </a>
                         <a href="" class="btn btn-danger btn-sm" title="Excluir">
-                            Excluir
                             <i class="fa-regular fa-trash-can"></i>
+                            Excluir
                         </a>
                     </td>
                 </tr>

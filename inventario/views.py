@@ -1,6 +1,7 @@
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, CreateView
 from django.views.generic.list import ListView
 from django.shortcuts import redirect
+from django.urls import reverse_lazy
 from .models import Equipamento, Componente
 
 # Create your views here.
@@ -19,3 +20,17 @@ class EquipamentosList(ListView):
 class ComponenteList(ListView):
     model = Componente
     template_name = 'componentes.html'
+
+########## Cadastros ##########
+
+class EquipamentoCreate(CreateView):
+    model = Equipamento
+    fields = ['id','nome','descricao','empretimo']
+    template_name = 'cadastros/create_form.html'
+    success_url = reverse_lazy('Listar-Equipamentos')
+
+class ComponenteCreate(CreateView):
+    model = Componente
+    fields = ['id','nome','unidade_de_medida','valor','localizacao']
+    template_name = 'cadastros/create_form.html'
+    success_url = reverse_lazy('Listar-Componentes')

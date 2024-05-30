@@ -15,6 +15,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
+    box-sizing: border-box;
     background-color: #0096d6;
     color: white;
     z-index: 1000;
@@ -49,7 +50,7 @@ body {
     border-radius: 50%;
     cursor: pointer;
 }
-.dropdown {
+.dropdown-menu {
     display: none;
     position: absolute;
     right: 0;
@@ -57,13 +58,13 @@ body {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     z-index: 1;
 }
-.dropdown a {
+.dropdown-menu a {
     color: black;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
 }
-.dropdown a:hover {
+.dropdown-menu a:hover {
     background-color: #f1f1f1;
 }
 .content {
