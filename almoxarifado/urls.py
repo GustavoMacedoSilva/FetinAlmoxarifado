@@ -16,12 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from django.http import HttpResponse
-
-def home (request):
-    return HttpResponse('Home Page')
+from inventario.views import HomeView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('inventario.urls')),
+    path('inventario/', include('inventario.urls')),
+    path('login/',include('autenticacao.urls')),
+    path('emprestimos/',include('emprestimos.urls')),
+    path('', HomeView.as_view(), name='home_page')
 ]
