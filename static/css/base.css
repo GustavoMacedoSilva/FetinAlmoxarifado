@@ -9,6 +9,7 @@ body {
 
 .app-bar {
     position: fixed;
+    top: 0;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -64,4 +65,7 @@ body {
 }
 .dropdown a:hover {
     background-color: #f1f1f1;
+}
+.content {
+    margin-top: 50px;
 }
