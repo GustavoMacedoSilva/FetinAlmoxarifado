@@ -48,11 +48,13 @@
     {% block extraTemplate %}
     
     {% endblock %}
-    {% block content %}
+    <div class="block">
+        {% block content %}
         <div class="content">   
             <h3>Seu Conteudo Aqui!</h3>
         </div>
-    {% endblock %} 
+        {% endblock %} 
+    </div>
     
     <!-- Importacoes de Js -->
     <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
