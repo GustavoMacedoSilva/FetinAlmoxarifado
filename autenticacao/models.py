@@ -6,7 +6,7 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
     name = models.CharField(max_length=200, null=True)
-    email= models.EmailField(unique=True)
+    email= models.EmailField(unique=True, null=True)
     is_aluno = models.BooleanField(default=False)
     is_funcionario =models.BooleanField(default=False)
     
