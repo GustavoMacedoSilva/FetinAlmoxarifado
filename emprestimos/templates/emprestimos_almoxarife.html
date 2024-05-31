@@ -11,6 +11,7 @@
     .emprestimos-container {
         display: grid;
         grid-template-columns: 1fr 3fr 1fr;
+        margin-top: 40px;
     }
 </style>
 
@@ -18,7 +19,11 @@
 <div class="emprestimos-container">
 
     <div>
-        <h5>Bem vindo aos emprestimos</h5>
+        {% include 'componente_emprestimo_recente.html' %}
+    </div>
+
+    <div>
+        <h5>Bem vindo aos emprestimos, {{User.name}}</h5>
     </div>
 
 </div>
