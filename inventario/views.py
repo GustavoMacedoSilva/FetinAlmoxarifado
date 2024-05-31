@@ -25,7 +25,7 @@ class ComponenteList(ListView):
 
 class EquipamentoCreate(CreateView):
     model = Equipamento
-    fields = ['id','nome','descricao','empretimo']
+    fields = ['id','nome','descricao','emprestimo']
     template_name = 'cadastros/create_form.html'
     success_url = reverse_lazy('Listar-Equipamentos')
 
@@ -38,7 +38,7 @@ class ComponenteCreate(CreateView):
 ########## Updates ##########
 class EquipamentoUpdate(UpdateView):
     model = Equipamento
-    fields = ['id','nome','descricao','empretimo']
+    fields = ['id','nome','descricao','emprestimo']
     template_name = 'cadastros/create_form.html'
     success_url = reverse_lazy('Listar-Equipamentos')
 

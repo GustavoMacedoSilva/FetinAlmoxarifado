@@ -18,10 +18,10 @@ class Equipamento(models.Model):
     id = models.IntegerField(primary_key=True, unique=True)
     nome = models.CharField(max_length=50)
     descricao = models.CharField(max_length=500,verbose_name='Descrição')
-    empretimo = models.ForeignKey(Emprestimo, on_delete=models.SET_DEFAULT, default=None, blank=True, null=True) 
+    emprestimo = models.ForeignKey(Emprestimo, on_delete=models.SET_DEFAULT, default=None, blank=True, null=True) 
 
     def __str__(self):
-        return "id : {}\nnome : {}\ndescrição : {}\nemprestimo : {}".format(self.id, self.nome, self.descricao, self.empretimo)
+        return "id : {}\nnome : {}\ndescrição : {}\nemprestimo : {}".format(self.id, self.nome, self.descricao, self.emprestimo)
     
 class Emprestimo_has_components(models.Model):
     emprestimo = models.ForeignKey(Emprestimo, on_delete=models.CASCADE)
