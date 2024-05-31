@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'emprestimos.apps.EmprestimosConfig',
 ]
 
+AUTH_USER_MODEL = 'autenticacao.User'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
