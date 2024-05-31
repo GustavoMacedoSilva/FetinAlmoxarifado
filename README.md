@@ -5,4 +5,4 @@ lembrar de sempre que adicionar um novo plugin de python ao projeto atualizar o 
 
 # Usuario Administrador
 
-O painel de administrador esta configurado na url /admin e o login e senha criados são ambos "admin"
+O painel de administrador esta configurado na url /admin e o login e senha criados são ambos "admin", pedindo email é admin@gmail.com
