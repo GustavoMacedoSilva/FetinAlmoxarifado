@@ -5,7 +5,13 @@ from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
 class User(AbstractUser):
-    pass
+    name = models.CharField(max_length=200, null=True)
+    email= models.EmailField(unique=True)
+    is_aluno = models.BooleanField(default=False)
+    is_funcionario =models.BooleanField(default=False)
+    
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
 
 class Aluno(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
