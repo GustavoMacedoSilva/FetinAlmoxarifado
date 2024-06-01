@@ -5,9 +5,9 @@
             <a href="{% url 'loginAluno'%}">All</a>
         </div>
 
-        {% for User in user %}
+        {% for Aluno in aluno %}
         <div>
-            <a href="{% url 'loginAluno'%}">{{User.username}}</a>
+            <a href="{% url 'loginAluno'%}">{{Aluno.user.username}}</a>
         </div>
         {% endfor %}
         
