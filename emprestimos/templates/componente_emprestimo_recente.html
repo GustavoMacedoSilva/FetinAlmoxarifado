@@ -66,7 +66,7 @@
             <a href="{% url 'loginAluno' %}">All</a>
         </div>
 
-        {% for Aluno in aluno %}
+        {% for Aluno in alunos %}
         <div class="aluno-link">
             <a href="{% url 'loginAluno' %}">{{ Aluno.user.username }}</a>
         </div>
