@@ -42,20 +42,20 @@
                     <td>{{ equipamento.id }}</td>
                     <td>{{ equipamento.nome }}</td>
                     <td>{{ equipamento.descricao }}</td>
-                    <td>
+                    <td itemID="{{ equipamento.id }}" itemName="{{ equipamento.nome }}" description="{{ equipamento.descricao }}">
                         <a href="" class="btn btn-success btn-sm" title="Reservar">
                             <i class="fa fa-bookmark" aria-hidden="true"></i>
                             Reservar
                         </a>
-                        <a href="" class="btn btn-primary btn-sm" title="Visualizar">
+                        <button id="detail-button" class="btn btn-primary btn-sm" title="Visualizar">
                             <i class="fa-regular fa-eye"></i>
                             Visualizar
-                        </a>
+                        </button>
                         <a href="{% url 'Editar-Equipamento' equipamento.id %}" class="btn btn-warning btn-sm" title="Editar">
                             <i class="fa-regular fa-pen-to-square"></i>
                             Editar
                         </a>
-                        <button id="delete-Button" class="btn btn-danger btn-sm" title="Excluir" itemID="{{ equipamento.id }}" itemName="{{ equipamento.nome }}">
+                        <button id="delete-Button" class="btn btn-danger btn-sm" title="Excluir">
                             <i class="fa-regular fa-trash-can"></i>
                             Excluir
                         </button>
@@ -74,7 +74,7 @@
     <!-- Modal para confirmar exclusao -->
     <div id="deleteModal" class="modal">
         <div class="modal-content">
-            <span class="close-button">&times;</span>
+            <span id="close-button-delete" class="close-button">&times;</span>
             <h2>Confirmar Exclusão</h2>
             <p>
                 <i class="fa-solid fa-triangle-exclamation"></i>
@@ -87,6 +87,19 @@
                     <i class="fa-regular fa-trash-can"></i>
                     Confirmar
                 </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de exibicao de detalhes do equipamento -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content">
+            <span id="close-button-detail" class="close-button">&times;</span>
+            <h3>Detalhes do Item</h3>
+            <div class="modal-body">
+                <p><strong>ID:</strong> <span id="itemId"></span></p>
+                <p><strong>Nome:</strong> <span id="itemName"></span></p>
+                <p><strong>Descrição:</strong> <span id="itemDescription"></span></p>
             </div>
         </div>
     </div>

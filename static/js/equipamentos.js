@@ -34,8 +34,11 @@ $(document).ready(function(){
 
     
     var deleteButtons = document.querySelectorAll('#delete-Button'); // acessa o botao excluir da tabela 
-    var modal = document.getElementById('deleteModal'); // carrega o modal de exclusao
-    var closeButton = document.querySelector('.close-button'); // botao de fechar o modal
+    var detailButtons = document.querySelectorAll('#detail-button');
+    var deleteModal = document.getElementById('deleteModal'); // carrega o modal de exclusao
+    var detailModal = document.getElementById('detailModal'); // carrega o modal de detalhes
+    var closeButtonDelete = document.getElementById('close-button-delete'); // botao de fechar o modal
+    var closeButtonDetail = document.getElementById('close-button-detail'); // botao de fechar o modal
     var confirmDeleteButton = document.getElementById('confirm-delete'); // botao de confirmacao de exclusao do modal 
     var itemDetails = document.getElementById('item-details'); // elemento do modal de exclusão que mostra detalhes da exclusão
     var currentPk; // representa a primary key do item que sera excluido
@@ -43,8 +46,9 @@ $(document).ready(function(){
     deleteButtons.forEach(function(button) {
         button.addEventListener('click', function() {
             // carrega o id e o nome do item a ser excluido
-            var itemId = button.getAttribute('itemID');
-            var itemName = button.getAttribute('itemName');
+            let itemElement = button.parentElement;
+            let itemId = itemElement.getAttribute('itemID');
+            let itemName = itemElement.getAttribute('itemName');
             
             // define os detalhes do item no modal antes de motrar na tela
             itemDetails.textContent = `ID: ${itemId}\nNome: ${itemName}`;
@@ -52,19 +56,47 @@ $(document).ready(function(){
             currentPk = itemId;
             
             // exibe o modal na tela
-            modal.style.display = 'block';
+            deleteModal.style.display = 'block';
+        });
+    });
+
+    detailButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            // carrega as informacoes do item
+            let itemElement = button.parentElement;
+            let itemId = itemElement.getAttribute('itemID');
+            let itemName = itemElement.getAttribute('itemName');
+            let itemDescription = itemElement.getAttribute('description');
+            // carrega os campos para mostragem dos atributos
+            let atributo1 = document.getElementById('itemId');
+            let atributo2 = document.getElementById('itemName');
+            let atributo3 = document.getElementById('itemDescription');
+
+            // define os detalhes do item no modal antes de motrar na tela
+            atributo1.textContent = `${itemId}`;
+            atributo2.textContent = `${itemName}`;
+            atributo3.textContent = `${itemDescription}`;
+            
+            // exibe o modal na tela
+            detailModal.style.display = 'block';
         });
     });
 
     // funcao para fechar o modal pelo botao
-    closeButton.addEventListener('click', function() {
-        modal.style.display = 'none';
+    closeButtonDelete.addEventListener('click', function() {
+        deleteModal.style.display = 'none';
+    });
+
+    // funcao para fechar o modal pelo botao
+    closeButtonDetail.addEventListener('click', function() {
+        detailModal.style.display = 'none';
     });
 
     // fecha o modal quando clica em qualquer lugar da tela 
     window.addEventListener('click', function(event) {
-        if (event.target == modal) {
-            modal.style.display = 'none';
+        if (event.target == deleteModal || event.target == detailModal) {
+            deleteModal.style.display = 'none';
+            detailModal.style.display = 'none';
         }
     });
 
@@ -89,7 +121,7 @@ $(document).ready(function(){
             }
         });
         // remove o modal da tela
-        modal.style.display = 'none';
+        deleteModal.style.display = 'none';
     });
 
     function getCookie(name) {
