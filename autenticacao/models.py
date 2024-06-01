@@ -19,12 +19,13 @@ class Aluno(models.Model):
     curso = models.CharField(max_length=50)
 
     def __str__(self):
-        return "nome : {}\nmatricula : {}\ncurso : {}\ndata de nascimento :  {}\nemail : {}".format(self.nome, self.matricula, self.curso, self.data_de_nascimento, self.email)
+        return "user : {}\nmatricula : {}\ncurso : {}".format(self.user, self.matricula, self.curso)
     
 class Funcionario(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     id = models.IntegerField(primary_key=True, unique=True)
     cargo = models.CharField(max_length=50)
 
     def __str__(self):
-        return "id : {}\nnome : {}\ncargo : {}".format(self.id, self.nome, self.cargo) 
+        return "user : {}\nid : {}\ncargo : {}".format(self.user, self.id, self.cargo) 
     
