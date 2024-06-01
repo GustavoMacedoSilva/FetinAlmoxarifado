@@ -66,9 +66,15 @@
             <a href="{% url 'loginAluno' %}">All</a>
         </div>
 
-        {% for Aluno in alunos %}
+        {% for aluno in alunos %}
         <div class="aluno-link">
-            <a href="{% url 'loginAluno' %}">{{ Aluno.user.username }}</a>
+            {% for emprestimo in emprestimos %}
+                {% if emprestimo.aluno == aluno %}
+                    {% if emprestimo.aluno != null %}
+                    <li><a href="{% url 'loginAluno' %}">{{ aluno.user.username }}</a></li>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}    
         </div>
         {% endfor %}
     </div>

@@ -5,7 +5,7 @@
             {% for emprestimo in emprestimos %}
                 {% if emprestimo.aluno == aluno %}
                     {% if emprestimo.aluno != null %}
-                        <h2>{{ aluno.user.username }}</h2>
+                    <li><h2>{{ aluno.user.username }}</h2></li>
                         <h3>Equipamentos:</h3>
                             {% for Componente in componentes %}
                                 {% if Componente.emprestimo == emprestimo %}

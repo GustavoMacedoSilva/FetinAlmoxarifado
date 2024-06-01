@@ -38,7 +38,7 @@ def loginAlmoxarife(request):
 def loginAluno(request):
     page = 'aluno'
     context = {'page': page}
-    return render(request, 'login_register.html', context)
+    return render(request, 'autenticacao/login_register.html', context)
 
 def logoutUser(request):
     logout(request)
