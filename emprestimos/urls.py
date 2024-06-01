@@ -3,5 +3,5 @@ from .views import EmprestimoView
 
 
 urlpatterns = [
-    path('',EmprestimoView.as_view(), name='emprestimo'),
+    path('',EmprestimoView, name='emprestimo'),
 ]

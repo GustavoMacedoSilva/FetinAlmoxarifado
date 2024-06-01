@@ -1,9 +1,22 @@
-from django.shortcuts import render
-from django.views.generic import TemplateView
-from django.views.generic.list import ListView
-from django.shortcuts import redirect
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.db.models import Q
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import UserCreationForm
+from .models import Emprestimo
+from autenticacao.models import User
 
 # Create your views here.
 
-class EmprestimoView(TemplateView):
-    template_name = 'emprestimos_almoxarife.html'
+def EmprestimoView(request):
+    q = request.GET.get('q') if request.GET.get('q') != None else ''
+    user = User.objects.filter(
+        Q(username__icontains=q) 
+    )[:8] #get(esp),filter(multiecificoplos especifico),exclude
+
+    context = {'user': user}
+    return render(request, 'emprestimos_almoxarife.html', context)
+    
