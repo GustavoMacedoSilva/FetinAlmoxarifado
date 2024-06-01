@@ -70,3 +70,7 @@ body {
 .block {
     margin-top: 50px;
 }
+.canto {
+    text-align: center;
+    margin: 0 auto;
+}
