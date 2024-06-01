@@ -1,7 +1,24 @@
 <div>
-    {% for Aluno in aluno %}
+    {% for aluno in alunos %}
     <div> 
-        <h5>{{Aluno.user.username}}</h5>
+        <h2>{{ aluno.user.username }}</h2>
+        <h3>Equipamentos:</h3>
+        <ul>
+            {% for emprestimo in emprestimos %}
+                {% if emprestimo.aluno == aluno %}
+                    {% for Componente in componentes %}
+                        {% if Componente.emprestimo == emprestimo %}
+                            <li>{{ Componente.componente.nome }}</li>
+                        {% endif %}
+                    {% endfor %}
+                    {% for equipamento in equipamentos %}
+                        {% if equipamento.emprestimo == emprestimo %}
+                            <li>{{ equipamento.nome }}</li>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        </ul>
         <hr>
     </div>
     {% endfor %}
