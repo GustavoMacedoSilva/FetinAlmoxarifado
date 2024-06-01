@@ -6,6 +6,7 @@
 {% endblock %}
 
 {% block style %}
+<link rel="stylesheet" href="{% static 'css/sideBar.css' %}">
 <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.min.css' %}">
 <link rel="stylesheet" href="{% static 'fa/css/all.min.css' %}">
 <link rel="stylesheet" href="{% static 'css/datatables.min.css' %}">
@@ -56,63 +57,51 @@
                             <i class="fa-regular fa-pen-to-square"></i>
                             Editar
                         </a>
-                        <a href="" class="btn btn-danger btn-sm" title="Excluir">
+                        <button id="delete-Button" class="btn btn-danger btn-sm" title="Excluir" itemID="{{ componente.id }}" itemName="{{ componente.nome }}" itemValue="{{ componente.valor }}" itemUnit="{{ componente.unidade_de_medida }}">
                             <i class="fa-regular fa-trash-can"></i>
                             Excluir
-                        </a>
+                        </button>
                     </td>
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="4">Nenhum componente encontrado</td>
+                    <td colspan="5">Nenhum componente encontrado</td>
                 </tr>
                 {% endfor %}
             </tbody>
                 
             </table>
         </div>
+
+        <!-- Modal para confirmar exclusao -->
+        <div id="deleteModal" class="modal">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h2>Confirmar Exclusão</h2>
+                <p>
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    ESSA AÇÃO É IRREVERSIVEL
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </p>
+                <p id="item-details"></p>
+                <div class="container-fluid">
+                    <button id="confirm-delete" class="btn btn-danger btn-sm" type="submit">
+                        <i class="fa-regular fa-trash-can"></i>
+                        Confirmar
+                    </button>
+                </div>
+            </div>
+        </div>
+
     </div>
     {% endblock %}
 
 {% block script %}
     <script src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/datatables.min.js' %}"></script>
+    <script src="{% static 'js/componentes.js' %}"></script>
     <script> 
         activePage("inventario");
         activePage("Lista-Componentes");
-        $(document).ready(function(){
-            //usa o plugin datatables para colocar campos de pesquisa, e ordenacao na tabela
-            $("#tabela-componentes").DataTable({
-                // aplica traducao para portugues nos campos da tabela
-                responsive: true,
-                // "bSort": false,
-                "aaSorting": [],
-                "pageLength": 50,
-                "language": {
-                    "decimal": "",
-                    "emptyTable": "Sem dados disponíveis",
-                    "info": "",
-                    "infoEmpty": "",
-                    "infoFiltered": "",
-                    "infoPostFix": "",
-                    "thousands": ",",
-                    "lengthMenu": "",
-                    "loadingRecords": "A carregar dados...",
-                    "processing": "A processar...",
-                    "search": "Procurar:",
-                    "zeroRecords": "Não foram encontrados resultados",
-                    "paginate": {
-                        "first": "Primeiro",
-                        "last": "Último",
-                        "next": "Seguinte",
-                        "previous": "Anterior"
-                    },
-                    "aria": {
-                        "sortAscending": ": ordem crescente",
-                        "sortDescending": ": ordem decrescente"
-                    }
-                }
-            });
-        });
     </script>
 {% endblock %}

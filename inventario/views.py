@@ -1,6 +1,7 @@
 from django.views.generic import TemplateView, CreateView, UpdateView
 from django.views.generic.list import ListView
-from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404, redirect
+from django.http import JsonResponse
 from django.urls import reverse_lazy
 from .models import Equipamento, Componente
 
@@ -47,3 +48,18 @@ class ComponenteUpdate(UpdateView):
     fields = ['id','nome','unidade_de_medida','valor','localizacao']
     template_name = 'cadastros/create_form.html'
     success_url = reverse_lazy('Listar-Componentes')
+
+########## Deletess ##########
+def equipamentoDelete(request, item_id):
+    if request.method == 'POST':
+        item = Equipamento.objects.get(pk=item_id)
+        item.delete()
+        return JsonResponse({'success': True})
+    return JsonResponse({'success': False}, status=400)
+
+def componenteDelete(request, item_id):
+    if request.method == 'POST':
+        item = Componente.objects.get(pk=item_id)
+        item.delete()
+        return JsonResponse({'success': True})
+    return JsonResponse({'success': False}, status=400)
