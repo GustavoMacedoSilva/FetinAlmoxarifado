@@ -1,3 +1,4 @@
+from django.views.generic import TemplateView, CreateView, UpdateView
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
@@ -33,3 +34,6 @@ def EmprestimoView(request):
         'componentes': componentes,
     }
     return render(request, 'emprestimos_almoxarife.html', context)
+
+class EmprestimoDetalhes(TemplateView):
+    template_name = 'detalhes.html'
