@@ -5,7 +5,6 @@
 {% endblock %}
 
 {% block content %}
-
 <style>
     .detalhes_aluno {
         display: grid;
@@ -19,40 +18,38 @@
         {% include 'componente_emprestimo_recente.html' %}
     </div>
     <div>
-    <h1>{{ aluno.user.username }}</h1>
-    <h3>Equipamentos:</h3>
-    <ul>
-        {% for emprestimo in emprestimos %}
-            <li>Empréstimo ID: {{ emprestimo.id }}</li>
-            <ul>
-                {% for equipamento in equipamentos %}
-                    {% if equipamento.emprestimo == emprestimo %}
-                        <li>{{ equipamento.nome }}</li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-            <h3>Componentes:</h3>
-            <ul>
-                {% for componente in componentes %}
-                    {% if componente.emprestimo == emprestimo %}
-                        <li>{{ componente.componente.nome }} - Quantidade: {{ componente.quantidade }}</li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-        {% endfor %}
-    </ul>
-    <hr>
-    <a href="{% url 'emprestimo' %}">Voltar</a>
+        <h1>{{ aluno.user.username }}</h1>
+        <h3>Equipamentos:</h3>
+        <ul>
+            {% for emprestimo in emprestimos %}
+                <li>Empréstimo ID: {{ emprestimo.id }}</li>
+                <ul>
+                    {% for equipamento in equipamentos %}
+                        {% if equipamento.emprestimo == emprestimo %}
+                            <li>{{ equipamento.nome }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                <h3>Componentes:</h3>
+                <ul>
+                    {% for componente in componentes %}
+                        {% if componente.emprestimo == emprestimo %}
+                            <li>{{ componente.componente.nome }} - Quantidade: {{ componente.quantidade }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            {% endfor %}
+        </ul>
+        <hr>
+        <a href="{% url 'emprestimo' %}">Voltar</a>
     </div>
     <div>
         
     </div>
 </div>
-
-
-
 {% endblock content %}
 
 {% block script %}
 <script>activePage("emprestimo");</script>
 {% endblock %}
+

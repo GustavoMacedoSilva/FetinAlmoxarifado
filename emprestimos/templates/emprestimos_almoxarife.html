@@ -1,12 +1,10 @@
 {% extends "base.html" %}
 
-{%block title%}
+{% block title %}
 <title>Emprestimos</title>
-{%endblock%}
+{% endblock %}
 
 {% block content %}
-
-
 <style>
     .emprestimos-container {
         display: grid;
@@ -15,25 +13,18 @@
     }
 </style>
 
-
 <div class="emprestimos-container">
-
     <div>
         {% include 'componente_emprestimo_recente.html' %}
     </div>
-
     <div>
-        <h5>Bem vindo aos emprestimos, {{user.username}}</h5>
+        <h5>Bem vindo aos emprestimos, {{ user.username }}</h5>
         {% include 'navbar.html' %}
         {% include 'componente_feed.html' %}
-
     </div>
-
 </div>
-
 {% endblock content %}
 
 {% block script %}
-    <script>activePage("emprestimo");</script>
+<script>activePage("emprestimo");</script>
 {% endblock %}
-

@@ -1,6 +1,4 @@
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Empréstimos Recentes</title>
     <style>
         body {
@@ -56,26 +54,18 @@
             color: #3a0348;
         }
     </style>
-</head>
-<body>
+
+
     <div class="sidebar">
         <h3>Empréstimos Recentes</h3>
     
-
         <div class="link-container">
             <a href="{% url 'emprestimo' %}">Todos</a>
         </div>
 
-        {% for aluno in alunos %}
+        {% for aluno in alunos_com_emprestimos %}
         <div class="aluno-link">
-            {% for emprestimo in emprestimos %}
-                {% if emprestimo.aluno == aluno %}
-                    {% if emprestimo.aluno != null %}
-                    <li><a href="{% url 'detalhes' pk=aluno.matricula%}">{{ aluno.user.username }}</a></li>
-                    {% endif %}
-                {% endif %}
-            {% endfor %}    
+            <li><a href="{% url 'detalhes' pk=aluno.matricula %}">{{ aluno.user.username }}</a></li>
         </div>
         {% endfor %}
     </div>
-</body>
