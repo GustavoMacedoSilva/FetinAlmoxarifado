@@ -4,7 +4,7 @@
         <ul>
             {% for emprestimo in emprestimos %}
                 {% if emprestimo.aluno == aluno %}
-                    <li><a href="{% url 'detalhes' pk=aluno.matricula %}">{{ aluno.user.username }}</a></li>
+                    <li><a href="{% url 'detalhes' pk=aluno.matricula %}">{{ aluno.user.username }}</a> - {{aluno.matricula}} - {{aluno.curso}}</li>
                     <h3>Equipamentos:</h3>
                     <ul>
                         {% for componente in componentes %}

@@ -18,7 +18,7 @@
         {% include 'componente_emprestimo_recente.html' %}
     </div>
     <div>
-        <h1>{{ aluno.user.username }}</h1>
+        <h1>{{ aluno.user.username }} - {{ aluno.matricula }} - {{ aluno.curso }}</h1>
         <h3>Equipamentos:</h3>
         <ul>
             {% for emprestimo in emprestimos %}
