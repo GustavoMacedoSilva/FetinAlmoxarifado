@@ -36,11 +36,15 @@ def EmprestimoView(request):
     return render(request, 'emprestimos_almoxarife.html', context)
 
 def EmprestimoDetalhes(request, pk):
-    aluno = get_object_or_404(Aluno, matricula=pk)
+    try:
+        aluno = Aluno.objects.get(matricula=pk)
+    except Aluno.DoesNotExist:
+        return redirect('home_page')
+    
     emprestimos = Emprestimo.objects.filter(aluno=aluno)
 
     if not emprestimos.exists():
-        return HttpResponse('Nenhum empréstimo encontrado para este aluno.')
+        return redirect('home_page')
 
     equipamentos = Equipamento.objects.filter(emprestimo__in=emprestimos)
     componentes = Emprestimo_has_components.objects.filter(emprestimo__in=emprestimos)
