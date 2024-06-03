@@ -1,5 +1,5 @@
 from django.views.generic import TemplateView, CreateView, UpdateView
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -35,5 +35,20 @@ def EmprestimoView(request):
     }
     return render(request, 'emprestimos_almoxarife.html', context)
 
-class EmprestimoDetalhes(TemplateView):
-    template_name = 'detalhes.html'
+def EmprestimoDetalhes(request, pk):
+    aluno = get_object_or_404(Aluno, matricula=pk)
+    emprestimos = Emprestimo.objects.filter(aluno=aluno)
+
+    if not emprestimos.exists():
+        return HttpResponse('Nenhum empréstimo encontrado para este aluno.')
+
+    equipamentos = Equipamento.objects.filter(emprestimo__in=emprestimos)
+    componentes = Emprestimo_has_components.objects.filter(emprestimo__in=emprestimos)
+
+    context = {
+        'aluno': aluno,
+        'equipamentos': equipamentos,
+        'emprestimos': emprestimos,
+        'componentes': componentes,
+    }
+    return render(request, 'detalhes.html', context)

@@ -1,15 +1,41 @@
 {% extends "base.html" %}
 
-{%block title%}
+{% block title %}
 <title>Detalhes</title>
-{%endblock%}
+{% endblock %}
 
 {% block content %}
 
-<h1> teste </h1>
+<div>
+    <h1>{{ aluno.user.username }}</h1>
+    <h3>Equipamentos:</h3>
+    <ul>
+        {% for emprestimo in emprestimos %}
+            <li>Empréstimo ID: {{ emprestimo.id }}</li>
+            <ul>
+                {% for equipamento in equipamentos %}
+                    {% if equipamento.emprestimo == emprestimo %}
+                        <li>{{ equipamento.nome }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <h3>Componentes:</h3>
+            <ul>
+                {% for componente in componentes %}
+                    {% if componente.emprestimo == emprestimo %}
+                        <li>{{ componente.componente.nome }} - Quantidade: {{ componente.quantidade }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    </ul>
+    <hr>
+</div>
+
+<a href="{% url 'emprestimo' %}">Voltar</a>
 
 {% endblock content %}
 
 {% block script %}
-    <script>activePage("emprestimo");</script>
+<script>activePage("emprestimo");</script>
 {% endblock %}
