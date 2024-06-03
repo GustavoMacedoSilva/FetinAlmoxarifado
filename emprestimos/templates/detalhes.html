@@ -6,7 +6,19 @@
 
 {% block content %}
 
-<div>
+<style>
+    .detalhes_aluno {
+        display: grid;
+        grid-template-columns: 1fr 3fr 1fr;
+        margin-top: 40px;
+    }
+</style>
+
+<div class="detalhes_aluno">
+    <div>
+        {% include 'componente_emprestimo_recente.html' %}
+    </div>
+    <div>
     <h1>{{ aluno.user.username }}</h1>
     <h3>Equipamentos:</h3>
     <ul>
@@ -30,9 +42,14 @@
         {% endfor %}
     </ul>
     <hr>
+    <a href="{% url 'emprestimo' %}">Voltar</a>
+    </div>
+    <div>
+        
+    </div>
 </div>
 
-<a href="{% url 'emprestimo' %}">Voltar</a>
+
 
 {% endblock content %}
 
