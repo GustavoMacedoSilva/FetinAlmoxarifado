@@ -14,15 +14,18 @@ def EmprestimoView(request):
     q = request.GET.get('q') if request.GET.get('q') is not None else ''
     alunos = Aluno.objects.filter(Q(user__username__icontains=q))[:8]
 
+    # Coletar todos os empréstimos e ordenar pela ordem de criação (id)
+    emprestimos = Emprestimo.objects.all().order_by('-id')
 
-    emprestimos = Emprestimo.objects.all().order_by('-data_de_retirada')
-
-
+    # Coletar todos os equipamentos relacionados a esses empréstimos
     equipamentos = Equipamento.objects.filter(emprestimo__in=emprestimos)
     componentes = Emprestimo_has_components.objects.filter(emprestimo__in=emprestimos)
 
+    # Coletar os alunos com empréstimos mais recentes
     alunos_com_emprestimos = Aluno.objects.filter(emprestimo__isnull=False).distinct()
-    alunos_com_emprestimos = sorted(alunos_com_emprestimos, key=lambda aluno: aluno.emprestimo_set.order_by('-data_de_retirada').first().data_de_retirada, reverse=True)
+
+    # Ordenar alunos com base no empréstimo mais recente (id)
+    alunos_com_emprestimos = sorted(alunos_com_emprestimos, key=lambda aluno: aluno.emprestimo_set.order_by('-id').first().id, reverse=True)
 
     context = {
         'alunos': alunos,
@@ -39,7 +42,7 @@ def EmprestimoDetalhes(request, pk):
     except Aluno.DoesNotExist:
         return redirect('home_page')
     
-    emprestimos = Emprestimo.objects.filter(aluno=aluno).order_by('-data_de_retirada')
+    emprestimos = Emprestimo.objects.filter(aluno=aluno).order_by('-id')
 
     if not emprestimos.exists():
         return redirect('home_page')
@@ -47,9 +50,9 @@ def EmprestimoDetalhes(request, pk):
     equipamentos = Equipamento.objects.filter(emprestimo__in=emprestimos)
     componentes = Emprestimo_has_components.objects.filter(emprestimo__in=emprestimos)
 
-    # Ordenar alunos com base no empréstimo mais recente
+    # Ordenar alunos com base no empréstimo mais recente (id)
     alunos_com_emprestimos = Aluno.objects.filter(emprestimo__isnull=False).distinct()
-    alunos_com_emprestimos = sorted(alunos_com_emprestimos, key=lambda aluno: aluno.emprestimo_set.order_by('-data_de_retirada').first().data_de_retirada, reverse=True)
+    alunos_com_emprestimos = sorted(alunos_com_emprestimos, key=lambda aluno: aluno.emprestimo_set.order_by('-id').first().id, reverse=True)
 
     context = {
         'aluno': aluno,
