@@ -1,20 +1,12 @@
 {%if user.is_authenticated and user.is_superuser%}
-<h3>Registrar Usuario</h3>
+<h3>Registrar Aluno</h3>
 
 <form method="POST" action="">
     {% csrf_token %}
-    {{form.username.label}}
-    {{form.username}}
-    
-    {{form.email.label}}
-    {{form.email}}
-
-    {{form.password1.label}}
-    {{form.password1}}
-
-    {{form.password2.label}}
-    {{form.password2}}
-
+    {%for field in form%}
+        {{field.label}}
+        {{field}}
+    {%endfor%}
     <input type="submit" name="Criar Usuario">
 </form>
 
