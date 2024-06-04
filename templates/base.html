@@ -31,7 +31,7 @@
             <a href="{% url 'home_page' %}">Home</a>
             <a href="{% url 'Listar-Equipamentos' %}" id="inventario">Inventário</a>
             <a href="{% url 'emprestimo'%}" id="emprestimo">Emprestimos</a>
-            <a href="#">Contato</a>
+            <a href="{% url 'contato'%}" id="contato">Contato</a>
         </div>
         <div class="account" onclick="toggleDropdown()">
             <img src="{% static 'imgs/account_icon.png' %}" alt="Conta">

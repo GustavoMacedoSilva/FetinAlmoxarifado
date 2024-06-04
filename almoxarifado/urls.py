@@ -17,12 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from inventario.views import HomeView
+from .views import contato_page
 
-urlpatterns = [
+urlpatterns =[
     path('admin/', admin.site.urls),
     path('', HomeView.as_view(), name='home_page'),
     #importando urls dos aplicativos 
     path('inventario/', include('inventario.urls')),
     path('login/',include('autenticacao.urls')),
-    path('emprestimos/',include('emprestimos.urls'))
+    path('emprestimos/',include('emprestimos.urls')),
+    path('contato/',contato_page,name = "contato")
 ]

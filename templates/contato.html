@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+
+<html>
+{% block title %}
+<title>Contato</title>
+{% endblock %}
+
+{%block style%}
+<head>
+    <style>
+        body, html{
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+    </style>
+</head>
+{%endblock%}
+
+{% block content %}
+<body>
+    <div class = "contato">
+        <h1>Dúvidas? Entre em contato conosco</h1>
+        <p>==============================</p>
+        <h3>Email: </h3>
+        <p>email do eduardo</p>
+        <p>henrique.issao@gec.inatel.br</p>
+        <p>email do guilherme</p>
+        <p>macedo.gustavo@ges.inatel.br</p>
+        <p>==============================</p>
+        <h3>Whatsapp:</h3>
+        <p>+55(35)9842-9114</p>
+        <p>+55(11)99349-8384</p>
+        <p>+55(37)9872-5431</p>
+        <p>+55(35)9832-8264</p>
+    </div>
+</body>
+{% endblock %}
+</html>

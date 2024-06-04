@@ -3,7 +3,7 @@ from .views import EquipamentosList, ComponenteList
 from .views import EquipamentoCreate, ComponenteCreate
 from .views import EquipamentoUpdate, ComponenteUpdate
 from .views import equipamentoDelete, componenteDelete
-from .views import redirect_to_equipamentos 
+from .views import redirect_to_equipamentos
 
 
 
