@@ -1,10 +1,10 @@
-from django.urls import path
+from django.urls import path, include
 from .views import EquipamentosList, ComponenteList 
 from .views import EquipamentoCreate, ComponenteCreate
 from .views import EquipamentoUpdate, ComponenteUpdate
 from .views import equipamentoDelete, componenteDelete
 from .views import redirect_to_equipamentos
-
+from almoxarifado.views import contato_page
 
 
 urlpatterns = [
@@ -22,5 +22,6 @@ urlpatterns = [
     path('equipamentos/delete/<int:item_id>/', equipamentoDelete, name='Deletar-Equipamento'),
     path('componentes/delete/<int:item_id>/', componenteDelete, name='Deletar-Componente'),
     ######## Redirect ########
-    path('', redirect_to_equipamentos, name = 'inventario_redirect')
+    path('', redirect_to_equipamentos, name = 'inventario_redirect'),
+    path('contato/', contato_page, name = "contato")
 ]
