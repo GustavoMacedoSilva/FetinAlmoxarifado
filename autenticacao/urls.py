@@ -7,5 +7,5 @@ urlpatterns = [
     path('aluno/', loginAluno, name='loginAluno'),
     path('logout/', logoutUser, name='logout'),
     path('registrarUser/', createUser, name='userCreation'),
-    path('registarAluno/', createAluno, name='alunoCreation'),
+    path('registrarAluno/', createAluno, name='alunoCreation'),
 ]
