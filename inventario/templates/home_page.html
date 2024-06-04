@@ -111,6 +111,9 @@
             <div id="dropdown-menu" class="dropdown">
                 {%if request.user.is_authenticated%}
                 <a href="{% url 'logout' %}">Logout</a>
+                {%if user.is_superuser%}
+                <a href="{% url 'userCreation'%}">Registrar Aluno</a>
+                {%endif%}
                 {% else %}
                 <a href="{% url 'loginAlmoxarife' %}">Login Funcionário</a>
                 <a href="{% url 'loginAluno' %}">Login Aluno</a>
