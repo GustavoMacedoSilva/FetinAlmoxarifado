@@ -5,23 +5,24 @@
             {% for emprestimo in emprestimos %}
                 {% if emprestimo.aluno == aluno %}
                     <li><a href="{% url 'detalhes' pk=aluno.matricula %}">{{ aluno.user.username }}</a> - {{aluno.matricula}} - {{aluno.curso}}</li>
-                    <h3>Equipamentos:</h3>
                     <ul>
-                        {% for componente in componentes %}
-                            {% if componente.emprestimo == emprestimo %}
-                                <li>{{ componente.componente.nome }}</li>
-                            {% endif %}
-                        {% endfor %}
+                        <h4>Equipamentos:</h4>
                         {% for equipamento in equipamentos %}
                             {% if equipamento.emprestimo == emprestimo %}
                                 <li>{{ equipamento.nome }}</li>
                             {% endif %}
                         {% endfor %}
+                        <h4>Componentes:</h4>
+                        {% for componente in componentes %}
+                            {% if componente.emprestimo == emprestimo %}
+                                <li>{{ componente.componente.nome }}</li>
+                            {% endif %}
+                        {% endfor %}
+                        <hr>
                     </ul>
                 {% endif %}
             {% endfor %}
         </ul>
-        <hr>
     </div>
     {% endfor %}
 </div>
