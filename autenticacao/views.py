@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Aluno, Funcionario, User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
+from .forms import creationUserForm
 
 # Create your views here.
 
@@ -44,3 +45,12 @@ def logoutUser(request):
     logout(request)
     return redirect('home_page')
 
+def createUser(request):
+    form = creationUserForm()
+    
+    if request.method == 'POST':
+        form = creationUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+    context = {'form': form}
+    return render(request, 'autenticacao/create_user.html', context)
