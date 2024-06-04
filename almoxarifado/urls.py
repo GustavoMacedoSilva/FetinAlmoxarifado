@@ -24,7 +24,7 @@ urlpatterns =[
     path('', HomeView.as_view(), name='home_page'),
     #importando urls dos aplicativos 
     path('inventario/', include('inventario.urls')),
-    path('login/',include('autenticacao.urls')),
+    path('autenticacao/',include('autenticacao.urls')),
     path('emprestimos/',include('emprestimos.urls')),
     path('contato/',contato_page,name = "contato")
 ]
