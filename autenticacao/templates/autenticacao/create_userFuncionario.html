@@ -38,7 +38,8 @@ form label {
 
 form input[type="text"],
 form input[type="email"],
-form input[type="password"] {
+form input[type="password"]
+form input[type="boolean"] {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
@@ -98,6 +99,10 @@ form input[type="submit"]:hover {
                 <div>
                     <label>{{ form.email.label }}</label>
                     {{ form.email }}
+                </div>
+                <div>
+                    <label>{{form.is_staff.label}}</label>
+                    {{form.is_staff}}
                 </div>
                 <div>
                     <label>{{ form.password1.label }}</label>

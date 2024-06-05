@@ -6,6 +6,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
+    <!-- icone da pagina -->
+    <link rel="icon" href="{% static 'imgs/Logo_inatel.jpg' %}" type="image/jpg">
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -113,6 +116,7 @@
                 <a href="{% url 'logout' %}">Logout</a>
                 {%if user.is_superuser%}
                 <a href="{% url 'userCreation'%}">Registrar Aluno</a>
+                <a href="{% url 'userCreationFuncionario'%}">Registrar Almoxarife</a>
                 {%endif%}
                 {% else %}
                 <a href="{% url 'loginAlmoxarife' %}">Login Funcionário</a>
