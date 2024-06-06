@@ -5,7 +5,7 @@ from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
 class User(AbstractUser):
-    name = models.CharField(max_length=200, null=True)
+    name = models.CharField(max_length=200, null=True, unique=True)
     email= models.EmailField(unique=True, null=True)
     is_aluno = models.BooleanField(default=False)
     is_funcionario =models.BooleanField(default=False)
