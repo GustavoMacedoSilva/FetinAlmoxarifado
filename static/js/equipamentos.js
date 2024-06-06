@@ -1,4 +1,50 @@
 $(document).ready(function(){
+
+    //####### Declarando funcoes #######
+
+    // funcao para acessar o token de validacao de formularios do django
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    // Função para filtrar itens que estejam com emprestimos
+    function filterItems() {
+        if ($('input[name="filter"]').is(':checked')) {
+            $('tr[emprestimo="true"]').show();
+        } else {
+            $('tr[emprestimo="true"]').hide();
+        }
+    }
+
+    //####### Declarando variaveis #######
+
+    var deleteButtons = document.querySelectorAll('#delete-Button'); // acessa o botao excluir da tabela 
+    var detailButtons = document.querySelectorAll('#detail-button');
+    var deleteModal = document.getElementById('deleteModal'); // carrega o modal de exclusao
+    var detailModal = document.getElementById('detailModal'); // carrega o modal de detalhes
+    var closeButtonDelete = document.getElementById('close-button-delete'); // botao de fechar o modal
+    var closeButtonDetail = document.getElementById('close-button-detail'); // botao de fechar o modal
+    var confirmDeleteButton = document.getElementById('confirm-delete'); // botao de confirmacao de exclusao do modal 
+    var itemDetails = document.getElementById('item-details'); // elemento do modal de exclusão que mostra detalhes da exclusão
+    var currentPk; // representa a primary key do item que sera excluido
+
+    // Evento de mudança para o checkbox
+    $('input[name="filter"]').change(filterItems);
+
+    // Aplicar filtro inicialmente depois de carregar a pagina
+    filterItems();
+
     //usa o plugin datatables para colocar campos de pesquisa, e ordenacao na tabela
     $("#tabela-equipamentos").DataTable({
         // aplica traducao para portugues nos campos da tabela
@@ -32,17 +78,6 @@ $(document).ready(function(){
         }
     });
 
-    
-    var deleteButtons = document.querySelectorAll('#delete-Button'); // acessa o botao excluir da tabela 
-    var detailButtons = document.querySelectorAll('#detail-button');
-    var deleteModal = document.getElementById('deleteModal'); // carrega o modal de exclusao
-    var detailModal = document.getElementById('detailModal'); // carrega o modal de detalhes
-    var closeButtonDelete = document.getElementById('close-button-delete'); // botao de fechar o modal
-    var closeButtonDetail = document.getElementById('close-button-detail'); // botao de fechar o modal
-    var confirmDeleteButton = document.getElementById('confirm-delete'); // botao de confirmacao de exclusao do modal 
-    var itemDetails = document.getElementById('item-details'); // elemento do modal de exclusão que mostra detalhes da exclusão
-    var currentPk; // representa a primary key do item que sera excluido
-
     deleteButtons.forEach(function(button) {
         button.addEventListener('click', function() {
             // carrega o id e o nome do item a ser excluido
@@ -63,7 +98,7 @@ $(document).ready(function(){
     detailButtons.forEach(function(button) {
         button.addEventListener('click', function() {
             // carrega as informacoes do item
-            let itemElement = button.parentElement;
+            let itemElement = button.parentElement.parentElement;
             let itemId = itemElement.getAttribute('itemID');
             let itemName = itemElement.getAttribute('itemName');
             let itemDescription = itemElement.getAttribute('description');
@@ -127,21 +162,5 @@ $(document).ready(function(){
         // remove o modal da tela
         deleteModal.style.display = 'none';
     });
-
-    function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-    
 
 });

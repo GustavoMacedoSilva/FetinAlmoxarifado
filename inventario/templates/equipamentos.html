@@ -18,10 +18,17 @@
 <div class="content">
     <div class="container-fluid">
         <h3>Lista de Equipamentos</h3>
-        <a href="{% url 'Cadastrar-Equipamento' %}" class="btn btn-success btn-sm" title="Cadastrar">
-            <i class="fa-regular fa-square-plus"></i>
-            Cadastrar novo equipamento
-        </a>
+        <div class="buttons">
+            <p>Mostar items que estejam emprestados: </p>
+            <label class="switch">
+                <input type="checkbox" name="filter">
+                <span class="slider"></span>
+            </label>
+            <a href="{% url 'Cadastrar-Equipamento' %}" class="btn btn-success btn-sm" title="Cadastrar">
+                <i class="fa-regular fa-square-plus"></i>
+                Cadastrar novo equipamento
+            </a>
+        </div>
     </div>
     <hr>
     <div class="table-responsive">
@@ -38,11 +45,11 @@
 
             <tbody>
                 {% for equipamento in object_list %}
-                <tr>
+                <tr itemID="{{ equipamento.id }}" itemName="{{ equipamento.nome }}" description="{{ equipamento.descricao }}" itemLocation="{{ equipamento.localizacao }}" emprestimo={% if equipamento.emprestimo != None %} true {% else %} false {% endif %}>
                     <td>{{ equipamento.id }}</td>
                     <td>{{ equipamento.nome }}</td>
                     <td>{{ equipamento.localizacao }}</td>
-                    <td itemID="{{ equipamento.id }}" itemName="{{ equipamento.nome }}" description="{{ equipamento.descricao }}" itemLocation="{{ equipamento.localizacao }}">
+                    <td>
                         <a href="" class="btn btn-success btn-sm" title="Reservar">
                             <i class="fa fa-bookmark" aria-hidden="true"></i>
                             Emprestar
