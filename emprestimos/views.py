@@ -9,6 +9,8 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import Emprestimo
 from autenticacao.models import User, Aluno
 from inventario.models import Componente, Equipamento, Emprestimo_has_components
+from django.urls import reverse_lazy
+from .forms import createEmprestimoForm
 
 def EmprestimoView(request):
     q = request.GET.get('q') if request.GET.get('q') is not None else ''
@@ -62,3 +64,27 @@ def EmprestimoDetalhes(request, pk):
         'alunos_com_emprestimos': alunos_com_emprestimos,
     }
     return render(request, 'detalhes.html', context)
+
+def createEmprestimo(request):
+    if request.method == 'POST':
+        form = createEmprestimoForm(request.POST)
+        if form.is_valid():
+            estado = form.cleaned_data['estado']
+            data_de_devolucao = form.cleaned_data['data_de_devolucao']
+            funcionario = form.cleaned_data['funcionario']
+            aluno = form.cleaned_data['aluno']
+            equipamentos = form.cleaned_data['equipamentos']
+            componentes = form.cleaned_data['componentes']
+
+            emprestimo = Emprestimo.objects.create(data_de_devolucao=data_de_devolucao, estado=estado, aluno=aluno, funcionario=funcionario)
+            for equipamento in equipamentos:
+                equipamento.emprestimo = emprestimo
+                equipamento.save()
+            
+            for componente, quantidade in componentes:
+                Emprestimo_has_components.objects.create(emprestimo=emprestimo, componente=componente, quantidade=quantidade)
+            
+            return redirect('emprestimo')  
+    else:
+        form = createEmprestimoForm()
+    return render(request, 'create_form.html', {'form': form})
