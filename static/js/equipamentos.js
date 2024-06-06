@@ -67,15 +67,19 @@ $(document).ready(function(){
             let itemId = itemElement.getAttribute('itemID');
             let itemName = itemElement.getAttribute('itemName');
             let itemDescription = itemElement.getAttribute('description');
+            let itemLocation = itemElement.getAttribute('itemLocation');
             // carrega os campos para mostragem dos atributos
             let atributo1 = document.getElementById('itemId');
             let atributo2 = document.getElementById('itemName');
-            let atributo3 = document.getElementById('itemDescription');
+            let atributo3 = document.getElementById('itemLocation');
+            let atributo4 = document.getElementById('itemDescription');
+            
 
             // define os detalhes do item no modal antes de motrar na tela
             atributo1.textContent = `${itemId}`;
             atributo2.textContent = `${itemName}`;
-            atributo3.textContent = `${itemDescription}`;
+            atributo3.textContent = `${itemLocation}`;
+            atributo4.textContent = `${itemDescription}`;
             
             // exibe o modal na tela
             detailModal.style.display = 'block';
