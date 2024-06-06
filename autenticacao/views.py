@@ -66,29 +66,23 @@ def logoutUser(request):
     logout(request)
     return redirect('home_page')
 
-def createUser(request):
+def createUserAluno(request):
     form = creationUserForm()
-    
     if request.method == 'POST':
         form = creationUserForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect ('alunoCreation')
+            user = form.save()
+            matricula = request.POST.get('matricula')
+            curso = request.POST.get('curso')
+            Aluno.objects.create(
+                user=user,
+                matricula=matricula,
+                curso=curso,
+            )
+            return redirect('home_page')
     context = {'form': form}
     return render(request, 'autenticacao/create_user.html', context)
 
-
-def createAluno(request):
-    form = creationAlunoForm()
-    
-    if request.method == 'POST':
-        form = creationAlunoForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('home_page')
-    
-    context = {'form': form}
-    return render(request, 'autenticacao/createAluno.html', context)
 
 def createUserAlmoxarife(request):
     form = creationUserFormFuncionario()

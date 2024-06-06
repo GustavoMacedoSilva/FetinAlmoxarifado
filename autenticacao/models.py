@@ -14,8 +14,8 @@ class User(AbstractUser):
     REQUIRED_FIELDS = []
 
 class Aluno(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    matricula = models.IntegerField(unique=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    matricula = models.IntegerField(primary_key=True)
     curso = models.CharField(max_length=50)
 
     def __str__(self):

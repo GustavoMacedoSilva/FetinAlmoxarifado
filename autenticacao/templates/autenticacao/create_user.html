@@ -81,7 +81,7 @@ form input[type="submit"]:hover {
 </style>
 
 
-<html lang="en">
+<html lang="pt-br">
 <head>
     <title>Registrar Usuário</title>
 </head>
@@ -98,6 +98,14 @@ form input[type="submit"]:hover {
                 <div>
                     <label>{{ form.email.label }}</label>
                     {{ form.email }}
+                </div>
+                <div>
+                    <label>Matricula:</label>
+                    <input type="number" name="matricula" placeholder="Matricula"/>
+                </div>
+                <div>
+                    <label>Curso:</label>
+                    <input type="text" name="curso" placeholder="Curso"/>
                 </div>
                 <div>
                     <label>{{ form.password1.label }}</label>
