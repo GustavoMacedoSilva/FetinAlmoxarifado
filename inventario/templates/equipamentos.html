@@ -35,7 +35,7 @@
         <table class="table table-striped" id="tabela-equipamentos">
 
             <thead>
-                <tr>
+                <tr id="head">
                     <th>Id</th>
                     <th>Nome</th>
                     <th>Localização</th>
@@ -45,7 +45,7 @@
 
             <tbody>
                 {% for equipamento in object_list %}
-                <tr itemID="{{ equipamento.id }}" itemName="{{ equipamento.nome }}" description="{{ equipamento.descricao }}" itemLocation="{{ equipamento.localizacao }}" emprestimo={% if equipamento.emprestimo != None %} true {% else %} false {% endif %}>
+                <tr itemID="{{ equipamento.id }}" itemName="{{ equipamento.nome }}" description="{{ equipamento.descricao }}" itemLocation="{{ equipamento.localizacao }}" emprestimo={% if equipamento.emprestimo != None %} {{ equipamento.emprestimo.id }} {% else %} false {% endif %}>
                     <td>{{ equipamento.id }}</td>
                     <td>{{ equipamento.nome }}</td>
                     <td>{{ equipamento.localizacao }}</td>
@@ -108,6 +108,7 @@
                 <p><strong>Nome:</strong> <span id="itemName"></span></p>
                 <p><strong>Localização:</strong> <span id="itemLocation"></span></p>
                 <p><strong>Descrição:</strong> <span id="itemDescription"></span></p>
+                <p><strong>ID do Emprestimo:</strong> <span id="emprestimoID"></span></p>
             </div>
         </div>
     </div>

@@ -1,50 +1,5 @@
 $(document).ready(function(){
-
-    //####### Declarando funcoes #######
-
-    // funcao para acessar o token de validacao de formularios do django
-    function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-
-    // Função para filtrar itens que estejam com emprestimos
-    function filterItems() {
-        if ($('input[name="filter"]').is(':checked')) {
-            $('tr[emprestimo="true"]').show();
-        } else {
-            $('tr[emprestimo="true"]').hide();
-        }
-    }
-
-    //####### Declarando variaveis #######
-
-    var deleteButtons = document.querySelectorAll('#delete-Button'); // acessa o botao excluir da tabela 
-    var detailButtons = document.querySelectorAll('#detail-button');
-    var deleteModal = document.getElementById('deleteModal'); // carrega o modal de exclusao
-    var detailModal = document.getElementById('detailModal'); // carrega o modal de detalhes
-    var closeButtonDelete = document.getElementById('close-button-delete'); // botao de fechar o modal
-    var closeButtonDetail = document.getElementById('close-button-detail'); // botao de fechar o modal
-    var confirmDeleteButton = document.getElementById('confirm-delete'); // botao de confirmacao de exclusao do modal 
-    var itemDetails = document.getElementById('item-details'); // elemento do modal de exclusão que mostra detalhes da exclusão
-    var currentPk; // representa a primary key do item que sera excluido
-
-    // Evento de mudança para o checkbox
-    $('input[name="filter"]').change(filterItems);
-
-    // Aplicar filtro inicialmente depois de carregar a pagina
-    filterItems();
-
+    //####### Aplicando o DataTables #######
     //usa o plugin datatables para colocar campos de pesquisa, e ordenacao na tabela
     $("#tabela-equipamentos").DataTable({
         // aplica traducao para portugues nos campos da tabela
@@ -78,10 +33,56 @@ $(document).ready(function(){
         }
     });
 
+    //####### Declarando funcoes #######
+
+    // funcao para acessar o token de validacao de formularios do django
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    // Função para filtrar itens que estejam com emprestimos
+    function filterItems() {
+        if ($('input[name="filter"]').is(':checked')) {
+            $('tbody tr[emprestimo!="false"]').show();
+        } else {
+            $('tbody tr[emprestimo!="false"]').hide();
+        }
+    }
+
+    //####### Declarando variaveis #######
+
+    var deleteButtons = document.querySelectorAll('#delete-Button'); // acessa o botao excluir da tabela 
+    var detailButtons = document.querySelectorAll('#detail-button');
+    var deleteModal = document.getElementById('deleteModal'); // carrega o modal de exclusao
+    var detailModal = document.getElementById('detailModal'); // carrega o modal de detalhes
+    var closeButtonDelete = document.getElementById('close-button-delete'); // botao de fechar o modal
+    var closeButtonDetail = document.getElementById('close-button-detail'); // botao de fechar o modal
+    var confirmDeleteButton = document.getElementById('confirm-delete'); // botao de confirmacao de exclusao do modal 
+    var itemDetails = document.getElementById('item-details'); // elemento do modal de exclusão que mostra detalhes da exclusão
+    var currentPk; // representa a primary key do item que sera excluido
+
+    // Evento de mudança para o checkbox
+    $('input[name="filter"]').change(filterItems);
+
+    // Aplicar filtro inicialmente depois de carregar a pagina
+    filterItems();
+
+
     deleteButtons.forEach(function(button) {
         button.addEventListener('click', function() {
             // carrega o id e o nome do item a ser excluido
-            let itemElement = button.parentElement;
+            let itemElement = button.parentElement.parentElement;
             let itemId = itemElement.getAttribute('itemID');
             let itemName = itemElement.getAttribute('itemName');
             
@@ -103,19 +104,24 @@ $(document).ready(function(){
             let itemName = itemElement.getAttribute('itemName');
             let itemDescription = itemElement.getAttribute('description');
             let itemLocation = itemElement.getAttribute('itemLocation');
+            let emprestimoID = itemElement.getAttribute('emprestimo');
+            if(emprestimoID == "false"){
+                emprestimoID = "Não esta associado a nenhum emprestimo";
+            }
             // carrega os campos para mostragem dos atributos
             let atributo1 = document.getElementById('itemId');
             let atributo2 = document.getElementById('itemName');
             let atributo3 = document.getElementById('itemLocation');
             let atributo4 = document.getElementById('itemDescription');
-            
+            let atributo5 = document.getElementById('emprestimoID');
 
             // define os detalhes do item no modal antes de motrar na tela
             atributo1.textContent = `${itemId}`;
             atributo2.textContent = `${itemName}`;
             atributo3.textContent = `${itemLocation}`;
             atributo4.textContent = `${itemDescription}`;
-            
+            atributo5.textContent = `${emprestimoID}`;
+
             // exibe o modal na tela
             detailModal.style.display = 'block';
         });
