@@ -1,10 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from .models import Aluno, Funcionario, User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
-from .forms import creationUserForm, creationAlunoForm, creationUserFormFuncionario, creationAlmoxarifeForm
+from .forms import creationUserForm, creationUserFormFuncionario
 
 # Create your views here.
 
@@ -90,20 +89,15 @@ def createUserAlmoxarife(request):
     if request.method == 'POST':
         form = creationUserFormFuncionario(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('funcionarioCreation')
+            user = form.save()
+            id = request.POST.get('id')
+            cargo = request.POST.get('cargo')
+            Funcionario.objects.create(
+                user=user,
+                id=id,
+                cargo=cargo,
+            )
+            return redirect('home_page')
             
     context = {'form':form}        
     return render(request, 'autenticacao/create_userFuncionario.html', context)
-
-def createFuncionario(request):
-    form = creationAlmoxarifeForm()
-    
-    if request.method == 'POST':
-        form = creationAlmoxarifeForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('home_page')
-        
-    context = {'form': form}
-    return render(request, 'autenticacao/createFuncionario.html', context)
