@@ -49,10 +49,10 @@ $(document).ready(function(){
         button.addEventListener('click', function() {
             // carrega o id e o nome do item a ser excluido
             let itemElement = button.parentElement.parentElement;
-            var itemId = itemElement.getAttribute('itemID');
-            var itemName = itemElement.getAttribute('itemName');
-            var itemValue = itemElement.getAttribute('itemValue');
-            var itemUnit = itemElement.getAttribute('itemUnit');
+            let itemId = itemElement.getAttribute('itemID');
+            let itemName = itemElement.getAttribute('itemName');
+            let itemValue = itemElement.getAttribute('itemValue');
+            let itemUnit = itemElement.getAttribute('itemUnit');
             
             // define os detalhes do item no modal antes de motrar na tela
             itemDetails.textContent = `ID: ${itemId}\n Nome: ${itemName} ${itemValue}${itemUnit}`;
@@ -68,19 +68,22 @@ $(document).ready(function(){
         button.addEventListener('click', function() {
             // carrega as informacoes do item
             let itemElement = button.parentElement.parentElement;
+            let itemId = itemElement.getAttribute('itemID');
             let itemName = itemElement.getAttribute('itemName');
             let itemValue = itemElement.getAttribute('itemValue');
             let itemUnit = itemElement.getAttribute('itemUnit');
             let itemLocation = itemElement.getAttribute('itemLocation');
             // carrega os campos para mostragem dos atributos
-            let atributo1 = document.getElementById('itemName');
-            let atributo2 = document.getElementById('itemValue');
-            let atributo3 = document.getElementById('itemLocation');
+            let atributo1 = document.getElementById('itemID');
+            let atributo2 = document.getElementById('itemName');
+            let atributo3 = document.getElementById('itemValue');
+            let atributo4 = document.getElementById('itemLocation');
 
             // define os detalhes do item no modal antes de motrar na tela
-            atributo1.textContent = `${itemName}`;
-            atributo2.textContent = `${itemValue} ${itemUnit}`;
-            atributo3.textContent = `${itemLocation}`;
+            atributo1.textContent = `${itemId}`;
+            atributo2.textContent = `${itemName}`;
+            atributo3.textContent = `${itemValue} ${itemUnit}`;
+            atributo4.textContent = `${itemLocation}`;
             
             // exibe o modal na tela
             detailModal.style.display = 'block';

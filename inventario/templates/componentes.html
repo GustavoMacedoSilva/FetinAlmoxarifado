@@ -29,6 +29,7 @@
             
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Nome</th>
                     <th>Valor</th>
                     <th>Unidade de Medida</th>
@@ -40,6 +41,7 @@
             <tbody>
                 {% for componente in object_list %}
                 <tr itemID="{{ componente.id }}" itemName="{{ componente.nome }}" itemValue="{{ componente.valor }}" itemUnit="{{ componente.unidade_de_medida }}" itemLocation="{{ componente.localizacao }}">
+                    <td>{{ componente.id }}</td>
                     <td>{{ componente.nome }}</td>
                     <td>{{ componente.valor }}</td>
                     <td>{{ componente.unidade_de_medida }}</td>
@@ -99,6 +101,7 @@
             <span id="close-button-detail" class="close-button">&times;</span>
             <h3>Detalhes do Item</h3>
             <div class="modal-body">
+                <p><strong>ID:</strong> <span id="itemID"></span></p>
                 <p><strong>Nome:</strong> <span id="itemName"></span></p>
                 <p><strong>Valor:</strong> <span id="itemValue"></span></p>
                 <p><strong>Localização:</strong> <span id="itemLocation"></span></p>
