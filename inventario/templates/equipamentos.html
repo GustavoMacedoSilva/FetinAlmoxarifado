@@ -50,10 +50,10 @@
                     <td>{{ equipamento.nome }}</td>
                     <td>{{ equipamento.localizacao }}</td>
                     <td>
-                        <a href="" class="btn btn-success btn-sm" title="Reservar">
+                        <button id="emprestimoButton" class="btn btn-success btn-sm" title="Reservar">
                             <i class="fa fa-bookmark" aria-hidden="true"></i>
                             Emprestar
-                        </a>
+                        </button>
                         <button id="detail-button" class="btn btn-primary btn-sm" title="Visualizar">
                             <i class="fa-regular fa-eye"></i>
                             Visualizar
@@ -112,7 +112,44 @@
             </div>
         </div>
     </div>
-
+    <!-- Modal para adicionar novos emprestimos pelo botão emprestar -->
+    <div id="emprestimoModal" class="modal">
+        <div class="modal-content">
+            <span id="close-button-emprestimo" class="close-button">&times;</span>
+            <h3>Emprestar Equipamento</h3>
+            <div class="modal-body">
+                <p>Esolha se deseja criar um novo emprestimo ou apenas adicionar este item a um emprestimo existente:</p>
+                <a href="{% url 'cadastrar-emprestimo' %}" class="btn btn-success btn-lg">
+                    <i class="fa-solid fa-plus"></i>
+                    Criar novo emprestimo
+                </a>
+                <button id="addEmprestimo" class="btn btn-primary btn-lg" type="submit">
+                    <i class="fa-solid fa-cart-plus"></i>
+                    Adicionar item a um emprestimo existente
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal para inserção do id do emprestimo que ira receber o equipamento -->
+<div id="empretimoIDmodal" class="modal">
+    <div class="modal-content">
+        <h3>Insira o ID do emprestimo que deseja adicionar este equipamento</h3>
+        <div class="modal-body">
+            <div>
+                <label>Emprestimo:</label>
+                <input type="number" id="addEmprestimoID" placeholder="ID do emprestimo"/>
+                <button id="confirm-add-emprestimo" class="btn btn-success btn-sm" type="submit">
+                    <i class="fa-solid fa-check"></i>
+                    Confirmar
+                </button>
+            </div>
+            <button id="cancel-add-emprestimo" class="btn btn-danger btn-sm" type="submit">
+                <i class="fa-regular fa-trash-can"></i>
+                Cancelar
+            </button>
+        </div>
+    </div>
 </div>
 {% endblock %}
 

@@ -26,12 +26,12 @@ class createEmprestimoForm(ModelForm):
         try:
             funcionario = Funcionario.objects.get(pk=funcionario_pk)
         except Funcionario.DoesNotExist:
-            self.add_error('funcionario_pk', 'Funcionario com essa PK não existe')
+            self.add_error('funcionario_pk', 'Funcionario com esse ID não existe')
 
         try:
             aluno = Aluno.objects.get(pk=aluno_pk)
         except Aluno.DoesNotExist:
-            self.add_error('aluno_pk', 'Aluno com essa PK não existe')
+            self.add_error('aluno_pk', 'Aluno com essa matricula não existe')
         
         equipamentos = []
         if equipamentos_pks != '':
@@ -61,14 +61,3 @@ class createEmprestimoForm(ModelForm):
             cleaned_data['componentes'] = componentes
 
         return cleaned_data
-
-
-
-
-
-
-
-#class createEmprestimoForm(ModelForm):
-#    class Meta:
-#        model = Emprestimo
-#        fields = ['estado','data_de_devolucao','aluno','funcionario']

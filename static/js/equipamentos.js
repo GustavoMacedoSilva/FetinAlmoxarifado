@@ -63,13 +63,15 @@ $(document).ready(function(){
     //####### Declarando variaveis #######
 
     var deleteButtons = document.querySelectorAll('#delete-Button'); // acessa o botao excluir da tabela 
-    var detailButtons = document.querySelectorAll('#detail-button');
+    var detailButtons = document.querySelectorAll('#detail-button'); // acessa o botao ver detalhes da tabela
+    var emprestimoButtons = document.querySelectorAll('#emprestimoButton'); // acessa o botao emprestar da tabela
     var deleteModal = document.getElementById('deleteModal'); // carrega o modal de exclusao
     var detailModal = document.getElementById('detailModal'); // carrega o modal de detalhes
+    var emprestimoModal = document.getElementById('emprestimoModal');
     var closeButtonDelete = document.getElementById('close-button-delete'); // botao de fechar o modal
     var closeButtonDetail = document.getElementById('close-button-detail'); // botao de fechar o modal
+    var closeButtonEmprestimo = document.getElementById('close-button-emprestimo'); // botao de fechar o modal
     var confirmDeleteButton = document.getElementById('confirm-delete'); // botao de confirmacao de exclusao do modal 
-    var itemDetails = document.getElementById('item-details'); // elemento do modal de exclusão que mostra detalhes da exclusão
     var currentPk; // representa a primary key do item que sera excluido
 
     // Evento de mudança para o checkbox
@@ -78,9 +80,10 @@ $(document).ready(function(){
     // Aplicar filtro inicialmente depois de carregar a pagina
     filterItems();
 
-
     deleteButtons.forEach(function(button) {
         button.addEventListener('click', function() {
+            // elemento do modal de exclusão que mostra detalhes da exclusão
+            let itemDetails = document.getElementById('item-details'); 
             // carrega o id e o nome do item a ser excluido
             let itemElement = button.parentElement.parentElement;
             let itemId = itemElement.getAttribute('itemID');
@@ -127,6 +130,52 @@ $(document).ready(function(){
         });
     });
 
+    emprestimoButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            // carrega id do equipamento
+            let itemElement = button.parentElement.parentElement;
+            let itemId = itemElement.getAttribute('itemID');
+            // carrega o botao de adicionar a emprestimo
+            let addEmprestimoButton = document.getElementById('addEmprestimo');
+            // carrega o modal de adicionar a emprestimo
+            let addEmprestimoModal = document.getElementById('empretimoIDmodal');
+            addEmprestimoButton.addEventListener('click', function() {
+                // carrega o botao de cancelar 
+                let cancelButton = document.getElementById('cancel-add-emprestimo');
+                // carrega o botao de confimar adicao
+                let confirmButton = document.getElementById('confirm-add-emprestimo');
+                confirmButton.addEventListener('click', function() {
+                    // le o valor do input numerico referente ao id do emprestimo
+                    let emprestimoID = document.getElementById('addEmprestimoID').value;
+                    // envia o post para adicionar
+                    fetch(`addToEmprestimo/${itemId}/${emprestimoID}/`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': getCookie('csrftoken'),
+                            'Content-Type': 'application/json'
+                        },
+                    })
+                    .then(response => response.json()) // aguarda resposta do servidor atraves de um json
+                    .then(data => {
+                        // mostra aviso na tela de adicao concluida do banco e um erro caso nao tenha sido possivel a adicao
+                        if (data.success) {
+                            location.reload();
+                            alert('Equipamento adicionado ao emprestimo com sucesso');
+                        } else {
+                            alert('Não foi possivel encontrar o emprestimo inserido');
+                        }
+                    });
+                    emprestimoModal.style.display = 'none';
+                    addEmprestimoModal.style.display = 'none';
+                });
+                cancelButton.addEventListener('click', button => addEmprestimoModal.style.display = 'none');
+                addEmprestimoModal.style.display = 'block';
+            });
+
+            emprestimoModal.style.display = 'block';
+        });
+    });
+
     // funcao para fechar o modal pelo botao
     closeButtonDelete.addEventListener('click', function() {
         deleteModal.style.display = 'none';
@@ -137,11 +186,17 @@ $(document).ready(function(){
         detailModal.style.display = 'none';
     });
 
+    // funcao para fechar o modal pelo botao
+    closeButtonEmprestimo.addEventListener('click', function() {
+        emprestimoModal.style.display = 'none';
+    });
+
     // fecha o modal quando clica em qualquer lugar da tela 
     window.addEventListener('click', function(event) {
-        if (event.target == deleteModal || event.target == detailModal) {
+        if (event.target == deleteModal || event.target == detailModal || event.target == emprestimoModal) {
             deleteModal.style.display = 'none';
             detailModal.style.display = 'none';
+            emprestimoModal.style.display = 'none';
         }
     });
 
