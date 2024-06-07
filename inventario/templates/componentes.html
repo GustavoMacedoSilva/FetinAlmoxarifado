@@ -39,16 +39,16 @@
 
             <tbody>
                 {% for componente in object_list %}
-                <tr>
+                <tr itemID="{{ componente.id }}" itemName="{{ componente.nome }}" itemValue="{{ componente.valor }}" itemUnit="{{ componente.unidade_de_medida }}" itemLocation="{{ componente.localizacao }}">
                     <td>{{ componente.nome }}</td>
                     <td>{{ componente.valor }}</td>
                     <td>{{ componente.unidade_de_medida }}</td>
                     <td>{{ componente.localizacao }}</td>
-                    <td itemID="{{ componente.id }}" itemName="{{ componente.nome }}" itemValue="{{ componente.valor }}" itemUnit="{{ componente.unidade_de_medida }}" itemLocation="{{ componente.localizacao }}">
-                        <a href="" class="btn btn-success btn-sm" title="Reservar">
+                    <td>
+                        <button id="emprestimoButton" class="btn btn-success btn-sm" title="Reservar">
                             <i class="fa fa-bookmark" aria-hidden="true"></i>
                             Emprestar
-                        </a>
+                        </button>
                         <button id="detail-button" class="btn btn-primary btn-sm" title="Visualizar">
                             <i class="fa-regular fa-eye"></i>
                             Visualizar
@@ -70,44 +70,86 @@
                 {% endfor %}
             </tbody>
                 
-            </table>
-        </div>
+        </table>
+    </div>
 
-        <!-- Modal para confirmar exclusao -->
-        <div id="deleteModal" class="modal">
-            <div class="modal-content">
-                <span id="close-button-delete" class="close-button">&times;</span>
-                <h2>Confirmar Exclusão</h2>
-                <p>
-                    <i class="fa-solid fa-triangle-exclamation"></i>
-                    ESSA AÇÃO É IRREVERSIVEL
-                    <i class="fa-solid fa-triangle-exclamation"></i>
-                </p>
-                <p id="item-details"></p>
-                <div class="container-fluid">
-                    <button id="confirm-delete" class="btn btn-danger btn-sm" type="submit">
-                        <i class="fa-regular fa-trash-can"></i>
+    <!-- Modal para confirmar exclusao -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <span id="close-button-delete" class="close-button">&times;</span>
+            <h2>Confirmar Exclusão</h2>
+            <p>
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                ESSA AÇÃO É IRREVERSIVEL
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </p>
+            <p id="item-details"></p>
+            <div class="container-fluid">
+                <button id="confirm-delete" class="btn btn-danger btn-sm" type="submit">
+                    <i class="fa-regular fa-trash-can"></i>
+                    Confirmar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de exibicao de detalhes do componente -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content">
+            <span id="close-button-detail" class="close-button">&times;</span>
+            <h3>Detalhes do Item</h3>
+            <div class="modal-body">
+                <p><strong>Nome:</strong> <span id="itemName"></span></p>
+                <p><strong>Valor:</strong> <span id="itemValue"></span></p>
+                <p><strong>Localização:</strong> <span id="itemLocation"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para adicionar novos emprestimos pelo botão emprestar -->
+    <div id="emprestimoModal" class="modal">
+        <div class="modal-content">
+            <span id="close-button-emprestimo" class="close-button">&times;</span>
+            <h3>Emprestar Componentes</h3>
+            <div class="modal-body">
+                <p>Esolha se deseja criar um novo emprestimo ou apenas adicionar este item a um emprestimo existente:</p>
+                <a href="{% url 'cadastrar-emprestimo' %}" class="btn btn-success btn-lg">
+                    <i class="fa-solid fa-plus"></i>
+                    Criar novo emprestimo
+                </a>
+                <button id="addEmprestimo" class="btn btn-primary btn-lg" type="submit">
+                    <i class="fa-solid fa-cart-plus"></i>
+                    Adicionar item a um emprestimo existente
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para inserção do id do emprestimo que ira receber o equipamento -->
+    <div id="empretimoIDmodal" class="modal">
+        <div class="modal-content">
+            <h3>Insira o ID do emprestimo que deseja adicionar este equipamento</h3>
+            <div class="modal-body">
+                <div>
+                    <label>Emprestimo:</label>
+                    <input type="number" id="addEmprestimoID" placeholder="ID do emprestimo"/>
+                    <label>Quantos deste componente seram emprestados:</label>
+                    <input type="number" id="addEmprestimoQtd" placeholder="Quantidade de componentes a serem emprestados"/>
+                    <button id="confirm-add-emprestimo" class="btn btn-success btn-sm" type="submit">
+                        <i class="fa-solid fa-check"></i>
                         Confirmar
                     </button>
                 </div>
+                <button id="cancel-add-emprestimo" class="btn btn-danger btn-sm" type="submit">
+                    <i class="fa-regular fa-trash-can"></i>
+                    Cancelar
+                </button>
             </div>
         </div>
-
-        <!-- Modal de exibicao de detalhes do equipamento -->
-        <div id="detailModal" class="modal">
-            <div class="modal-content">
-                <span id="close-button-detail" class="close-button">&times;</span>
-                <h3>Detalhes do Item</h3>
-                <div class="modal-body">
-                    <p><strong>Nome:</strong> <span id="itemName"></span></p>
-                    <p><strong>Valor:</strong> <span id="itemValue"></span></p>
-                    <p><strong>Localização:</strong> <span id="itemLocation"></span></p>
-                </div>
-            </div>
     </div>
 
-    </div>
-    {% endblock %}
+</div>
+{% endblock %}
 
 {% block script %}
     <script src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>

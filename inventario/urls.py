@@ -3,7 +3,7 @@ from .views import EquipamentosList, ComponenteList
 from .views import EquipamentoCreate, ComponenteCreate
 from .views import EquipamentoUpdate, ComponenteUpdate
 from .views import equipamentoDelete, componenteDelete
-from .views import addToEmprestimo
+from .views import addEquipamentoToEmprestimo, addComponenteToEmprestimo
 from .views import redirect_to_equipamentos
 from almoxarifado.views import contato_page
 
@@ -19,7 +19,8 @@ urlpatterns = [
     ######## Editar ########
     path('editar/equipamento/<int:pk>/', EquipamentoUpdate.as_view(), name = 'Editar-Equipamento'),
     path('editar/componente/<int:pk>/', ComponenteUpdate.as_view(), name = 'Editar-Componente'),
-    path('equipamentos/addToEmprestimo/<int:item_id>/<int:emprestimo_id>/', addToEmprestimo, name='add-to-emprestimo'),
+    path('equipamentos/addToEmprestimo/<int:item_id>/<int:emprestimo_id>/', addEquipamentoToEmprestimo, name='add-to-emprestimo'),
+    path('componentes/addToEmprestimo/<int:item_id>/<int:emprestimo_id>/<int:quantidade>/', addComponenteToEmprestimo, name='add-to-emprestimo'),
     ######## Deletar ########
     path('equipamentos/delete/<int:item_id>/', equipamentoDelete, name='Deletar-Equipamento'),
     path('componentes/delete/<int:item_id>/', componenteDelete, name='Deletar-Componente'),

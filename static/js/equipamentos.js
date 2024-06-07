@@ -67,7 +67,7 @@ $(document).ready(function(){
     var emprestimoButtons = document.querySelectorAll('#emprestimoButton'); // acessa o botao emprestar da tabela
     var deleteModal = document.getElementById('deleteModal'); // carrega o modal de exclusao
     var detailModal = document.getElementById('detailModal'); // carrega o modal de detalhes
-    var emprestimoModal = document.getElementById('emprestimoModal');
+    var emprestimoModal = document.getElementById('emprestimoModal'); // carrega o modal de emprestimos
     var closeButtonDelete = document.getElementById('close-button-delete'); // botao de fechar o modal
     var closeButtonDetail = document.getElementById('close-button-detail'); // botao de fechar o modal
     var closeButtonEmprestimo = document.getElementById('close-button-emprestimo'); // botao de fechar o modal

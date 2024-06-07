@@ -4,7 +4,7 @@ from django.shortcuts import redirect
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 from emprestimos.models import Emprestimo
-from .models import Equipamento, Componente
+from .models import Equipamento, Componente, Emprestimo_has_components
 
 # Create your views here.
 class HomeView(TemplateView):
@@ -50,7 +50,7 @@ class ComponenteUpdate(UpdateView):
     template_name = 'cadastros/create_form.html'
     success_url = reverse_lazy('Listar-Componentes')
 
-def addToEmprestimo(request, item_id, emprestimo_id):
+def addEquipamentoToEmprestimo(request, item_id, emprestimo_id):
     if request.method == 'POST':
         try:
             item = Equipamento.objects.get(pk=item_id)
@@ -64,6 +64,25 @@ def addToEmprestimo(request, item_id, emprestimo_id):
         item.save()
         return JsonResponse({'success': True})
     return JsonResponse({'success': False}, status=400)
+
+def addComponenteToEmprestimo(request, item_id, emprestimo_id, quantidade):
+    if request.method == 'POST':
+        try:
+            item = Componente.objects.get(pk=item_id)
+        except:
+            return JsonResponse({'success': False}, status=400)
+        try:
+            emprestimo = Emprestimo.objects.get(pk=emprestimo_id)
+        except:
+            return JsonResponse({'success': False}, status=400)
+        Emprestimo_has_components.objects.create(
+            emprestimo = emprestimo,
+            componente = item,
+            quantidade = quantidade
+        )
+        return JsonResponse({'success': True})
+    return JsonResponse({'success': False}, status=400)
+
 
 ########## Deletess ##########
 def equipamentoDelete(request, item_id):

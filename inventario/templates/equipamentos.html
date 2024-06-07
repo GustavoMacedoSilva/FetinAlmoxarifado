@@ -112,6 +112,7 @@
             </div>
         </div>
     </div>
+
     <!-- Modal para adicionar novos emprestimos pelo botão emprestar -->
     <div id="emprestimoModal" class="modal">
         <div class="modal-content">
@@ -130,26 +131,28 @@
             </div>
         </div>
     </div>
-</div>
-<!-- Modal para inserção do id do emprestimo que ira receber o equipamento -->
-<div id="empretimoIDmodal" class="modal">
-    <div class="modal-content">
-        <h3>Insira o ID do emprestimo que deseja adicionar este equipamento</h3>
-        <div class="modal-body">
-            <div>
-                <label>Emprestimo:</label>
-                <input type="number" id="addEmprestimoID" placeholder="ID do emprestimo"/>
-                <button id="confirm-add-emprestimo" class="btn btn-success btn-sm" type="submit">
-                    <i class="fa-solid fa-check"></i>
-                    Confirmar
+
+    <!-- Modal para inserção do id do emprestimo que ira receber o equipamento -->
+    <div id="empretimoIDmodal" class="modal">
+        <div class="modal-content">
+            <h3>Insira o ID do emprestimo que deseja adicionar este equipamento</h3>
+            <div class="modal-body">
+                <div>
+                    <label>Emprestimo:</label>
+                    <input type="number" id="addEmprestimoID" placeholder="ID do emprestimo"/>
+                    <button id="confirm-add-emprestimo" class="btn btn-success btn-sm" type="submit">
+                        <i class="fa-solid fa-check"></i>
+                        Confirmar
+                    </button>
+                </div>
+                <button id="cancel-add-emprestimo" class="btn btn-danger btn-sm" type="submit">
+                    <i class="fa-regular fa-trash-can"></i>
+                    Cancelar
                 </button>
             </div>
-            <button id="cancel-add-emprestimo" class="btn btn-danger btn-sm" type="submit">
-                <i class="fa-regular fa-trash-can"></i>
-                Cancelar
-            </button>
         </div>
     </div>
+
 </div>
 {% endblock %}
 
