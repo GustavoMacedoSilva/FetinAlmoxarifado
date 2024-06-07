@@ -74,3 +74,13 @@ body {
     text-align: center;
     margin: 0 auto;
 }
+.imagem-fundo{
+    display: flex;
+    position: fixed;
+    top: 100px;
+    left: 0;
+    width: 100vw;
+    height: 100dvh;
+    justify-content: center;
+    align-items: center;
+}

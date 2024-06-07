@@ -75,6 +75,16 @@
             text-align: center;
             margin: 0 auto;
         }
+        .imagem-fundo{
+            display: flex;
+            position: fixed;
+            top: 100px;
+            left: 0;
+            width: 100vw;
+            height: 100dvh;
+            justify-content: center;
+            align-items: center;
+        }
     </style>
     <script>
         function toggleDropdown() {
@@ -125,14 +135,10 @@
             </div>
         </div>
     </div>
-
-    <div class="canto">
-        <h1>Bem-vindo ao almoxarifado Inatel!</h1>
-        <p>- Aqui você pode: </p>
-        <p>- Buscar e ver informações de nossos componentes e equipamentos</p>
-        <p>- Realizar empréstimos</p>
-        <p>- Ver nossos serviços</p>
+    <div class = "imagem-fundo">
+        <meta charset="UTF-8">
+        <meta name="viewport" content = "initial-scale = 1.0">
+        <img src = "{% static 'imgs/teste_home.png' %}">
     </div>
-
 </body>
 </html>
