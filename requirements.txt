@@ -7,7 +7,6 @@ distlib==0.3.8
 Django==5.0.4
 django-braces==1.15.0
 django-cleanup==8.1.0
-django-crispy-forms==2.1
 filelock==3.14.0
 isort==5.13.2
 mccabe==0.7.0
