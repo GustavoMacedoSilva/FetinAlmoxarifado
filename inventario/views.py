@@ -88,11 +88,22 @@ def addComponenteToEmprestimo(request, item_id, emprestimo_id, quantidade):
 def equipamentoDelete(request, item_id):
     if request.method == 'POST':
         item = Equipamento.objects.get(pk=item_id)
+        if item.emprestimo != None:
+            return JsonResponse({'success': False, 'error': 405}, status=400)
         item.delete()
         return JsonResponse({'success': True})
     return JsonResponse({'success': False}, status=400)
 
+def componenteIsEmprestimo(item_id):
+    try:
+        test = Emprestimo_has_components.objects.get(pk=item_id)
+    except Emprestimo_has_components.DoesNotExist:
+        test = False
+    return test
+
 def componenteDelete(request, item_id):
+    if componenteIsEmprestimo(item_id) != False:
+        return JsonResponse({'success': False, 'error': 405}, status=400)
     if request.method == 'POST':
         item = Componente.objects.get(pk=item_id)
         item.delete()

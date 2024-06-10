@@ -216,6 +216,8 @@ $(document).ready(function(){
             if (data.success) {
                 location.reload();
                 alert('Item excluido com sucesso');
+            } else if(data.error == 405) {
+                alert('Não é possivel escluir um equipamento que esteja atualmente em um emprestimo');
             } else {
                 alert('Erro ao excluir o item');
             }

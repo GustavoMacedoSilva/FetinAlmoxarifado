@@ -39,6 +39,7 @@
                     <th>Id</th>
                     <th>Nome</th>
                     <th>Localização</th>
+                    <th>Emprestimo</th>
                     <th>Opções</th>
                 </tr>
             </thead>
@@ -49,8 +50,9 @@
                     <td>{{ equipamento.id }}</td>
                     <td>{{ equipamento.nome }}</td>
                     <td>{{ equipamento.localizacao }}</td>
+                    <td>{% if equipamento.emprestimo == None %} Não associado a emprestimo {% else %} Emprestimo nº {{equipamento.emprestimo.id}} {% endif %} </td>
                     <td>
-                        <button id="emprestimoButton" class="btn btn-success btn-sm" title="Reservar">
+                        <button id="emprestimoButton" class="btn btn-success btn-sm" title="Emprestar">
                             <i class="fa fa-bookmark" aria-hidden="true"></i>
                             Emprestar
                         </button>
