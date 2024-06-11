@@ -1,10 +1,12 @@
 from django.views.generic import TemplateView, CreateView, UpdateView
 from django.views.generic.list import ListView
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 from emprestimos.models import Emprestimo
 from .models import Equipamento, Componente, Emprestimo_has_components
+from .forms import createEquipamentoForm
+from django.db import IntegrityError
 
 # Create your views here.
 class HomeView(TemplateView):
@@ -24,6 +26,18 @@ class ComponenteList(ListView):
     template_name = 'componentes.html'
 
 ########## Cadastros ##########
+def equipamentoCreate(request):
+    if request.method == 'POST':
+        form = createEquipamentoForm(request.POST)
+        if form.is_valid():
+            try:
+                form.save()
+                return redirect('Listar-Equipamentos')
+            except:
+                form.add_error('id', 'Não é possivel criar um novo equipamento com um ID igual ao de outro ja existente')
+    else:
+        form = createEquipamentoForm()        
+    return render(request, 'formularios/createEquipamento.html', {'form':form})
 
 class EquipamentoCreate(CreateView):
     model = Equipamento

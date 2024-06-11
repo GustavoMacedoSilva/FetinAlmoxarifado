@@ -5,8 +5,8 @@ from django import forms
 class createEquipamentoForm(ModelForm):
     class Meta:
         model = Equipamento
-        fields = []
-    id = forms.IntegerField()
-    nome = forms.CharField(max_length=50)
-    descricao = forms.CharField(max_length=500)
-    localizacao = forms.CharField(max_length=50)
+        fields = ['id','nome','descricao','localizacao']
+    #id = forms.IntegerField()
+    #nome = forms.CharField(max_length=50)
+    #descricao = forms.CharField(max_length=500)
+    #localizacao = forms.CharField(max_length=50)
