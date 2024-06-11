@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title%}
+<title>Inventario</title>
+{% endblock %}
+
+{% block style%}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <h3>Cadastro de Equipamento</h3>
+    <p>Preencha todos os campos adequadamente</p>
+    <hr>
+    <form method="POST" action="">
+        {% csrf_token %}
+        <div>
+            <label>ID:</label>
+            {{ form.id }}
+        </div>
+        <div>
+            <label>Nome:</label>
+            {{ form.nome }}
+        </div>
+        <div>
+            <label>Descrição:</label>
+            {{ form.descricao }}
+        </div>
+        <div>
+            <label>Localização</label>
+            {{ form.localizacao }}
+        </div>
+        <div>
+            <input type="submit" value="Criar Equipamento"/>
+        </div>
+    </form>
+    <a class="voltar" href="{% url 'Listar-Equipamentos' %}">Voltar</a>
+</div>
+
+{% endblock %}
+
+{% block script%}
+<script>activePage("inventario");</script>
+{% endblock %}
