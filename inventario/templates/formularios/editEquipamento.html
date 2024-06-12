@@ -7,11 +7,12 @@
 
 {% block style%}
 <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'fa/css/all.min.css' %}">
 {% endblock %}
 
 {% block content %}
 <div class="container">
-    <h3>Cadastro de Componentes</h3>
+    <h3>Editar Equipamento</h3>
     <p>Preencha todos os campos adequadamente</p>
     <hr>
     <form method="POST" action="">
@@ -23,19 +24,13 @@
             </div>
         </div>
         <div class="form-group row mb-2">
-            <label class="col-sm-2 col-form-label">Unidade de Medida:</label>
+            <label class="col-sm-2 col-form-label">Descrição:</label>
             <div class="col-sm-10">
-                {{ form.unidade_de_medida }}
+                {{ form.descricao }}
             </div>
         </div>
         <div class="form-group row mb-2">
-            <label class="col-sm-2 col-form-label">Valor:</label>
-            <div class="col-sm-10">
-                {{ form.valor }}
-            </div>
-        </div>
-        <div class="form-group row mb-2">
-            <label class="col-sm-2 col-form-label">Localização:</label>
+            <label class="col-sm-2 col-form-label">Localização</label>
             <div class="col-sm-10">
                 {{ form.localizacao }}
             </div>
@@ -43,12 +38,12 @@
         <hr>
         <div class="form-group row">
             <div class="col-sm-10">
-                <input class="btn btn-primary" type="submit" value="Criar Equipamento"/>
+                <input class="btn btn-primary" type="submit" value="Salvar"/>
             </div>
         </div>
     </form>
     <div class="col-sm-10 mt-2 mb-2">
-        <a class="btn btn-secondary" href="{% url 'Listar-Componentes' %}">Voltar</a>
+        <a class="btn btn-secondary" href="{% url 'Listar-Equipamentos' %}">Voltar</a>
     </div>
 </div>
 {% endblock %}

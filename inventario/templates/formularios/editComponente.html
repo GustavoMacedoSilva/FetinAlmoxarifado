@@ -7,11 +7,12 @@
 
 {% block style%}
 <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'fa/css/all.min.css' %}">
 {% endblock %}
 
 {% block content %}
 <div class="container">
-    <h3>Cadastro de Componentes</h3>
+    <h3>Editar Componente</h3>
     <p>Preencha todos os campos adequadamente</p>
     <hr>
     <form method="POST" action="">
@@ -43,7 +44,7 @@
         <hr>
         <div class="form-group row">
             <div class="col-sm-10">
-                <input class="btn btn-primary" type="submit" value="Criar Equipamento"/>
+                <input class="btn btn-primary" type="submit" value="Salvar"/>
             </div>
         </div>
     </form>

@@ -59,7 +59,7 @@ class EquipamentoUpdate(UpdateView):
 class ComponenteUpdate(UpdateView):
     model = Componente
     fields = ['nome','unidade_de_medida','valor','localizacao']
-    template_name = 'cadastros/create_form.html'
+    template_name = 'formularios/editComponente.html'
     success_url = reverse_lazy('Listar-Componentes')
 
 def addEquipamentoToEmprestimo(request, item_id, emprestimo_id):

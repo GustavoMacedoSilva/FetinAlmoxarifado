@@ -1,6 +1,6 @@
 from django.urls import path, include
 from .views import EquipamentosList, ComponenteList 
-from .views import EquipamentoCreate, ComponenteCreate, equipamentoCreate, componenteCreate
+from .views import equipamentoCreate, componenteCreate
 from .views import EquipamentoUpdate, ComponenteUpdate
 from .views import equipamentoDelete, componenteDelete
 from .views import addEquipamentoToEmprestimo, addComponenteToEmprestimo

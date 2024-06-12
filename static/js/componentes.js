@@ -177,7 +177,7 @@ $(document).ready(function(){
                 location.reload();
                 alert('Item excluido com sucesso');
             } else if(data.error == 405) {
-                alert('Não é possivel excluir um componente que esteja atualemnte em um emprestimo');
+                alert('Não é possivel excluir um componente que esteja atualmente em um emprestimo');
             } else {
                 alert('Erro ao excluir o item');
             }
