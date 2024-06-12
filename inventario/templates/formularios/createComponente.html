@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title%}
+<title>Inventario</title>
+{% endblock %}
+
+{% block style%}
+<link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.min.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h3>Cadastro de Componentes</h3>
+    <p>Preencha todos os campos adequadamente</p>
+    <hr>
+    <form method="POST" action="">
+        {% csrf_token %}
+        <div class="form-group row mb-2">
+            <label class="col-sm-2 col-form-label">Nome:</label>
+            <div class="col-sm-10">
+                {{ form.nome }}
+            </div>
+        </div>
+        <div class="form-group row mb-2">
+            <label class="col-sm-2 col-form-label">Unidade de Medida:</label>
+            <div class="col-sm-10">
+                {{ form.unidade_de_medida }}
+            </div>
+        </div>
+        <div class="form-group row mb-2">
+            <label class="col-sm-2 col-form-label">Valor:</label>
+            <div class="col-sm-10">
+                {{ form.valor }}
+            </div>
+        </div>
+        <div class="form-group row mb-2">
+            <label class="col-sm-2 col-form-label">Localização:</label>
+            <div class="col-sm-10">
+                {{ form.localizacao }}
+            </div>
+        </div>
+        <hr>
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <input class="btn btn-primary" type="submit" value="Criar Equipamento"/>
+            </div>
+        </div>
+    </form>
+    <div class="col-sm-10 mt-2 mb-2">
+        <a class="btn btn-secondary" href="{% url 'Listar-Equipamentos' %}">Voltar</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block script%}
+<script>activePage("inventario");</script>
+<script src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/forms.js' %}"></script>
+{% endblock %}

@@ -1,6 +1,6 @@
 from django.urls import path, include
 from .views import EquipamentosList, ComponenteList 
-from .views import EquipamentoCreate, ComponenteCreate, equipamentoCreate
+from .views import EquipamentoCreate, ComponenteCreate, equipamentoCreate, componenteCreate
 from .views import EquipamentoUpdate, ComponenteUpdate
 from .views import equipamentoDelete, componenteDelete
 from .views import addEquipamentoToEmprestimo, addComponenteToEmprestimo
@@ -15,7 +15,7 @@ urlpatterns = [
     path('componentes/', ComponenteList.as_view(), name='Listar-Componentes'),
     ######## Cadastros ########
     path('cadastrar/equipamento/', equipamentoCreate, name = 'Cadastrar-Equipamento'),
-    path('cadastrar/componente/',ComponenteCreate.as_view(), name = 'Cadastrar-Componente'),
+    path('cadastrar/componente/', componenteCreate, name = 'Cadastrar-Componente'),
     ######## Editar ########
     path('editar/equipamento/<int:pk>/', EquipamentoUpdate.as_view(), name = 'Editar-Equipamento'),
     path('editar/componente/<int:pk>/', ComponenteUpdate.as_view(), name = 'Editar-Componente'),

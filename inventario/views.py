@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from django.urls import reverse_lazy
 from emprestimos.models import Emprestimo
 from .models import Equipamento, Componente, Emprestimo_has_components
-from .forms import createEquipamentoForm
+from .forms import createEquipamentoForm, createComponenteForm
 from django.db import IntegrityError
 
 # Create your views here.
@@ -33,11 +33,22 @@ def equipamentoCreate(request):
             try:
                 form.save()
                 return redirect('Listar-Equipamentos')
-            except:
+            except IntegrityError:
                 form.add_error('id', 'Não é possivel criar um novo equipamento com um ID igual ao de outro ja existente')
     else:
         form = createEquipamentoForm()        
     return render(request, 'formularios/createEquipamento.html', {'form':form})
+
+def componenteCreate(request):
+    if request.method == 'POST':
+        form = createComponenteForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('Listar-Componentes')
+    else:
+        form = createComponenteForm()
+    return render(request, 'formularios/createComponente.html', {'form':form})
+            
 
 class EquipamentoCreate(CreateView):
     model = Equipamento
