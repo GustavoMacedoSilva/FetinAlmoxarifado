@@ -1,11 +1,11 @@
-from django.views.generic import TemplateView, CreateView, UpdateView
+from django.views.generic import TemplateView, UpdateView
 from django.views.generic.list import ListView
 from django.shortcuts import redirect, render
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 from emprestimos.models import Emprestimo
 from .models import Equipamento, Componente, Emprestimo_has_components
-from .forms import createEquipamentoForm, createComponenteForm
+from .forms import CreateEquipamentoForm, CreateComponenteForm, EditEquipamentoForm
 from django.db import IntegrityError
 
 # Create your views here.
@@ -28,7 +28,7 @@ class ComponenteList(ListView):
 ########## Cadastros ##########
 def equipamentoCreate(request):
     if request.method == 'POST':
-        form = createEquipamentoForm(request.POST)
+        form = CreateEquipamentoForm(request.POST)
         if form.is_valid():
             try:
                 form.save()
@@ -36,37 +36,24 @@ def equipamentoCreate(request):
             except IntegrityError:
                 form.add_error('id', 'Não é possivel criar um novo equipamento com um ID igual ao de outro ja existente')
     else:
-        form = createEquipamentoForm()        
+        form = CreateEquipamentoForm()        
     return render(request, 'formularios/createEquipamento.html', {'form':form})
 
 def componenteCreate(request):
     if request.method == 'POST':
-        form = createComponenteForm(request.POST)
+        form = CreateComponenteForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('Listar-Componentes')
     else:
-        form = createComponenteForm()
+        form = CreateComponenteForm()
     return render(request, 'formularios/createComponente.html', {'form':form})
-            
-
-class EquipamentoCreate(CreateView):
-    model = Equipamento
-    fields = ['id','nome','descricao','localizacao','emprestimo']
-    template_name = 'cadastros/create_form.html'
-    success_url = reverse_lazy('Listar-Equipamentos')
-
-class ComponenteCreate(CreateView):
-    model = Componente
-    fields = ['id','nome','unidade_de_medida','valor','localizacao']
-    template_name = 'cadastros/create_form.html'
-    success_url = reverse_lazy('Listar-Componentes')
 
 ########## Updates ##########
 class EquipamentoUpdate(UpdateView):
     model = Equipamento
-    fields = ['id','nome','descricao','localizacao','emprestimo']
-    template_name = 'cadastros/create_form.html'
+    form_class = EditEquipamentoForm
+    template_name = 'formularios/editEquipamento.html'
     success_url = reverse_lazy('Listar-Equipamentos')
 
 class ComponenteUpdate(UpdateView):
@@ -121,13 +108,13 @@ def equipamentoDelete(request, item_id):
 
 def componenteIsEmprestimo(item_id):
     try:
-        test = Emprestimo_has_components.objects.get(pk=item_id)
+        emprestimo = Emprestimo_has_components.objects.get(componente_id=item_id)
+        return True
     except Emprestimo_has_components.DoesNotExist:
-        test = False
-    return test
-
+        return False
+    
 def componenteDelete(request, item_id):
-    if componenteIsEmprestimo(item_id) != False:
+    if componenteIsEmprestimo(item_id=item_id):
         return JsonResponse({'success': False, 'error': 405}, status=400)
     if request.method == 'POST':
         item = Componente.objects.get(pk=item_id)
