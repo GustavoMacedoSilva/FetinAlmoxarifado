@@ -65,6 +65,18 @@ def EmprestimoDetalhes(request, pk):
     }
     return render(request, 'detalhes.html', context)
 
+#def createEmprestimo(request):
+    if request.method == 'POST':
+        form = createEmprestimoForm(request.POST)
+        if form.is_valid():
+            emprestimo = form.save()
+            equipamentos = form.cleaned_data['equipamentos']
+            for equipamento in equipamentos:
+                equipamento.emprestimo = emprestimo
+                equipamento.save()
+    else:
+        form = createEmprestimoForm()
+    return render(request, 'formularios/createEmprestimoForm.html', {'form': form})
 def createEmprestimo(request):
     if request.method == 'POST':
         form = createEmprestimoForm(request.POST)
@@ -87,4 +99,4 @@ def createEmprestimo(request):
             return redirect('emprestimo')  
     else:
         form = createEmprestimoForm()
-    return render(request, 'create_form.html', {'form': form})
+    return render(request, 'formularios/createEmprestimoForm.html', {'form': form})
