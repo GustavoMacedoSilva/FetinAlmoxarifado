@@ -161,6 +161,8 @@ $(document).ready(function(){
                         if (data.success) {
                             location.reload();
                             alert('Equipamento adicionado ao emprestimo com sucesso');
+                        } else if(data.error == 405) {
+                            alert('Este equipamento ja se encontra em um emprestimo');
                         } else {
                             alert('Não foi possivel encontrar o emprestimo inserido');
                         }
@@ -217,7 +219,7 @@ $(document).ready(function(){
                 location.reload();
                 alert('Item excluido com sucesso');
             } else if(data.error == 405) {
-                alert('Não é possivel escluir um equipamento que esteja atualmente em um emprestimo');
+                alert('Não é possivel excluir um equipamento que esteja atualmente em um emprestimo');
             } else {
                 alert('Erro ao excluir o item');
             }

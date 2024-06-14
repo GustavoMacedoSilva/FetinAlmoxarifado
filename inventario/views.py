@@ -72,6 +72,8 @@ def addEquipamentoToEmprestimo(request, item_id, emprestimo_id):
             emprestimo = Emprestimo.objects.get(pk=emprestimo_id)
         except:
             return JsonResponse({'success': False}, status=400)
+        if item.emprestimo != None:
+            return JsonResponse({'success': False, 'error': 405}, status=400)
         item.emprestimo = emprestimo
         item.save()
         return JsonResponse({'success': True})
