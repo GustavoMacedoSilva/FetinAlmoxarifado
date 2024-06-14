@@ -22,11 +22,13 @@ class createEmprestimoForm(ModelForm):
     ),
     equipamentos = forms.ModelMultipleChoiceField(
         queryset=Equipamento.objects.all(),
-        initial=0
+        initial=0,
+        required=False
     )
     componentes = forms.ModelMultipleChoiceField(
         queryset=Componente.objects.all(),
-        initial=0
+        initial=0,
+        required=False
     )
     class Meta:
         model = Emprestimo

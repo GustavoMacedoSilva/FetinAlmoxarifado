@@ -65,9 +65,36 @@ $(document).ready(function () {
             width: '100%',
             multiple: true
         });
+
+        $('#id_componentes').on('change', function() {
+            var selectedComponents = $(this).val();
+            $('#quantidades').empty();  // Limpa os campos de quantidade existentes
+        
+            if (selectedComponents) {
+                selectedComponents.forEach(function(componenteId) {
+                    var label = $(`#id_componentes option[value="${componenteId}"]`).text();
+                    $('#quantidades').append(`
+                        <div class="col">
+                            <span>${label}</span>
+                            <input class="form-control" type="number" name="quantidade_${componenteId}" id="quantidade_${componenteId}" min="1" placeholder="Quantidade">
+                        </div>
+                    `);
+                });
+            }
+        });
     
     }catch(e){
 
     }
 
 });
+
+/*
+$('#quantidades').append(`
+    <div class="form-group row mb-2">
+        <div class="col-sm-10">
+            <label class="col-sm-2 col-form-label" for="quantidade_${componenteId}">Quantidade de ${label}:</label>
+            <input type="number" name="quantidade_${componenteId}" id="quantidade_${componenteId}" min="1" value="1">
+        </div>
+    </div>
+`);*/

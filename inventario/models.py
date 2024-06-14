@@ -11,7 +11,7 @@ class Componente(models.Model):
     localizacao = models.CharField(max_length=50, verbose_name='Localização')
     
     def __str__(self):
-        return "nome : {}\nunidade de medida : {}\nvalor : {}\nlocalizacao : {}".format(self.nome,self.unidade_de_medida,self.valor,self.localizacao)
+        return "{}\n {}\n {}\n".format(self.nome,self.valor,self.unidade_de_medida)
     
 
 class Equipamento(models.Model):
@@ -22,7 +22,10 @@ class Equipamento(models.Model):
     emprestimo = models.ForeignKey(Emprestimo, on_delete=models.SET_DEFAULT, default=None, blank=True, null=True) 
 
     def __str__(self):
-        return "id : {}\nnome : {}\ndescrição : {}\nlocalizacao : {}\nemprestimo : {}".format(self.id, self.nome, self.descricao, self.localizacao, self.emprestimo)
+        if self.emprestimo != None:
+            return "id : {}\nnome : {} \n emprestimo : ATIVO".format(self.id, self.nome)
+        else:
+            return "id : {}\nnome : {} \n".format(self.id, self.nome)
     
 class Emprestimo_has_components(models.Model):
     emprestimo = models.ForeignKey(Emprestimo, on_delete=models.CASCADE)
