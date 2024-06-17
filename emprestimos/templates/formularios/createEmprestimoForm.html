@@ -2,13 +2,14 @@
 {% load static %}
 
 {% block title%}
-<title>Inventario</title>
+<title>Emprestimos</title>
 {% endblock %}
 
 {% block style%}
 <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.min.css' %}">
 <link rel="stylesheet" href="{% static 'fa/css/all.min.css' %}">
 <link rel="stylesheet" href="{% static 'css/select2.min.css' %}" >
+<link rel="stylesheet" href="{% static 'css/form.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -36,18 +37,24 @@
                 {{ form.funcionario }}
             </div>
         </div>
-        <div class="form-group row mb-2">
+        <div class="row mb-2">
             <label class="col-sm-2 col-form-label">Matrícula do Aluno:</label>
-            <div class="col-sm-10">
+            <div class="col-sm-9">
                 {{ form.aluno }}
             </div>
-        </div>
-        <div class="form-group row mb-2">
-            <label class="col-sm-2 col-form-label">Equipamentos:</label>
-            <div class="col-sm-10">
-                {{ form.equipamentos }}
+            <div class="col">
+                <button id="alunoReader" type="button" class="btn btn-primary"><i class="fa-solid fa-barcode"></i></button> 
             </div>
         </div>
+        <div class="row mb-2">
+            <label class="col-sm-2 col-form-label">Equipamentos:</label>
+            <div class="col-sm-9">
+                {{ form.equipamentos }}    
+            </div>
+            <div class="col">
+                <button id="equipamentoReader" type="button" class="btn btn-primary"><i class="fa-solid fa-barcode"></i></button> 
+            </div>
+        </div> 
         <div class="row">
             <label class="col-sm-2 col-form-label">Componentes:</label>
             <div class="col">
@@ -78,6 +85,16 @@
             {% endif %}
         {% endfor %}
     {% endif %}
+    <!-- Modal para leitura de codigo de barras -->
+    <div id="barCodeReader" class="modal">
+        <div class="modal-content">
+            <span id="close-button" class="close-button">&times;</span>
+            <h3>Leitura de Codigo de Barras</h3>
+            <div class="modal-body">
+                <div id="cam"></div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
 
@@ -86,5 +103,6 @@
 <script src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>
 <script src="{% static 'js/forms.js' %}"></script>
 <script src="{% static 'js/select2.min.js' %}"></script>
+<script src="{% static 'js/quagga.min.js' %}"></script>
 {% endblock %}
 

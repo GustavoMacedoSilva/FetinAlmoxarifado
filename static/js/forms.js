@@ -1,3 +1,60 @@
+function readBarCode(id) {
+    $('#barCodeReader').css("display","block");
+    $('#close-button').on('click', () => {
+        $('#barCodeReader').css("display","none")
+        Quagga.stop();
+    });
+    $(window).on('click', (event) => {
+        if(event.target == $('#barCodeReader')[0]){
+            $('#barCodeReader').css("display","none");
+            Quagga.stop();
+        }
+    });
+
+    Quagga.init({
+        inputStream: {
+            name: "Live",
+            type: "LiveStream",
+            target: document.querySelector('#cam'),    // Or '#yourElement' (optional)
+            constraints: {
+                width: 640,
+                height: 480,
+            },
+        },
+        decoder: {
+            readers: ["code_128_reader"]
+        }
+    }, function (err) {
+        if (err) {
+            console.log(err);
+            return
+        }
+        
+        Quagga.start();
+    });
+
+    Quagga.onDetected((data) => {
+        // fecha o modal
+        $('#barCodeReader').css("display","none");
+        // para a leitura da camera
+        Quagga.stop();
+
+        // abre o campo de inserir equipamentos
+        let campo = $(id);
+        campo.select2('open');
+        // encontra o input no html resposavel pelos id's de equipamentos
+        let parent = campo[0].parentElement;
+        let input = $(parent).find('input.select2-search__field');
+
+        // adiciona a entrada lida no barcode
+        input.val(data.codeResult.code);
+
+        // aciona um evento para atualizar a lista de busca
+        input.trigger('input');
+
+    });
+}
+
 $(document).ready(function () {
 
     // Carrega todos os elementos existentes em nossos formularios e aplica a classe css adequada
@@ -35,7 +92,7 @@ $(document).ready(function () {
     }catch(e){
         
     }
-
+    // parte responsavel pelo formulario de emprestimos
     try{
         $('#id_data_de_devolucao').toggleClass("form-control");
 
@@ -82,19 +139,13 @@ $(document).ready(function () {
                 });
             }
         });
-    
+        
+
+        $('#equipamentoReader').on('click', () => readBarCode('#id_equipamentos'));
+        $('#alunoReader').on('click', () => readBarCode('#id_aluno'));
+
     }catch(e){
 
     }
 
 });
-
-/*
-$('#quantidades').append(`
-    <div class="form-group row mb-2">
-        <div class="col-sm-10">
-            <label class="col-sm-2 col-form-label" for="quantidade_${componenteId}">Quantidade de ${label}:</label>
-            <input type="number" name="quantidade_${componenteId}" id="quantidade_${componenteId}" min="1" value="1">
-        </div>
-    </div>
-`);*/
