@@ -1,4 +1,5 @@
-function readBarCode(id) {
+function readerInit() {
+
     $('#barCodeReader').css("display","block");
     $('#close-button').on('click', () => {
         $('#barCodeReader').css("display","none")
@@ -33,26 +34,6 @@ function readBarCode(id) {
         Quagga.start();
     });
 
-    Quagga.onDetected((data) => {
-        // fecha o modal
-        $('#barCodeReader').css("display","none");
-        // para a leitura da camera
-        Quagga.stop();
-
-        // abre o campo de inserir equipamentos
-        let campo = $(id);
-        campo.select2('open');
-        // encontra o input no html resposavel pelos id's de equipamentos
-        let parent = campo[0].parentElement;
-        let input = $(parent).find('input.select2-search__field');
-
-        // adiciona a entrada lida no barcode
-        input.val(data.codeResult.code);
-
-        // aciona um evento para atualizar a lista de busca
-        input.trigger('input');
-
-    });
 }
 
 $(document).ready(function () {
@@ -141,8 +122,63 @@ $(document).ready(function () {
         });
         
 
-        $('#equipamentoReader').on('click', () => readBarCode('#id_equipamentos'));
-        $('#alunoReader').on('click', () => readBarCode('#id_aluno'));
+        $('#alunoReader').on('click', () => {
+
+            // inicia o modal de leitura de barCodes
+            readerInit();
+
+            Quagga.onDetected((data) => {
+                
+                let input;
+                
+                // fecha o modal
+                $('#barCodeReader').css("display","none");
+
+                // para a leitura da camera
+                Quagga.stop();
+                
+                // abre o campo de inserir equipamentos
+                $('#id_aluno').select2('open');
+                input = $("input[controls='select2-id_aluno-results']");
+                //console.log(input);
+                // adiciona a entrada lida no barcode
+                input.val(data.codeResult.code);
+
+                // aciona um evento para atualizar a lista de busca
+                input.trigger('input');
+        
+            });
+
+        });
+        $('#equipamentoReader').on('click', () => {
+            
+            // inicia o modal de leitura de barCodes
+            readerInit();
+            
+            Quagga.onDetected((data) => {
+                // encontra o input no html resposavel pelos id's de equipamentos
+                let campo = $('#id_equipamentos');
+                let parent = campo[0].parentElement;
+                let input = $(parent).find('input.select2-search__field');
+                
+                // fecha o modal
+                $('#barCodeReader').css("display","none");
+
+                // para a leitura da camera
+                Quagga.stop();
+                
+                // abre o campo de inserir equipamentos
+                campo.select2('open');
+
+                // adiciona a entrada lida no barcode
+                input.val(data.codeResult.code);
+
+                // aciona um evento para atualizar a lista de busca
+                input.trigger('input');
+        
+            });
+
+        });
 
     }catch(e){
 
