@@ -1,4 +1,4 @@
-from django.views.generic import TemplateView, CreateView, UpdateView
+from django.views.generic import TemplateView, CreateView, UpdateView, ListView
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib import messages
@@ -95,3 +95,9 @@ def createEmprestimo(request):
     else:
         form = createEmprestimoForm()
     return render(request, 'formularios/createEmprestimoForm.html', {'form': form})
+
+########### teste ###########
+class Test(ListView):
+    model = Emprestimo
+    template_name = "test.html"
+    paginate_by = 10
