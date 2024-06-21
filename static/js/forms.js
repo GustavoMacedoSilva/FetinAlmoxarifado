@@ -75,6 +75,9 @@ $(document).ready(function () {
     }
     // parte responsavel pelo formulario de emprestimos
     try{
+
+        let campo_id; // variavel para representar qual campo deve ser inserido o valor lido no barCode
+
         $('#id_data_de_devolucao').toggleClass("form-control");
 
         // usando a biblioteca select2 do jquery possibilida digitar o id do funcionario ou a matricula do aluno ao mesmo tempo que seleciona a opcao
@@ -121,63 +124,57 @@ $(document).ready(function () {
             }
         });
         
+        $('#funcionarioReader').on('click', () => {
+            
+            // inicia o modal de leitura de barCodes
+            readerInit();
+            
+            campo_id = 'id_funcionario';
+
+        });
 
         $('#alunoReader').on('click', () => {
 
             // inicia o modal de leitura de barCodes
             readerInit();
 
-            Quagga.onDetected((data) => {
-                
-                let input;
-                
-                // fecha o modal
-                $('#barCodeReader').css("display","none");
-
-                // para a leitura da camera
-                Quagga.stop();
-                
-                // abre o campo de inserir equipamentos
-                $('#id_aluno').select2('open');
-                input = $("input[controls='select2-id_aluno-results']");
-                //console.log(input);
-                // adiciona a entrada lida no barcode
-                input.val(data.codeResult.code);
-
-                // aciona um evento para atualizar a lista de busca
-                input.trigger('input');
-        
-            });
+            campo_id = 'id_aluno';
 
         });
+
         $('#equipamentoReader').on('click', () => {
             
             // inicia o modal de leitura de barCodes
             readerInit();
             
-            Quagga.onDetected((data) => {
-                // encontra o input no html resposavel pelos id's de equipamentos
-                let campo = $('#id_equipamentos');
-                let parent = campo[0].parentElement;
-                let input = $(parent).find('input.select2-search__field');
-                
-                // fecha o modal
-                $('#barCodeReader').css("display","none");
+            campo_id = 'id_equipamentos';
 
-                // para a leitura da camera
-                Quagga.stop();
-                
-                // abre o campo de inserir equipamentos
-                campo.select2('open');
+        });
 
-                // adiciona a entrada lida no barcode
-                input.val(data.codeResult.code);
+        Quagga.onDetected((data) => {
+            
+            // carrega o campo do formulario
+            let campo = $(`#${campo_id}`);
+            let input; // armazena o input responsavel pelo campo selecionado pelo usuario
 
-                // aciona um evento para atualizar a lista de busca
-                input.trigger('input');
-        
-            });
+            // fecha o modal
+            $('#barCodeReader').css("display","none");
 
+            // para a leitura da camera
+            Quagga.stop();
+            
+            // abre o campo de inserir equipamentos
+            campo.select2('open');
+
+            // encontra o input no html resposavel pela selecao na lista 
+            input = $(`input[aria-controls='select2-${campo_id}-results']`);
+    
+            // adiciona a entrada lida no barcode
+            input.val(data.codeResult.code);
+
+            // aciona um evento para atualizar a lista de busca
+            input.trigger('input');
+    
         });
 
     }catch(e){
