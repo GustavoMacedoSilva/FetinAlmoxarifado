@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<style>
+    body {
+        background-image: url("{% static 'imgs/inatel.jpeg' %}");
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    <ul class="list">
+        <li>Busque Equipamentos</li>
+        <li>Realize Empréstimos</li>
+        <li>Veja nossos Serviços</li>
+    </ul>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>activePage("home");</script>
+{% endblock %}

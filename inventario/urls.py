@@ -1,12 +1,10 @@
-from django.urls import path, include
+from django.urls import path
 from .views import EquipamentosList, ComponenteList 
 from .views import equipamentoCreate, componenteCreate
 from .views import EquipamentoUpdate, ComponenteUpdate
 from .views import equipamentoDelete, componenteDelete
 from .views import addEquipamentoToEmprestimo, addComponenteToEmprestimo
 from .views import redirect_to_equipamentos
-from almoxarifado.views import contato_page
-
 
 urlpatterns = [
     ##path('endereço/', MinhaView.as_view(), name = 'nome-da-url'), colinha
@@ -26,5 +24,4 @@ urlpatterns = [
     path('componentes/delete/<int:item_id>/', componenteDelete, name='Deletar-Componente'),
     ######## Redirect ########
     path('', redirect_to_equipamentos, name = 'inventario_redirect'),
-    path('contato/', contato_page, name = "contato")
 ]

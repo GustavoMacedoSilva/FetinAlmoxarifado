@@ -4,7 +4,7 @@
 
 <!-- Bloco de Titulo da Pagina -->
 {% block title %}
-<title>Equipamentos</title>
+<title>Almoxarifado</title>
 {% endblock %}
 
 <head>
@@ -28,7 +28,7 @@
     <div class="app-bar">
         <div class="logo">Almoxarifado Inatel</div>
         <div class="menu">
-            <a href="{% url 'home_page' %}">Home</a>
+            <a href="{% url 'home_page' %}" id="home">Home</a>
             <a href="{% url 'Listar-Equipamentos' %}" id="inventario">Inventário</a>
             <a href="{% url 'emprestimo'%}" id="emprestimo">Emprestimos</a>
             <a href="{% url 'contato'%}" id="contato">Contato</a>

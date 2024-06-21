@@ -1,0 +1,32 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat; 
+    background-attachment: fixed; 
+}
+.content {
+    background-color: rgba(255, 255, 255, 0.6); 
+    padding: 50px;
+    border-radius: 10px;
+    width: 100%; 
+    max-width: 800px; 
+    text-align: center;
+    color: black; 
+}
+.list {
+    padding: 0; 
+    margin: 0; 
+}
+
+.list li {
+    text-align: left; 
+    font-weight: bold; 
+    font-size: 3em;
+    margin: 5px 0; 
+}

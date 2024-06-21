@@ -1,4 +1,4 @@
-from django.views.generic import TemplateView, UpdateView
+from django.views.generic import UpdateView
 from django.views.generic.list import ListView
 from django.shortcuts import redirect, render
 from django.http import JsonResponse
@@ -9,9 +9,6 @@ from .forms import CreateEquipamentoForm, CreateComponenteForm, EditEquipamentoF
 from django.db import IntegrityError
 
 # Create your views here.
-class HomeView(TemplateView):
-    template_name = 'home_page.html'
-
 def redirect_to_equipamentos(request):
     return redirect('Listar-Equipamentos')
 
