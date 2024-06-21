@@ -65,12 +65,15 @@ $(document).ready(function(){
     var deleteButtons = document.querySelectorAll('#delete-Button'); // acessa o botao excluir da tabela 
     var detailButtons = document.querySelectorAll('#detail-button'); // acessa o botao ver detalhes da tabela
     var emprestimoButtons = document.querySelectorAll('#emprestimoButton'); // acessa o botao emprestar da tabela
+    var readerButton = document.getElementById('readerButton');
     var deleteModal = document.getElementById('deleteModal'); // carrega o modal de exclusao
     var detailModal = document.getElementById('detailModal'); // carrega o modal de detalhes
+    var readerModal = document.getElementById('barCodeReader'); // carrega o modal de leitura de codigo de barras
     var emprestimoModal = document.getElementById('emprestimoModal'); // carrega o modal de emprestimos
     var closeButtonDelete = document.getElementById('close-button-delete'); // botao de fechar o modal
     var closeButtonDetail = document.getElementById('close-button-detail'); // botao de fechar o modal
     var closeButtonEmprestimo = document.getElementById('close-button-emprestimo'); // botao de fechar o modal
+    var closeButtonReader = document.getElementById('close-button-reader'); // botao de fechar o modal
     var confirmDeleteButton = document.getElementById('confirm-delete'); // botao de confirmacao de exclusao do modal 
     var currentPk; // representa a primary key do item que sera excluido
 
@@ -178,6 +181,34 @@ $(document).ready(function(){
         });
     });
 
+    // configura o botao de leitura de barCodes
+    readerButton.addEventListener('click', function(){
+        readerModal.style.display = 'block';
+        
+        Quagga.init({
+            inputStream: {
+                name: "Live",
+                type: "LiveStream",
+                target: document.querySelector('#cam'),    // Or '#yourElement' (optional)
+                constraints: {
+                    width: 640,
+                    height: 480,
+                },
+            },
+            decoder: {
+                readers: ["code_128_reader"]
+            }
+        }, function (err) {
+            if (err) {
+                console.log(err);
+                return
+            }
+            
+            Quagga.start();
+        });
+
+    });
+
     // funcao para fechar o modal pelo botao
     closeButtonDelete.addEventListener('click', function() {
         deleteModal.style.display = 'none';
@@ -193,12 +224,20 @@ $(document).ready(function(){
         emprestimoModal.style.display = 'none';
     });
 
+    // funcao para fechar o modal pelo botao
+    closeButtonReader.addEventListener('click', function() {
+        readerModal.style.display = 'none';
+        Quagga.stop();
+    });
+
     // fecha o modal quando clica em qualquer lugar da tela 
     window.addEventListener('click', function(event) {
-        if (event.target == deleteModal || event.target == detailModal || event.target == emprestimoModal) {
+        if (event.target == deleteModal || event.target == detailModal || event.target == emprestimoModal || event.target == readerModal) {
             deleteModal.style.display = 'none';
             detailModal.style.display = 'none';
             emprestimoModal.style.display = 'none';
+            readerModal.style.display = 'none';
+            Quagga.stop();
         }
     });
 
@@ -226,6 +265,25 @@ $(document).ready(function(){
         });
         // remove o modal da tela
         deleteModal.style.display = 'none';
+    });
+    // identifica quando feita uma leitura de codigo de barras atraves da camera
+    Quagga.onDetected((data) => {
+            
+        // encontra o input no html resposavel pela selecao na lista
+        let input = $('#dt-search-0'); 
+
+        // fecha o modal
+        readerModal.style.display = 'none';
+
+        // para a leitura da camera
+        Quagga.stop();
+
+        // adiciona a entrada lida no barcode
+        input.val(data.codeResult.code);
+
+        // aciona um evento para atualizar a lista de busca
+        input.trigger('input');
+
     });
 
 });

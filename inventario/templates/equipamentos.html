@@ -24,10 +24,14 @@
                 <input type="checkbox" name="filter">
                 <span class="slider"></span>
             </label>
-            <a href="{% url 'Cadastrar-Equipamento' %}" class="btn btn-success btn-sm" title="Cadastrar">
+            <a href="{% url 'Cadastrar-Equipamento' %}" class="btn btn-success btn-sm p-2 m-2" title="Cadastrar">
                 <i class="fa-regular fa-square-plus"></i>
                 Cadastrar novo equipamento
             </a>
+            <button id="readerButton" class="btn btn-primary btn-sm p-2 m-2" type="button" title="Ler codigo de barras">
+                <i class="fa-solid fa-barcode"></i>
+                Ler Codigo de Barras
+            </button>
         </div>
     </div>
     <hr>
@@ -155,6 +159,17 @@
         </div>
     </div>
 
+    <!-- Modal para leitura de codigo de barras -->
+    <div id="barCodeReader" class="modal">
+        <div class="modal-content">
+            <span id="close-button-reader" class="close-button">&times;</span>
+            <h3>Leitura de Codigo de Barras</h3>
+            <div class="modal-body">
+                <div id="cam"></div>
+            </div>
+        </div>
+    </div>
+
 </div>
 {% endblock %}
 
@@ -162,6 +177,7 @@
     <script src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/datatables.min.js' %}"></script>
     <script src="{% static 'js/equipamentos.js' %}"></script>
+    <script src="{% static 'js/quagga.min.js' %}"></script>
     <script> 
         activePage("inventario");
         activePage("Lista-Equipamentos");
