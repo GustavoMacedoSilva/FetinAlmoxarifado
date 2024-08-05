@@ -30,7 +30,11 @@
                         {% endif %}
                     {% endfor %}
                 </ul>
-                <h3>Componentes:</h3>
+            {% endfor %}
+        </ul>
+        <h3>Componentes:</h3>
+        <ul>
+            {% for emprestimo in emprestimos %}
                 <ul>
                     {% for componente in componentes %}
                         {% if componente.emprestimo == emprestimo %}
