@@ -4,12 +4,10 @@
     position: fixed;
     top: 40px;
     left: 0;
-    background-color: #0096d6;
     padding-top: 20px;
     display: flex;
     flex-direction: column;
     gap: 15px;
-    color: white;
     z-index: 500;
 }
 .sidebar a {

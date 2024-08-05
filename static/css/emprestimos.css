@@ -28,15 +28,10 @@ body h3 {
     
 }
 
-.card-content {
-    flex: 1;
-    padding-right: 10px;
-    z-index: 2;
-}
-
 .card-title {
     display: flex;
     align-items: center;
+    color: #000;
 }
 
 .card-title h2 {
@@ -56,6 +51,12 @@ body h3 {
 
 .card-status.late {
     color: orange; 
+}
+
+.card-content {
+    flex: 1;
+    padding-right: 10px;
+    color: gray;
 }
 
 .card-icons {

@@ -16,8 +16,6 @@ body {
     align-items: center;
     padding: 10px 20px;
     box-sizing: border-box;
-    background-color: #0096d6;
-    color: white;
     z-index: 1000;
 }
 .app-bar .logo {
@@ -73,4 +71,9 @@ body {
 .canto {
     text-align: center;
     margin: 0 auto;
+}
+
+.sidebar, .app-bar {
+    background: linear-gradient(135deg, #2980b9, #3498db);
+    color: #fff;
 }
