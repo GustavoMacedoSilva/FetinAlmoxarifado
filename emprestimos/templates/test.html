@@ -48,7 +48,7 @@
     <div class="card">
         <div class="card-content" title="Visualizar">
             <div class="card-title">
-                <h2>Empréstimo #{{ emprestimo.id }}</h2>
+                <h2><a href="{% url 'detalhes' pk=emprestimo.aluno.matricula %}">Empréstimo #{{ emprestimo.id }}</a></h2>
                 <span class="card-status active">Ativo</span>
             </div>
             <p><i class="fa-solid fa-user"></i> Aluno: {{ emprestimo.aluno.user.name }} Matricula: {{ emprestimo.aluno.matricula }} email: {{ emprestimo.aluno.user.email }} curso: {{ emprestimo.aluno.curso }}</p>
