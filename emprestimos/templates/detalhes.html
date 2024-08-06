@@ -22,11 +22,10 @@
         {% for emprestimo in emprestimos %}
             <li>Empréstimo ID: {{ emprestimo.id }}</li>
         {% endfor %}
-        
+
         <h3>Equipamentos:</h3>
         <ul>
             {% for emprestimo in emprestimos %}
-                <li>Empréstimo ID: {{ emprestimo.id }}</li>
                 <ul>
                     {% for equipamento in equipamentos %}
                         {% if equipamento.emprestimo == emprestimo %}
