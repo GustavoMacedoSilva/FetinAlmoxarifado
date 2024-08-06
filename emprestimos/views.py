@@ -11,6 +11,7 @@ from autenticacao.models import User, Aluno
 from inventario.models import Componente, Equipamento, Emprestimo_has_components
 from django.urls import reverse_lazy
 from .forms import createEmprestimoForm
+from django.http import JsonResponse
 
 def EmprestimoView(request):
     q = request.GET.get('q') if request.GET.get('q') is not None else ''
@@ -95,6 +96,14 @@ def createEmprestimo(request):
     else:
         form = createEmprestimoForm()
     return render(request, 'formularios/createEmprestimoForm.html', {'form': form})
+
+def deleteRoom(request, pk):
+    emprestimo = Emprestimo.objects.get(id=pk)
+    
+    if request.method == 'POST':
+        emprestimo.delete()
+        return redirect('emprestimo') 
+    return render(request, 'delete.html',{'obj':emprestimo})
 
 ########### teste ###########
 def testView(request):
