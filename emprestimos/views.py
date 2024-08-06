@@ -97,7 +97,7 @@ def createEmprestimo(request):
         form = createEmprestimoForm()
     return render(request, 'formularios/createEmprestimoForm.html', {'form': form})
 
-def deleteRoom(request, pk):
+def deleteEmprestimo(request, pk):
     emprestimo = Emprestimo.objects.get(id=pk)
     
     if request.method == 'POST':
