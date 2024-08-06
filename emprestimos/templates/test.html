@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load dict_filters %}
 
 {% block title%}
 <title>Emprestimos</title>
@@ -44,17 +45,24 @@
 <div class="container">
     <h3>Empréstimos</h3>
     <hr>
-    {% for emprestimo in object_list %}
-    <div class="card">
+    {% for emprestimo in emprestimos %}
+    <div class="card" data-url="{% url 'detalhes' pk=emprestimo.aluno.matricula %}">
         <div class="card-content" title="Visualizar">
             <div class="card-title">
-                <h2><a href="{% url 'detalhes' pk=emprestimo.aluno.matricula %}">Empréstimo #{{ emprestimo.id }}</a></h2>
+                <h2>Empréstimo #{{ emprestimo.id }}</h2>
+                {% if emprestimo.estado == 'Ativo' %}
                 <span class="card-status active">Ativo</span>
+                {% elif  emprestimo.estado == 'Pendente' %}
+                <span class="card-status warn">Pendente</span>
+                {% elif  emprestimo.estado == 'Atrasado' %}
+                <span class="card-status danger">Atrasado</span>
+                {% endif %}
             </div>
+            <p><i class="fa-regular fa-calendar"></i> Data de Vencimento: {{ emprestimo.data_de_devolucao }}</p>
             <p><i class="fa-solid fa-user"></i> Aluno: {{ emprestimo.aluno.user.name }} Matricula: {{ emprestimo.aluno.matricula }} email: {{ emprestimo.aluno.user.email }} curso: {{ emprestimo.aluno.curso }}</p>
             <p><i class="fa-regular fa-address-card"></i> Funcionario: {{ emprestimo.funcionario.user.name }} ID: {{ emprestimo.funcionario.id }}</p>
-            <p><i class="fa-solid fa-bolt"></i> Quantidade de Equipamentos: 2</p>
-            <p><i class="fa-solid fa-microscope"></i> Componentes: 1</p>
+            <p><i class="fa-solid fa-bolt"></i> Quantidade de Equipamentos: {{ qtd_equipamentos | dict_item:emprestimo.id }}</p>
+            <p><i class="fa-solid fa-microscope"></i> Componentes: {{ qtd_componentes | dict_item:emprestimo.id }}</p>
         </div>
         <div class="card-icons">
             <i class="fa-solid fa-check-double" title="Confirmar Entrega"></i>
@@ -69,4 +77,5 @@
 {% block script%}
 <script>activePage("emprestimo");</script>
 <script src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/emprestimos.js' %}"></script>
 {% endblock %}

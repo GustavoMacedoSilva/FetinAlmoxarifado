@@ -5,7 +5,7 @@ from autenticacao.models import Aluno, Funcionario
 
 class Emprestimo(models.Model):
     id = models.BigAutoField(primary_key=True, unique=True)
-    estado = models.CharField(max_length=50)
+    estado = models.CharField(max_length=50) # Ativo, Pendente(esperando aprovacao), Atrasado
     data_de_retirada = models.DateField(verbose_name='Data de Retirada', auto_now_add=True)
     data_de_devolucao = models.DateField(verbose_name='Data de Devolução')
     aluno = models.ForeignKey(Aluno, on_delete=models.PROTECT)

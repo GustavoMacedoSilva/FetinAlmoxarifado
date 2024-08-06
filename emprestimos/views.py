@@ -97,7 +97,23 @@ def createEmprestimo(request):
     return render(request, 'formularios/createEmprestimoForm.html', {'form': form})
 
 ########### teste ###########
-class Test(ListView):
-    model = Emprestimo
-    template_name = "test.html"
-    paginate_by = 10
+def testView(request):
+    emprestimos = Emprestimo.objects.all()
+    qtd_equipamentos = {}
+    qtd_componentes = {}
+    
+    for emprestimo in emprestimos:
+        soma_componentes = 0
+        qtd_equipamentos[emprestimo.id] = Equipamento.objects.filter(emprestimo=emprestimo).__len__()
+        relations = Emprestimo_has_components.objects.filter(emprestimo=emprestimo)
+        for relation in relations:
+            soma_componentes += relation.quantidade
+        qtd_componentes[emprestimo.id] = soma_componentes
+
+    context = {
+        'emprestimos':emprestimos,
+        'qtd_equipamentos':qtd_equipamentos,
+        'qtd_componentes':qtd_componentes
+    }
+
+    return render(request, 'test.html', context)
