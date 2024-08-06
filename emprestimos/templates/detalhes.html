@@ -19,6 +19,10 @@
     </div>
     <div>
         <h1>{{ aluno.user.username }} - {{ aluno.matricula }} - {{ aluno.curso }}</h1>
+        {% for emprestimo in emprestimos %}
+            <li>Empréstimo ID: {{ emprestimo.id }}</li>
+        {% endfor %}
+        
         <h3>Equipamentos:</h3>
         <ul>
             {% for emprestimo in emprestimos %}
