@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import EmprestimoView, EmprestimoDetalhes, createEmprestimo, testView
+from .views import EmprestimoView, EmprestimoDetalhes, createEmprestimo, testView, deleteEmprestimo
 
 
 urlpatterns = [
@@ -7,4 +7,5 @@ urlpatterns = [
     path('aluno/<int:pk>/',EmprestimoDetalhes, name='detalhes' ),
     path('cadastrar/', createEmprestimo, name='cadastrar-emprestimo'),
     path('test/', testView, name='test'),
+    path('delete-emprestimo/<str:pk>', deleteEmprestimo, name="delete-emprestimo"),
 ]
