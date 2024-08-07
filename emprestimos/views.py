@@ -99,7 +99,6 @@ def createEmprestimo(request):
 
 def deleteEmprestimo(request, pk):
     emprestimo = Emprestimo.objects.get(id=pk)
-    
     if request.method == 'POST':
         emprestimo.delete()
         return redirect('emprestimo') 

@@ -13,7 +13,7 @@
 
 <form method="POST" action=""> 
     {% csrf_token %}
-    <p>Tem certeza? "{{obj}}"?</p>
+    <p>Tem certeza??</p>
     <a href="{{request.META.HTTP_REFERER}}">Não</a>
     <input type="submit" value = "Sim" /> 
 </form>
