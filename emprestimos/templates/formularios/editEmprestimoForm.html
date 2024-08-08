@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title%}
+<title>Emprestimos</title>
+{% endblock %}
+
+{% block style%}
+<link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'fa/css/all.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/select2.min.css' %}" >
+<link rel="stylesheet" href="{% static 'css/form.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h3>Editar emprestimo</h3>
+    <p>Preencha todos os campos adequadamente</p>
+    <hr>
+    <form method="POST" action="">
+        {% csrf_token %}
+        <div class="form-group row mb-2">
+            <label class="col-sm-2 col-form-label">Estado:</label>
+            <div class="col-sm-10">
+                {{ form.estado }}
+            </div>
+        </div>
+        <div class="form-group row mb-2">
+            <label class="col-sm-2 col-form-label">Data de devolução:</label>
+            <div class="col-sm-10">
+                {{ form.data_de_devolucao }}
+            </div>
+        </div>
+        <div class="row mb-2">
+            <label class="col-sm-2 col-form-label">ID do Funcionário:</label>
+            <div class="col-sm-9">
+                {{ form.funcionario }}
+            </div>
+            <div class="col">
+                <button id="funcionarioReader" type="button" class="btn btn-primary" title="Ler codigo de barras"><i class="fa-solid fa-barcode"></i></button> 
+            </div>
+        </div>
+        <div class="row mb-2">
+            <label class="col-sm-2 col-form-label">Matrícula do Aluno:</label>
+            <div class="col-sm-9">
+                {{ form.aluno }}
+            </div>
+            <div class="col">
+                <button id="alunoReader" type="button" class="btn btn-primary" title="Ler codigo de barras"><i class="fa-solid fa-barcode"></i></button> 
+            </div>
+        </div>
+        <div class="row mb-2">
+            <label class="col-sm-2 col-form-label">Equipamentos:</label>
+            <div class="col-sm-9">
+                {{ form.equipamentos }}    
+            </div>
+            <div class="col">
+                <button id="equipamentoReader" type="button" class="btn btn-primary" title="Ler codigo de barras"><i class="fa-solid fa-barcode"></i></button> 
+            </div>
+        </div> 
+        <div class="row">
+            <label class="col-sm-2 col-form-label">Componentes:</label>
+            <div class="col">
+                {{ form.componentes }}
+            </div>
+            <div id="quantidades" class="col">
+                
+            </div>
+        </div>
+        <hr>
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <input class="btn btn-primary" type="submit" value="Salvar Novo Emprestimo"/>
+            </div>
+        </div>
+    </form>
+    <div class="col-sm-10 mt-2 mb-2">
+        <a class="btn btn-secondary" href="{% url 'Listar-Equipamentos' %}">Voltar</a>
+    </div>
+    {% if form.errors %}
+        {% for field in form %}
+            {% if field.errors %}
+                {% for error in field.errors %}
+                <div class="alert alert-danger">
+                        <p>{{ error }}</p>
+                </div>
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    <!-- Modal para leitura de codigo de barras -->
+    <div id="barCodeReader" class="modal">
+        <div class="modal-content">
+            <span id="close-button" class="close-button">&times;</span>
+            <h3>Leitura de Codigo de Barras</h3>
+            <div class="modal-body">
+                <div id="cam"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script%}
+<script>activePage("emprestimo");</script>
+<script src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/forms.js' %}"></script>
+<script src="{% static 'js/select2.min.js' %}"></script>
+<script src="{% static 'js/quagga.min.js' %}"></script>
+{% endblock %}
+
