@@ -66,6 +66,8 @@ def EmprestimoDetalhes(request, pk):
     }
     return render(request, 'detalhes.html', context)
 
+########### mexendo com a tabela emprestimo ########### 
+
 def createEmprestimo(request):
     if request.method == 'POST':
         form = createEmprestimoForm(request.POST)
@@ -96,6 +98,39 @@ def createEmprestimo(request):
     else:
         form = createEmprestimoForm()
     return render(request, 'formularios/createEmprestimoForm.html', {'form': form})
+
+def editEmprestimo(request, pk):
+    if request.method == 'POST':
+        emprestimo = Emprestimo.objects.get(id=pk)
+        form = createEmprestimoForm(instance=emprestimo)
+        form = createEmprestimoForm(request.POST, instance=emprestimo)
+        if form.is_valid():
+            equipamentos = form.cleaned_data['equipamentos']
+            componentes = form.cleaned_data['componentes']
+            # retorna True caso algum dos equipamentos selecionados pelo usuario ja esteja em algum emprestimo
+            equipamentoIsEmprestimo = any(equipamento.emprestimo != None for equipamento in equipamentos)
+            
+            if not equipamentoIsEmprestimo:
+                emprestimo = form.save()
+                
+                for equipamento in equipamentos:
+                    equipamento.emprestimo = emprestimo
+                    equipamento.save()
+                
+                for componente in componentes:
+                    quantidade = request.POST.get(f'quantidade_{componente.id}', 1)
+                    Emprestimo_has_components.objects.create(
+                        emprestimo = emprestimo,
+                        componente = componente,
+                        quantidade = quantidade
+                    )
+
+                return redirect('emprestimo')
+            else:
+                form.add_error('equipamentos', 'Um ou mais equipamentos selecionados ja estão em algum emprestimo, por favor remova-os ou troque')
+    else:
+        form = createEmprestimoForm()
+    return render(request, 'formularios/editEmprestimoForm.html', {'form': form})
 
 def deleteEmprestimo(request, pk):
     emprestimo = Emprestimo.objects.get(id=pk)
