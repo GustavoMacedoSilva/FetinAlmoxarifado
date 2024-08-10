@@ -1,17 +1,12 @@
-from django.views.generic import TemplateView, CreateView, UpdateView, ListView
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import UserCreationForm
 from .models import Emprestimo
 from autenticacao.models import User, Aluno
 from inventario.models import Componente, Equipamento, Emprestimo_has_components
-from django.urls import reverse_lazy
 from .forms import createEmprestimoForm
-from django.http import JsonResponse
 
 def EmprestimoView(request):
     q = request.GET.get('q') if request.GET.get('q') is not None else ''
@@ -142,17 +137,33 @@ def deleteEmprestimo(request, pk):
 
 ########### teste ###########
 def testView(request):
-    emprestimos = Emprestimo.objects.all()
+    user = request.user
     qtd_equipamentos = {}
     qtd_componentes = {}
     
-    for emprestimo in emprestimos:
-        soma_componentes = 0
-        qtd_equipamentos[emprestimo.id] = Equipamento.objects.filter(emprestimo=emprestimo).__len__()
-        relations = Emprestimo_has_components.objects.filter(emprestimo=emprestimo)
-        for relation in relations:
-            soma_componentes += relation.quantidade
-        qtd_componentes[emprestimo.id] = soma_componentes
+    if user.is_authenticated:
+        if user.is_funcionario:
+            emprestimos = Emprestimo.objects.all()
+            for emprestimo in emprestimos:
+                soma_componentes = 0
+                qtd_equipamentos[emprestimo.id] = Equipamento.objects.filter(emprestimo=emprestimo).__len__()
+                relations = Emprestimo_has_components.objects.filter(emprestimo=emprestimo)
+                for relation in relations:
+                    soma_componentes += relation.quantidade
+                qtd_componentes[emprestimo.id] = soma_componentes
+        else:
+            aluno = Aluno.objects.get(user=user)
+            emprestimos = Emprestimo.objects.filter(aluno=aluno)
+            for emprestimo in emprestimos:
+                soma_componentes = 0
+                qtd_equipamentos[emprestimo.id] = Equipamento.objects.filter(emprestimo=emprestimo).__len__()
+                relations = Emprestimo_has_components.objects.filter(emprestimo=emprestimo)
+                for relation in relations:
+                    soma_componentes += relation.quantidade
+                qtd_componentes[emprestimo.id] = soma_componentes
+
+    else:
+        return redirect('loginAluno')
 
     context = {
         'emprestimos':emprestimos,

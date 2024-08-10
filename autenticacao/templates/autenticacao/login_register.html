@@ -57,7 +57,7 @@
 
 {% block content %}
 
-{% if page == 'almoxarife' %}
+
 <footer>
 
     <div class="login">
@@ -83,11 +83,6 @@
         <a class="voltar" href="{%url 'home_page'%}">Voltar</a>
     </div>
 </footer>
-    {%else%}
-    <div>
-        <d1>Bem Vindo Aluno</d1>
-        <a class="voltar" href="{%url 'home_page'%}">Voltar</a>
-    </div>
-    {%endif%}
+   
 
 {% endblock content %}
