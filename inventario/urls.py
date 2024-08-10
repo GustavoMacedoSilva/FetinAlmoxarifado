@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import EquipamentosList, ComponenteList 
+from .views import equipamentosList, ComponenteList 
 from .views import equipamentoCreate, componenteCreate
 from .views import EquipamentoUpdate, ComponenteUpdate
 from .views import equipamentoDelete, componenteDelete
@@ -9,7 +9,7 @@ from .views import redirect_to_equipamentos
 urlpatterns = [
     ##path('endereço/', MinhaView.as_view(), name = 'nome-da-url'), colinha
     ######## Tabelas ########
-    path('equipamentos/', EquipamentosList.as_view(), name='Listar-Equipamentos'),
+    path('equipamentos/', equipamentosList, name='Listar-Equipamentos'),
     path('componentes/', ComponenteList.as_view(), name='Listar-Componentes'),
     ######## Cadastros ########
     path('cadastrar/equipamento/', equipamentoCreate, name = 'Cadastrar-Equipamento'),

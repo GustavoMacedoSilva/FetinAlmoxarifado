@@ -49,7 +49,7 @@
             </thead>
 
             <tbody>
-                {% for equipamento in object_list %}
+                {% for equipamento in equipamentos %}
                 <tr itemID="{{ equipamento.id }}" itemName="{{ equipamento.nome }}" description="{{ equipamento.descricao }}" itemLocation="{{ equipamento.localizacao }}" emprestimo={% if equipamento.emprestimo != None %} {{ equipamento.emprestimo.id }} {% else %} false {% endif %}>
                     <td>{{ equipamento.id }}</td>
                     <td>{{ equipamento.nome }}</td>

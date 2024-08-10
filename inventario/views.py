@@ -18,6 +18,15 @@ class EquipamentosList(ListView):
     model = Equipamento
     template_name = 'equipamentos.html'
 
+def equipamentosList(request):
+    user = request.user
+    equipamentos = Equipamento.objects.all()
+
+    if user.is_authenticated:
+        return render(request,'equipamentos.html',{'equipamentos':equipamentos})
+    else:
+        return redirect('loginAluno')
+
 class ComponenteList(ListView):
     model = Componente
     template_name = 'componentes.html'
