@@ -59,7 +59,7 @@
                 {% endif %}
             </div>
             <p><i class="fa-regular fa-calendar"></i> Data de Vencimento: {{ emprestimo.data_de_devolucao }}</p>
-            <p><i class="fa-solid fa-user"></i> Aluno: {{ emprestimo.aluno.user.name }} Matricula: {{ emprestimo.aluno.matricula }} email: {{ emprestimo.aluno.user.email }} curso: {{ emprestimo.aluno.curso }}</p>
+            <p><i class="fa-solid fa-user"></i> Aluno: {{ emprestimo.aluno.user.username }} Matricula: {{ emprestimo.aluno.matricula }} email: {{ emprestimo.aluno.user.email }} curso: {{ emprestimo.aluno.curso }}</p>
             <p><i class="fa-regular fa-address-card"></i> Funcionario: {{ emprestimo.funcionario.user.name }} ID: {{ emprestimo.funcionario.id }}</p>
             <p><i class="fa-solid fa-bolt"></i> Quantidade de Equipamentos: {{ qtd_equipamentos | dict_item:emprestimo.id }}</p>
             <p><i class="fa-solid fa-microscope"></i> Componentes: {{ qtd_componentes | dict_item:emprestimo.id }}</p>
