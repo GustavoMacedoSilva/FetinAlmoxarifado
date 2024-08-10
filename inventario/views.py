@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from django.urls import reverse_lazy
 from emprestimos.models import Emprestimo
 from .models import Equipamento, Componente, Emprestimo_has_components
-from .forms import CreateEquipamentoForm, CreateComponenteForm, EditEquipamentoForm
+from .forms import CreateEquipamentoForm, CreateComponenteForm, EditEquipamentoForm, EditComponenteForm
 from django.db import IntegrityError
 
 # Create your views here.
@@ -14,15 +14,10 @@ def redirect_to_equipamentos(request):
 
 ########## LISTA ##########
 
-class EquipamentosList(ListView):
-    model = Equipamento
-    template_name = 'equipamentos.html'
-
 def equipamentosList(request):
-    user = request.user
     equipamentos = Equipamento.objects.all()
 
-    if user.is_authenticated:
+    if request.user.is_authenticated:
         return render(request,'equipamentos.html',{'equipamentos':equipamentos})
     else:
         return redirect('loginAluno')
@@ -31,29 +26,43 @@ class ComponenteList(ListView):
     model = Componente
     template_name = 'componentes.html'
 
+def componenteList(request):
+    componentes = Componente.objects.all()
+
+    if request.user.is_authenticated:
+        return render(request,'componentes.html',{'componentes':componentes})
+    else:
+        return redirect('loginAluno')
+
 ########## Cadastros ##########
 def equipamentoCreate(request):
-    if request.method == 'POST':
-        form = CreateEquipamentoForm(request.POST)
-        if form.is_valid():
-            try:
-                form.save()
-                return redirect('Listar-Equipamentos')
-            except IntegrityError:
-                form.add_error('id', 'Não é possivel criar um novo equipamento com um ID igual ao de outro ja existente')
+    if request.user.is_authenticated and request.user.is_funcionario:
+        if request.method == 'POST':
+            form = CreateEquipamentoForm(request.POST)
+            if form.is_valid():
+                try:
+                    form.save()
+                    return redirect('Listar-Equipamentos')
+                except IntegrityError:
+                    form.add_error('id', 'Não é possivel criar um novo equipamento com um ID igual ao de outro ja existente')
+        else:
+            form = CreateEquipamentoForm()        
+        return render(request, 'formularios/createEquipamento.html', {'form':form})
     else:
-        form = CreateEquipamentoForm()        
-    return render(request, 'formularios/createEquipamento.html', {'form':form})
+        return redirect('home_page')
 
 def componenteCreate(request):
-    if request.method == 'POST':
-        form = CreateComponenteForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('Listar-Componentes')
+    if request.user.is_authenticated and request.user.is_funcionario:
+        if request.method == 'POST':
+            form = CreateComponenteForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('Listar-Componentes')
+        else:
+            form = CreateComponenteForm()
+        return render(request, 'formularios/createComponente.html', {'form':form})
     else:
-        form = CreateComponenteForm()
-    return render(request, 'formularios/createComponente.html', {'form':form})
+        return redirect('home_page')
 
 ########## Updates ##########
 class EquipamentoUpdate(UpdateView):
@@ -61,6 +70,38 @@ class EquipamentoUpdate(UpdateView):
     form_class = EditEquipamentoForm
     template_name = 'formularios/editEquipamento.html'
     success_url = reverse_lazy('Listar-Equipamentos')
+
+def equipamentoUpdate(request, pk):
+    if request.user.is_authenticated and request.user.is_funcionario:
+        equipamento = Equipamento.objects.get(pk=pk)
+        if request.method == 'POST':
+            form = EditEquipamentoForm(request.POST, instance=equipamento)
+            if form.is_valid():
+                form.save()
+                return redirect('Listar-Equipamentos')
+            else:
+                return render(request, 'formularios/editEquipamento.html', {'form':form})
+        else:
+            form = EditEquipamentoForm(instance=equipamento)
+        return render(request, 'formularios/editEquipamento.html', {'form':form})
+    else:
+        return redirect('home_page')
+
+def componenteUpdate(request, pk):
+    if request.user.is_authenticated and request.user.is_funcionario:
+        componente = Componente.objects.get(pk=pk)
+        if request.method == 'POST':
+            form = EditComponenteForm(request.POST, instance=componente)
+            if form.is_valid():
+                form.save()
+                return redirect('Listar-Componentes')
+            else:
+                return render(request, 'formularios/editComponente.html', {'form':form})
+        else:
+            form = EditComponenteForm(instance=componente)
+        return render(request, 'formularios/editComponente.html', {'form':form})
+    else:
+        return redirect('home_page')
 
 class ComponenteUpdate(UpdateView):
     model = Componente
@@ -106,13 +147,16 @@ def addComponenteToEmprestimo(request, item_id, emprestimo_id, quantidade):
 
 ########## Deletess ##########
 def equipamentoDelete(request, item_id):
-    if request.method == 'POST':
-        item = Equipamento.objects.get(pk=item_id)
-        if item.emprestimo != None:
-            return JsonResponse({'success': False, 'error': 405}, status=400)
-        item.delete()
-        return JsonResponse({'success': True})
-    return JsonResponse({'success': False}, status=400)
+    if request.user.is_authenticated and request.user.is_funcionario:
+        if request.method == 'POST':
+            item = Equipamento.objects.get(pk=item_id)
+            if item.emprestimo != None:
+                return JsonResponse({'success': False, 'error': 405}, status=400)
+            item.delete()
+            return JsonResponse({'success': True})
+        return JsonResponse({'success': False}, status=400)
+    else:
+        return redirect('home_page')
 
 def componenteIsEmprestimo(item_id):
     try:
@@ -122,10 +166,13 @@ def componenteIsEmprestimo(item_id):
         return False
     
 def componenteDelete(request, item_id):
-    if componenteIsEmprestimo(item_id=item_id):
-        return JsonResponse({'success': False, 'error': 405}, status=400)
-    if request.method == 'POST':
-        item = Componente.objects.get(pk=item_id)
-        item.delete()
-        return JsonResponse({'success': True})
-    return JsonResponse({'success': False}, status=400)
+    if request.user.is_authenticated and request.user.is_funcionario:
+        if componenteIsEmprestimo(item_id=item_id):
+            return JsonResponse({'success': False, 'error': 405}, status=400)
+        if request.method == 'POST':
+            item = Componente.objects.get(pk=item_id)
+            item.delete()
+            return JsonResponse({'success': True})
+        return JsonResponse({'success': False}, status=400)
+    else:
+        return redirect('home_page')

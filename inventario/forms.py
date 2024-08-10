@@ -9,10 +9,6 @@ class CreateEquipamentoForm(ModelForm):
         widgets = {
             'descricao': forms.Textarea(attrs={'rows': 5, 'cols': 40}),
         }
-    #id = forms.IntegerField()
-    #nome = forms.CharField(max_length=50)
-    #descricao = forms.CharField(max_length=500)
-    #localizacao = forms.CharField(max_length=50)
 
 class CreateComponenteForm(ModelForm):
     class Meta:
@@ -26,3 +22,8 @@ class EditEquipamentoForm(ModelForm):
         widgets = {
             'descricao': forms.Textarea(attrs={'rows': 5, 'cols': 40}),
         }
+
+class EditComponenteForm(ModelForm):
+    class Meta:
+        model = Componente
+        fields = ['nome','unidade_de_medida','valor','localizacao']

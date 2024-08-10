@@ -18,10 +18,12 @@
 <div class="content">
     <div class="container-fluid">
         <h3>Lista de Componentes</h3>
+        {% if user.is_funcionario %}
         <a href="{% url 'Cadastrar-Componente' %}" class="btn btn-success btn-sm" title="Cadastrar">
             <i class="fa-regular fa-square-plus"></i>
             Cadastrar novo componente
         </a>
+        {% endif %}
     </div>
     <hr>
     <div class="table-responsive">
@@ -39,7 +41,7 @@
             </thead>
 
             <tbody>
-                {% for componente in object_list %}
+                {% for componente in componentes %}
                 <tr itemID="{{ componente.id }}" itemName="{{ componente.nome }}" itemValue="{{ componente.valor }}" itemUnit="{{ componente.unidade_de_medida }}" itemLocation="{{ componente.localizacao }}">
                     <td>{{ componente.id }}</td>
                     <td>{{ componente.nome }}</td>
@@ -47,14 +49,17 @@
                     <td>{{ componente.unidade_de_medida }}</td>
                     <td>{{ componente.localizacao }}</td>
                     <td>
+                        {% if user.is_funcionario %}
                         <button id="emprestimoButton" class="btn btn-success btn-sm" title="Reservar">
                             <i class="fa fa-bookmark" aria-hidden="true"></i>
                             Emprestar
                         </button>
+                        {% endif %}
                         <button id="detail-button" class="btn btn-primary btn-sm" title="Visualizar">
                             <i class="fa-regular fa-eye"></i>
                             Visualizar
                         </button>
+                        {% if user.is_funcionario %}
                         <a href="{% url 'Editar-Componente' componente.id %}" class="btn btn-warning btn-sm" title="Editar">
                             <i class="fa-regular fa-pen-to-square"></i>
                             Editar
@@ -63,6 +68,7 @@
                             <i class="fa-regular fa-trash-can"></i>
                             Excluir
                         </button>
+                        {% endif %}
                     </td>
                 </tr>
                 {% empty %}
