@@ -65,7 +65,7 @@ def componenteCreate(request):
         return redirect('home_page')
 
 ########## Updates ##########
-class EquipamentoUpdate(UpdateView):
+#class EquipamentoUpdate(UpdateView):
     model = Equipamento
     form_class = EditEquipamentoForm
     template_name = 'formularios/editEquipamento.html'
@@ -103,46 +103,52 @@ def componenteUpdate(request, pk):
     else:
         return redirect('home_page')
 
-class ComponenteUpdate(UpdateView):
+#class ComponenteUpdate(UpdateView):
     model = Componente
     fields = ['nome','unidade_de_medida','valor','localizacao']
     template_name = 'formularios/editComponente.html'
     success_url = reverse_lazy('Listar-Componentes')
 
 def addEquipamentoToEmprestimo(request, item_id, emprestimo_id):
-    if request.method == 'POST':
-        try:
-            item = Equipamento.objects.get(pk=item_id)
-        except:
-            return JsonResponse({'success': False}, status=400)
-        try:
-            emprestimo = Emprestimo.objects.get(pk=emprestimo_id)
-        except:
-            return JsonResponse({'success': False}, status=400)
-        if item.emprestimo != None:
-            return JsonResponse({'success': False, 'error': 405}, status=400)
-        item.emprestimo = emprestimo
-        item.save()
-        return JsonResponse({'success': True})
-    return JsonResponse({'success': False}, status=400)
+    if request.user.is_authenticated and request.user.is_funcionario:
+        if request.method == 'POST':
+            try:
+                item = Equipamento.objects.get(pk=item_id)
+            except:
+                return JsonResponse({'success': False}, status=400)
+            try:
+                emprestimo = Emprestimo.objects.get(pk=emprestimo_id)
+            except:
+                return JsonResponse({'success': False}, status=400)
+            if item.emprestimo != None:
+                return JsonResponse({'success': False, 'error': 405}, status=400)
+            item.emprestimo = emprestimo
+            item.save()
+            return JsonResponse({'success': True})
+        return JsonResponse({'success': False}, status=400)
+    else:
+        return redirect('home_page')
 
 def addComponenteToEmprestimo(request, item_id, emprestimo_id, quantidade):
-    if request.method == 'POST':
-        try:
-            item = Componente.objects.get(pk=item_id)
-        except:
-            return JsonResponse({'success': False}, status=400)
-        try:
-            emprestimo = Emprestimo.objects.get(pk=emprestimo_id)
-        except:
-            return JsonResponse({'success': False}, status=400)
-        Emprestimo_has_components.objects.create(
-            emprestimo = emprestimo,
-            componente = item,
-            quantidade = quantidade
-        )
-        return JsonResponse({'success': True})
-    return JsonResponse({'success': False}, status=400)
+    if request.user.is_authenticated and request.user.is_funcionario:
+        if request.method == 'POST':
+            try:
+                item = Componente.objects.get(pk=item_id)
+            except:
+                return JsonResponse({'success': False}, status=400)
+            try:
+                emprestimo = Emprestimo.objects.get(pk=emprestimo_id)
+            except:
+                return JsonResponse({'success': False}, status=400)
+            Emprestimo_has_components.objects.create(
+                emprestimo = emprestimo,
+                componente = item,
+                quantidade = quantidade
+            )
+            return JsonResponse({'success': True})
+        return JsonResponse({'success': False}, status=400)
+    else:
+        return redirect('home_page')
 
 
 ########## Deletess ##########
