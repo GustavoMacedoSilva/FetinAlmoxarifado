@@ -89,7 +89,35 @@
                 
         </table>
     </div>
-
+    <div class="pagination">
+        <span class="step-links">
+            {% if equipamentos.has_previous %}
+                <a href="?page=1" class="btn btn-outline-secondary btn-sm p-2 m-2">
+                    <i class="fa-solid fa-backward-fast"></i>
+                    Primeiro
+                </a>
+                <a href="?page={{ equipamentos.previous_page_number }}" class="btn btn-outline-secondary btn-sm p-2 m-2">
+                    <i class="fa-solid fa-backward-step"></i>
+                    Anterior
+                </a>
+            {% endif %}
+    
+            <span class="current">
+                Página {{ equipamentos.number }} de {{ equipamentos.paginator.num_pages }}.
+            </span>
+    
+            {% if equipamentos.has_next %}
+                <a href="?page={{ equipamentos.next_page_number }}" class="btn btn-outline-secondary btn-sm p-2 m-2">
+                    Próximo
+                    <i class="fa-solid fa-forward-step"></i>
+                </a>
+                <a href="?page={{ equipamentos.paginator.num_pages }}" class="btn btn-outline-secondary btn-sm p-2 m-2">
+                    Ultimo
+                    <i class="fa-solid fa-forward-fast"></i>
+                </a>
+            {% endif %}
+        </span>
+    </div>
     <!-- Modal para confirmar exclusao -->
     <div id="deleteModal" class="modal">
         <div class="modal-content">

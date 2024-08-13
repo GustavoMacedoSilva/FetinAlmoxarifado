@@ -1,4 +1,4 @@
-from django.views.generic import UpdateView
+from django.core.paginator import Paginator
 from django.views.generic.list import ListView
 from django.shortcuts import redirect, render
 from django.http import JsonResponse
@@ -15,14 +15,16 @@ def redirect_to_equipamentos(request):
 ########## LISTA ##########
 
 def equipamentosList(request):
-    equipamentos = Equipamento.objects.all()
-
     if request.user.is_authenticated:
-        return render(request,'equipamentos.html',{'equipamentos':equipamentos})
+        equipamentos = Equipamento.objects.all()
+        paginator = Paginator(equipamentos, 2) # paginador para 20 por pagina
+        page_number = request.GET.get('page')
+        page_equipamentos = paginator.get_page(page_number)
+        return render(request,'equipamentos.html',{'equipamentos':page_equipamentos})
     else:
         return redirect('loginAluno')
 
-class ComponenteList(ListView):
+#class ComponenteList(ListView):
     model = Componente
     template_name = 'componentes.html'
 
