@@ -35,20 +35,30 @@ def EmprestimoView(request):
     return render(request, 'emprestimos_almoxarife.html', context)
 
 def EmprestimoDetalhes(request, pk):
+    user = request.user
+
     try:
         aluno = Aluno.objects.get(matricula=pk)
     except Aluno.DoesNotExist:
         return redirect('home_page')
-    
+
     emprestimos = Emprestimo.objects.filter(aluno=aluno).order_by('-id')
 
     if not emprestimos.exists():
         return redirect('home_page')
 
+    if user.is_funcionario:
+        pass
+    elif user == aluno.user:
+        pass
+
+    else:
+        return redirect('loginAluno')
+
     equipamentos = Equipamento.objects.filter(emprestimo__in=emprestimos)
     componentes = Emprestimo_has_components.objects.filter(emprestimo__in=emprestimos)
 
-    # Ordenar alunos com base no empréstimo mais recente (id)
+   
     alunos_com_emprestimos = Aluno.objects.filter(emprestimo__isnull=False).distinct()
     alunos_com_emprestimos = sorted(alunos_com_emprestimos, key=lambda aluno: aluno.emprestimo_set.order_by('-id').first().id, reverse=True)
 
