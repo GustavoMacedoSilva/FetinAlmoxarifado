@@ -7,36 +7,23 @@
 
 {%block style%}
 <style>
-    body, html{
-        height: 100%;
-        margin: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
+    body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat; 
+    background-attachment: fixed; 
+    }
+    body{
+        background-image: url("{% static 'imgs/abadecontato_teste4.png' %}");
     }
 </style>
 {%endblock%}
-
-{% block content %}
-
-<div class = "contato">
-    <h1>Dúvidas? Entre em contato conosco</h1>
-    <p>==============================</p>
-    <h3>Email: </h3>
-    <p>eduardo.a@gec.inatel.br</p>
-    <p>henrique.issao@gec.inatel.br</p>
-    <p>guilhermebrito@gec.inatel.br</p>
-    <p>macedo.gustavo@ges.inatel.br</p>
-    <p>==============================</p>
-    <h3>Whatsapp:</h3>
-    <p>+55(35)9842-9114</p>
-    <p>+55(11)99349-8384</p>
-    <p>+55(37)9872-5431</p>
-    <p>+55(35)9832-8264</p>
-</div>
-
-{% endblock %}
 
 {% block script %}
 <script>activePage("contato");</script>
