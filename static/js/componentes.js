@@ -4,6 +4,7 @@ $(document).ready(function(){
         // aplica traducao para portugues nos campos da tabela
         responsive: true,
         // "bSort": false,
+        "bPaginate": false,
         "aaSorting": [],
         "pageLength": 50,
         "language": {

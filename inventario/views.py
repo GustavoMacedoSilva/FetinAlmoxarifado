@@ -17,7 +17,7 @@ def redirect_to_equipamentos(request):
 def equipamentosList(request):
     if request.user.is_authenticated:
         equipamentos = Equipamento.objects.all()
-        paginator = Paginator(equipamentos, 2) # paginador para 20 por pagina
+        paginator = Paginator(equipamentos, 20) # paginador para 20 por pagina
         page_number = request.GET.get('page')
         page_equipamentos = paginator.get_page(page_number)
         return render(request,'equipamentos.html',{'equipamentos':page_equipamentos})
@@ -29,10 +29,12 @@ def equipamentosList(request):
     template_name = 'componentes.html'
 
 def componenteList(request):
-    componentes = Componente.objects.all()
-
     if request.user.is_authenticated:
-        return render(request,'componentes.html',{'componentes':componentes})
+        componentes = Componente.objects.all()
+        paginator = Paginator(componentes, 20) # paginator para 20 por pagina
+        page_number = request.GET.get('page')
+        page_componentes = paginator.get_page(page_number)
+        return render(request,'componentes.html',{'componentes':page_componentes})
     else:
         return redirect('loginAluno')
 
