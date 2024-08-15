@@ -47,18 +47,12 @@ def EmprestimoDetalhes(request, pk):
     if not emprestimos.exists():
         return redirect('home_page')
 
-    if user.is_funcionario:
-        pass
-    elif user == aluno.user:
-        pass
-
-    else:
-        return redirect('loginAluno')
+    # Permissão de acesso: Funcionário ou Superusuário
+    pode_editar_deletar = user.is_funcionario or user.is_superuser
 
     equipamentos = Equipamento.objects.filter(emprestimo__in=emprestimos)
     componentes = Emprestimo_has_components.objects.filter(emprestimo__in=emprestimos)
 
-   
     alunos_com_emprestimos = Aluno.objects.filter(emprestimo__isnull=False).distinct()
     alunos_com_emprestimos = sorted(alunos_com_emprestimos, key=lambda aluno: aluno.emprestimo_set.order_by('-id').first().id, reverse=True)
 
@@ -68,6 +62,7 @@ def EmprestimoDetalhes(request, pk):
         'emprestimos': emprestimos,
         'componentes': componentes,
         'alunos_com_emprestimos': alunos_com_emprestimos,
+        'pode_editar_deletar': pode_editar_deletar,  # Passar a variável de controle para o template
     }
     return render(request, 'detalhes.html', context)
 

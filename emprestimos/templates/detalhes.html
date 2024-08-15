@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-
 {% block title %}
 <title>Detalhes</title>
 {% endblock %}
@@ -21,6 +20,10 @@
         <h1>{{ aluno.user.username }} - {{ aluno.matricula }} - {{ aluno.curso }}</h1>
         {% for emprestimo in emprestimos %}
             <li>Empréstimo ID: {{ emprestimo.id }}</li>
+            {% if pode_editar_deletar %}
+            <a href="{% url 'edit-emprestimo' emprestimo.id %}">Editar</a>
+            <a href="{% url 'delete-emprestimo' emprestimo.id %}">Deletar</a>
+            {% endif %}
         {% endfor %}
 
         <h3>Equipamentos:</h3>
@@ -49,14 +52,10 @@
         </ul>
         <hr>
         <a href="{% url 'emprestimo' %}">Voltar</a>
-    </div>
-    <div>
-        
+        {% endblock content %}
+
+        {% block script %}
+        <script>activePage("emprestimo");</script>
+        {% endblock %}
     </div>
 </div>
-{% endblock content %}
-
-{% block script %}
-<script>activePage("emprestimo");</script>
-{% endblock %}
-
