@@ -148,7 +148,7 @@ def testView(request):
     
     if user.is_authenticated:
         if user.is_funcionario:
-            emprestimos = Emprestimo.objects.all()
+            emprestimos = Emprestimo.objects.all().order_by('-id')
             for emprestimo in emprestimos:
                 soma_componentes = 0
                 qtd_equipamentos[emprestimo.id] = Equipamento.objects.filter(emprestimo=emprestimo).__len__()

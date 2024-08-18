@@ -7,22 +7,61 @@
 
 {%block style%}
 <style>
-    body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    background-size: cover; 
-    background-position: center; 
-    background-repeat: no-repeat; 
-    background-attachment: fixed; 
-    }
     body{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        background-size: cover; 
+        background-position: center; 
+        background-repeat: no-repeat; 
+        background-attachment: fixed; 
         background-image: url("{% static 'imgs/abadecontato_teste4.png' %}");
+        justify-content: center;
+        align-items: center;
+        }
+    .wrapper{
+        display: flex;
+        gap: 100px;
+        columns: 2;
+        border: 1px;
+        width: 108%;
+        max-width: 2000px;
+    }
+    .left-collum{
+        flex: 1;
+        padding-top: 165px;
+        min-height: 10px;
+        font-size: 22px;
+    }
+    .right-collum{
+        flex: 1;
+        padding-top: 165px;
+        min-height: 10px;
+        font-size: 22px;
     }
 </style>
+{%endblock%}
+
+{% block content %}
+<body>
+    <div class = "wrapper">
+        <div class = "left-collum">
+            <div class = text>+55(35)9842-9114</div>
+            <div class = text>+55(11)99349-8384</div>
+            <div class = text>+55(37)9872-5431</div>
+            <div class = text>+55(35)9832-8264</div>
+        </div>
+        <div class = "right-collum">
+            <div class = text>eduardo.a@gec.inatel.br</div>
+            <div class = text>henrique.issao@gec.inatel.br</div>
+            <div class = text>guilhermebrito@gec.inatel.br</div>
+            <div class = text>macedo.gustavo@ges.inatel.br</div>
+        </div>
+    </div>
+</body>
 {%endblock%}
 
 {% block script %}
