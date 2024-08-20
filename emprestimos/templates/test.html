@@ -48,8 +48,8 @@
     <p>
         {% if user.is_funcionario or user.is_superuser %}
         <form method="get" action="{% url 'emprestimo' %}">
-            <input type="text" name="q" placeholder="Pesquisar aluno por nome ou matrícula..." value="{{ request.GET.q }}">
-            <button type="submit">Buscar</button>
+            <input class="col-sm-6 col-form-label" type="text" name="q" placeholder="Pesquisar aluno por nome ou matrícula..." value="{{ request.GET.q }}">
+            <button type="submit" class="btn btn-primary">Buscar</button>
         </form>
         {% endif %}
     </p>
