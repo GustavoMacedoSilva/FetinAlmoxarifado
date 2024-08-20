@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from .views import HomeView
-from .views import contato_page
+from .views import contato_page, sendEmail
 
 urlpatterns =[
     path('admin/', admin.site.urls),
@@ -26,5 +26,6 @@ urlpatterns =[
     path('inventario/', include('inventario.urls')),
     path('autenticacao/',include('autenticacao.urls')),
     path('emprestimos/',include('emprestimos.urls')),
-    path('contato/',contato_page,name = "contato")
+    path('contato/',contato_page,name = "contato"),
+    path('email/',sendEmail,name='email'),
 ]
