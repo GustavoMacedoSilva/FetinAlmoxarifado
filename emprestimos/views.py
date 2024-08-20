@@ -143,12 +143,17 @@ def deleteEmprestimo(request, pk):
 ########### teste ###########
 def testView(request):
     user = request.user
+    q = request.GET.get('q') if request.GET.get('q') is not None else ''
     qtd_equipamentos = {}
     qtd_componentes = {}
-    
+    emprestimos = []
+
     if user.is_authenticated:
-        if user.is_funcionario:
-            emprestimos = Emprestimo.objects.all().order_by('-id')
+        if user.is_funcionario or user.is_superuser:
+            emprestimos = Emprestimo.objects.filter(
+                Q(aluno__user__username__icontains=q) |
+                Q(aluno__matricula__icontains=q)
+            ).order_by('-id')
             for emprestimo in emprestimos:
                 soma_componentes = 0
                 qtd_equipamentos[emprestimo.id] = Equipamento.objects.filter(emprestimo=emprestimo).__len__()
