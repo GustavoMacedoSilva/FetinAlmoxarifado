@@ -10,6 +10,15 @@
         grid-template-columns: 1fr 3fr 1fr;
         margin-top: 40px;
     }
+    .emprestimo-detalhes {
+        margin-bottom: 20px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    .emprestimo-detalhes h2 {
+        margin-top: 0;
+    }
 </style>
 
 <div class="detalhes_aluno">
@@ -19,43 +28,44 @@
     <div>
         <h1>{{ aluno.user.username }} - {{ aluno.matricula }} - {{ aluno.curso }}</h1>
         {% for emprestimo in emprestimos %}
-            <li>Empréstimo ID: {{ emprestimo.id }}</li>
-            {% if pode_editar_deletar %}
-            <a href="{% url 'edit-emprestimo' emprestimo.id %}">Editar</a>
-            <a href="{% url 'delete-emprestimo' emprestimo.id %}">Deletar</a>
-            {% endif %}
+            <div class="emprestimo-detalhes">
+                <h2>Empréstimo ID: {{ emprestimo.id }}</h2>
+                {% if pode_editar_deletar %}
+                    <a href="{% url 'edit-emprestimo' emprestimo.id %}">Editar</a> | 
+                    <a href="{% url 'delete-emprestimo' emprestimo.id %}">Deletar</a>
+                {% endif %}
+                <div>
+                    {% if equipamentos|length > 0 %}
+                        <h3>Equipamentos:</h3>
+                        <ul>
+                            {% for equipamento in equipamentos %}
+                                {% if equipamento.emprestimo == emprestimo %}
+                                    <li>{{ equipamento.nome }}</li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+                <div>
+                    {% if componentes|length > 0 %}
+                        <h3>Componentes:</h3>
+                        <ul>
+                            {% for componente in componentes %}
+                                {% if componente.emprestimo == emprestimo %}
+                                    <li>{{ componente.componente.nome }} - Quantidade: {{ componente.quantidade }}</li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
         {% endfor %}
-
-        <h3>Equipamentos:</h3>
-        <ul>
-            {% for emprestimo in emprestimos %}
-                <ul>
-                    {% for equipamento in equipamentos %}
-                        {% if equipamento.emprestimo == emprestimo %}
-                            <li>{{ equipamento.nome }}</li>
-                        {% endif %}
-                    {% endfor %}
-                </ul>
-            {% endfor %}
-        </ul>
-        <h3>Componentes:</h3>
-        <ul>
-            {% for emprestimo in emprestimos %}
-                <ul>
-                    {% for componente in componentes %}
-                        {% if componente.emprestimo == emprestimo %}
-                            <li>{{ componente.componente.nome }} - Quantidade: {{ componente.quantidade }}</li>
-                        {% endif %}
-                    {% endfor %}
-                </ul>
-            {% endfor %}
-        </ul>
         <hr>
         <a href="{% url 'emprestimo' %}">Voltar</a>
-        {% endblock content %}
-
-        {% block script %}
-        <script>activePage("emprestimo");</script>
-        {% endblock %}
     </div>
 </div>
+{% endblock content %}
+
+{% block script %}
+<script>activePage("emprestimo");</script>
+{% endblock %}
