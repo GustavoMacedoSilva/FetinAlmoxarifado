@@ -12,6 +12,11 @@
 
 {% block content %}
 <div class="content">
+    {%if request.user.is_authenticated%}
+        <div class="nome_user">
+            <h1>Seja bem vindo, {{user.username}}!</h1>
+        </div>
+    {%endif%}
     <ul class="list">
         <li>Busque Equipamentos</li>
         <li>Realize Empréstimos</li>
