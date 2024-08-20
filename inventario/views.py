@@ -22,7 +22,7 @@ def equipamentosList(request):
         page_equipamentos = paginator.get_page(page_number)
         return render(request,'equipamentos.html',{'equipamentos':page_equipamentos})
     else:
-        return redirect('loginAluno')
+        return redirect('loginUser')
 
 #class ComponenteList(ListView):
     model = Componente
@@ -36,7 +36,7 @@ def componenteList(request):
         page_componentes = paginator.get_page(page_number)
         return render(request,'componentes.html',{'componentes':page_componentes})
     else:
-        return redirect('loginAluno')
+        return redirect('loginUser')
 
 ########## Cadastros ##########
 def equipamentoCreate(request):
