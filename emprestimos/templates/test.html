@@ -45,12 +45,17 @@
 <div class="container">
     <h3>Empréstimos</h3>
     <hr>
-    {% if user.is_funcionario or user.is_superuser %}
-    <form method="get" action="{% url 'emprestimo' %}">
-        <input type="text" name="q" placeholder="Pesquisar aluno por nome ou matrícula..." value="{{ request.GET.q }}">
-        <button type="submit">Buscar</button>
-    </form>
-    {% endif %}
+    <p>
+        {% if user.is_funcionario or user.is_superuser %}
+        <form method="get" action="{% url 'emprestimo' %}">
+            <input type="text" name="q" placeholder="Pesquisar aluno por nome ou matrícula..." value="{{ request.GET.q }}">
+            <button type="submit">Buscar</button>
+        </form>
+        {% endif %}
+    </p>
+    <p>
+        <a href="{% url 'cadastrar-emprestimo' %}" class="btn btn-primary btn-sm" style="background-color: #3498db; border-color: #add8e6;">Novo empréstimo</a>
+    </p>
     {% for emprestimo in emprestimos %}
     <div class="card" data-url="{% url 'detalhes' pk=emprestimo.aluno.matricula %}">
         <div class="card-content" title="Visualizar">
