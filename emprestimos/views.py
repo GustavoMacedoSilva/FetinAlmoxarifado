@@ -140,8 +140,8 @@ def deleteEmprestimo(request, pk):
         return redirect('emprestimo') 
     return render(request, 'delete.html',{'obj':emprestimo})
 
-########### teste ###########
-def testView(request):
+########### Card ###########
+def emprestimosCard(request):
     user = request.user
     q = request.GET.get('q') if request.GET.get('q') is not None else ''
     qtd_equipamentos = {}
