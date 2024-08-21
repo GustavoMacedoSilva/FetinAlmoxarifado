@@ -15,7 +15,7 @@ def sendEmail(request):
         'Fala Dog', # titulo do email
         'E O PIX GALERINHA? NADA AINDA? FAZ O PIX!!! Apenas testes ok? by nosso grupo from FETIN.', # mensagem que sera enviada
         'settings.EMAIL_HOST_USER', # importa algumas configurações do projeto 
-        ['macedo.gustavo@ges.inatel.br', 'henrique.issao@gec.inatel.br', 'guilhermebrito@gec.inatel.br'], # lista de emails que o django vai enviar esta mensagem
+        ['guiobrito3010@gmail.com'], # lista de emails que o django vai enviar esta mensagem
         fail_silently=False
     )
     return HttpResponse('Enviado')

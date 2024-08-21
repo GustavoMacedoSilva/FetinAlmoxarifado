@@ -32,6 +32,13 @@ EMAIL_HOST_USER = config("EMAIL_HOST_USER", cast=str, default=None)
 EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", cast=str, default=None)
 EMAIL_PORT = config("EMAIL_PORT", cast=str, default='587')
 EMAIL_USE_TLS = config("EMAIL_USE_TLS", cast=bool, default=True)  # Use EMAIL_PORT 587 for TLS
+CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'America/Sao_paulo'
+CELERY_BROKER_REDIS_URL = 'redis://localhost:6379'
 
 ALLOWED_HOSTS = []
 
@@ -40,6 +47,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'django_celery_beat',
+    'django_celery_results',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -50,6 +58,18 @@ INSTALLED_APPS = [
     'autenticacao.apps.AutenticacaoConfig',
     'emprestimos.apps.EmprestimosConfig',
 ]
+
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+
+Q_CLUSTER = {
+    "name": "DjangoQ",
+    "workers": 4,
+    "retry": 3600,
+    "timeout": 300,
+    "queue_limit": 50,
+    "bulk": 10,
+    "orm": "default",
+}
 
 AUTH_USER_MODEL = 'autenticacao.User'
 
