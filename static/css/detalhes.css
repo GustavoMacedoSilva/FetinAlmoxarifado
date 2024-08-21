@@ -1,0 +1,19 @@
+.card-icons {
+    flex: 0 0 10%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    z-index: 2;
+}
+
+.card-icons i {
+    margin-left: 10px;
+    font-size: 1.2em;
+    color: #007BFF;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.card-icons i:hover {
+    color: #FFFFFF;
+}
