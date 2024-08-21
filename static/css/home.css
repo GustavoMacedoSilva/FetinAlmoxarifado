@@ -20,13 +20,13 @@ body {
     color: black; 
 }
 .list {
-    padding: 0; 
+    padding: 0;
     margin: 0; 
+    justify-content: center;
+    font: Times;
+    font-size: 55px;
 }
 
-.list li {
-    text-align: left; 
-    font-weight: bold; 
-    font-size: 3em;
-    margin: 5px 0; 
+.nome_user{
+    font-size: 2em;
 }

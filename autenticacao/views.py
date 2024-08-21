@@ -8,8 +8,7 @@ from .forms import creationUserForm, creationUserFormFuncionario
 # Create your views here.
 
 
-def loginAlmoxarife(request):
-    page = 'almoxarife'
+def loginUser(request):
 
     if request.user.is_authenticated:
         return redirect('home_page')
@@ -21,45 +20,17 @@ def loginAlmoxarife(request):
         try:
             user = User.objects.get(username=username)
         except:
-            messages.error(request, 'Usuario não existe')
+            messages.error(request, 'Email não existe')
 
         user = authenticate(request, username=username, password=password)
-
         if user is not None:
             login(request, user)
             return redirect('home_page')
         else:
-            messages.error(request, 'Usuario ou senha está incorreta')
+            messages.error(request, 'Email ou senha está incorreta')
 
-    context = {'page': page}
 
-    return render(request, 'autenticacao/login_register.html', context)
-
-def loginAluno(request):
-    page = 'aluno'
-    if request.user.is_authenticated:
-        return redirect('home_page')
-    
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-
-        try:
-            user = User.objects.get(username=username)
-        except:
-            messages.error(request, 'Usuario não existe')
-
-        user = authenticate(request, username=username, password=password)
-
-        if user is not None:
-            login(request, user)
-            return redirect('home_page')
-        else:
-            messages.error(request, 'Usuario ou senha está incorreta')
-
-    context = {'page': page}
-
-    return render(request, 'autenticacao/login_register.html', context)
+    return render(request, 'autenticacao/login_register.html')
 
 def logoutUser(request):
     logout(request)

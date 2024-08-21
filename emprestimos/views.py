@@ -173,7 +173,7 @@ def emprestimosCard(request):
                 qtd_componentes[emprestimo.id] = soma_componentes
 
     else:
-        return redirect('loginAluno')
+        return redirect('loginUser')
 
     context = {
         'emprestimos':emprestimos,

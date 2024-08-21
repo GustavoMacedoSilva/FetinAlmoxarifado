@@ -1,88 +1,144 @@
-
 {%block style%}
 <style>
-    .login{
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f0f4f8;
+        color: #333;
         display: flex;
-        flex-direction: column;
+        justify-content: center;
         align-items: center;
-        padding: 20px;
-        margin: 20px auto;
-        width: 300px;
-        background-color: #fff;
-        border: 1px solid #ddd;
-        box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+        height: 100vh;
+        margin: 0;
     }
-    .form_container{
+
+    .login {
+        background-color: #ffffff;
+        padding: 30px;
+        width: 100%;
+        max-width: 400px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .form_container {
         display: flex;
         flex-direction: column;
-        align-items: center;
+    }
+
+    label {
+        font-size: 14px;
+        margin-bottom: 5px;
+        color: #0096d6;
+        font-weight: bold;
+    }
+
+    input[type="text"], input[type="password"] {
+        width: 100%;
+        padding: 12px;
         margin-bottom: 20px;
-    }
-    .usuario{
-        flex: 1;
-        padding: 10px;
         border: 1px solid #ccc;
         border-radius: 5px;
-        box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+        box-shadow: inset 0px 1px 3px rgba(0,0,0,0.1);
+        transition: border-color 0.3s ease;
     }
-    .senha{
-        flex: 1;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+
+    input[type="text"]:focus, input[type="password"]:focus {
+        border-color: #0096d6;
+        outline: none;
     }
-    .loginButton{
+
+    .loginButton {
         background-color: #0096d6;
         color: #fff;
-        padding: 9px 20px;
+        padding: 12px;
+        width: 100%;
         border: none;
         border-radius: 5px;
         cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
     }
-    .loginButton:hover{
-        background-color: #0096d6;
+
+    .loginButton:hover {
+        background-color: #007bb3;
     }
-    .voltar{
-        background-color: #0096d6;
-        color:white;
+
+    .footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .voltar {
+        background-color: transparent;
+        color: #0096d6;
         padding: 10px 20px;
-        border: none;
+        border: 2px solid #0096d6;
         border-radius: 5px;
-        cursor:pointer;
+        cursor: pointer;
         text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .voltar:hover {
+        background-color: #0096d6;
+        color: #fff;
+    }
+
+    .logo {
+        height: 40px; /* ajusta o tamanho da logo */
+        width: auto;
+    }
+
+    .messages {
+        margin-top: 20px;
+        padding: 10px;
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+        color: #721c24;
+        border-radius: 5px;
+    }
+
+    .messages li {
+        list-style-type: none;
     }
 </style>
 {%endblock%}
 
+
+{% block title %}
+<title>Login</title>
+{% endblock %}
+
+
+
 {% block content %}
-
-
-<footer>
-
-    <div class="login">
-        <form class="form_container" method="POST" action="">
-            {% csrf_token %}
-            
-            <br>
-            <label class="usuario">E-mail:</label>
-            <input type="text" name="username" placeholder="E-mail"/>
-            
-            <label class="senha">Senha:</label>
-            <input type="password" name="password" placeholder="Senha"/>
-            
-            <input class="loginButton" type="submit" value="Login"/>
-        </form>
-        {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-            <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-        <a class="voltar" href="{%url 'home_page'%}">Voltar</a>
+<div class="login">
+    <form class="form_container" method="POST" action="">
+        {% csrf_token %}
+        
+        <label for="username">E-mail:</label>
+        <input id="username" type="text" name="username" placeholder="E-mail"/>
+        
+        <label for="password">Senha:</label>
+        <input id="password" type="password" name="password" placeholder="Senha"/>
+        
+        <input class="loginButton" type="submit" value="Login"/>
+    </form>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    
+    <div class="footer">
+        <a class="voltar" href="{% url 'home_page' %}">Voltar</a>
+        <img src="https://iot-labs.io/wp-content/uploads/2023/05/Logo-Inatel.png" alt="Logo Inatel" class="logo">
     </div>
-</footer>
-   
-
+</div>
 {% endblock content %}
