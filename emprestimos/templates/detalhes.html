@@ -10,15 +10,56 @@
         grid-template-columns: 1fr 3fr 1fr;
         margin-top: 40px;
     }
+
     .emprestimo-detalhes {
         margin-bottom: 20px;
-        padding: 10px;
+        padding: 20px;
         border: 1px solid #ccc;
         border-radius: 5px;
+        position: relative;
+        background-color: #f9f9f9;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
+
     .emprestimo-detalhes h2 {
         margin-top: 0;
     }
+
+    .emprestimo-actions {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+    }
+
+    .emprestimo-actions i {
+        margin-left: 10px;
+        font-size: 1.2em;
+        cursor: pointer;
+        transition: color 0.2s ease;
+    }
+
+    .emprestimo-actions i:hover {
+        color: #007BFF;
+    }
+
+    .emprestimo-detalhes h3 {
+        margin-bottom: 5px;
+    }
+
+    .emprestimo-detalhes ul {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    .emprestimo-detalhes ul li {
+        padding: 5px 0;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .emprestimo-detalhes ul li:last-child {
+        border-bottom: none;
+    }
+
 </style>
 
 <div class="detalhes_aluno">
@@ -30,42 +71,45 @@
         {% for emprestimo in emprestimos %}
             <div class="emprestimo-detalhes">
                 <h2>Empréstimo ID: {{ emprestimo.id }}</h2>
-                {% if pode_editar_deletar %}
-                    <a href="{% url 'edit-emprestimo' emprestimo.id %}">Editar</a> | 
-                    <a href="{% url 'delete-emprestimo' emprestimo.id %}">Deletar</a>
-                {% endif %}
+                <p><i class="fa-regular fa-calendar"></i> Data de Vencimento: {{ emprestimo.data_de_devolucao }}</p>
                 <div>
-                    {% if equipamentos|length > 0 %}
-                        <h3>Equipamentos:</h3>
-                        <ul>
+                    <h3>Equipamentos:</h3>
+                    <ul>
+                        {% if equipamentos|length > 0 %}
                             {% for equipamento in equipamentos %}
                                 {% if equipamento.emprestimo == emprestimo %}
                                     <li>{{ equipamento.nome }}</li>
                                 {% endif %}
                             {% endfor %}
-                        </ul>
-                    {% endif %}
+                        {% else %}
+                            <li>vazio</li>
+                        {% endif %}
+                    </ul>
                 </div>
                 <div>
-                    {% if componentes|length > 0 %}
-                        <h3>Componentes:</h3>
-                        <ul>
+                    <h3>Componentes:</h3>
+                    <ul>
+                        {% if componentes|length > 0 %}
                             {% for componente in componentes %}
                                 {% if componente.emprestimo == emprestimo %}
                                     <li>{{ componente.componente.nome }} - Quantidade: {{ componente.quantidade }}</li>
                                 {% endif %}
                             {% endfor %}
-                        </ul>
-                    {% endif %}
+                        {% else %}
+                            <li>vazio</li>
+                        {% endif %}
+                    </ul>
                 </div>
+                {% if pode_editar_deletar %}
+                    <a href="{% url 'edit-emprestimo' emprestimo.id %}">Editar</a> | 
+                    <a href="{% url 'delete-emprestimo' emprestimo.id %}">Deletar</a>
+                {% endif %}
             </div>
         {% endfor %}
         <hr>
-        <a href="{% url 'emprestimo' %}">Voltar</a>
+        <a href="{% url 'emprestimo' %}" class="btn btn-secondary">Voltar</a>
     </div>
 </div>
 {% endblock content %}
 
-{% block script %}
-<script>activePage("emprestimo");</script>
-{% endblock %}
+
