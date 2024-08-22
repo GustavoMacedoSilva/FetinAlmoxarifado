@@ -181,4 +181,4 @@ def emprestimosCard(request):
         'qtd_componentes':qtd_componentes
     }
 
-    return render(request, 'test.html', context)
+    return render(request, 'emprestimo.html', context)
