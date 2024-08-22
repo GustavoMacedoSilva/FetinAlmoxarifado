@@ -65,13 +65,15 @@
         {% include 'componente_emprestimo_recente.html' %}
     </div>
     <div>
+        <p>
         <h1>{{ aluno.user.username }} - {{ aluno.matricula }} - {{ aluno.curso }}</h1>
+        </p>
         {% for emprestimo in emprestimos %}
             <div class="emprestimo-detalhes">
-                <h2>Empréstimo ID: {{ emprestimo.id }}</h2>
+                <h3>Empréstimo ID: {{ emprestimo.id }}</h3>
                 <p><i class="fa-regular fa-calendar"></i> Data de Vencimento: {{ emprestimo.data_de_devolucao }}</p>
                 <div>
-                    <h3>Equipamentos:</h3>
+                    <h4>Equipamentos:</h4>
                     <ul>
                         {% if equipamentos|length > 0 %}
                             {% for equipamento in equipamentos %}
@@ -85,7 +87,7 @@
                     </ul>
                 </div>
                 <div>
-                    <h3>Componentes:</h3>
+                    <h4>Componentes:</h4>
                     <ul>
                         {% if componentes|length > 0 %}
                             {% for componente in componentes %}
