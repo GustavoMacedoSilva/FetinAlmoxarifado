@@ -1,73 +1,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
     <title>Empréstimos Recentes</title>
+    {% block style%}
+
+    <link rel="stylesheet" href="{% static 'css/sideBar.css' %}">
+    <link rel="stylesheet" href="{% static 'fa/css/all.min.css' %}">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #ecf0f1;
-            color: #2c3e50;
-            margin: 0;
-            padding: 0;
-        }
 
-        .sidebar {
-            width: 250px;
-            background-color: #0096d6;
-            color: #ecf0f1;
-            padding: 20px;
-            position: fixed;
-            height: 100%;
-        }
-
-        .sidebar h3 {
-            border-bottom: 1px solid #ecf0f1;
-            padding-bottom: 10px;
-        }
-
-        .sidebar .link-container {
-            margin-bottom: 10px;
-        }
-
-        .sidebar .link-container a {
-            text-decoration: none;
-            color: #ecf0f1;
-            font-weight: bold;
-        }
-
-        .sidebar .link-container a:hover {
-            color: #3a0348;
-        }
-
-        .sidebar .aluno-link {
-            background-color: #0096d6;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-        }
-
-        .sidebar .aluno-link a {
-            text-decoration: none;
-            color: #ecf0f1;
-            font-size: 18px;
-        }
-
-        .sidebar .aluno-link a:hover {
-            color: #3a0348;
-        }
+    .sidebar .titul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-bottom: -10px;
+    left: 5px;
+    }
+    
     </style>
+    {% endblock %}
 </head>
 <body>
     <div class="sidebar">
+        <div class = "titul">
         <h3>Empréstimos Recentes</h3>
-    
+        </div>
         <div class="link-container">
             <a href="{% url 'emprestimo' %}">Todos</a>
         </div>
 
         {% for aluno in alunos_com_emprestimos %}
         <div class="aluno-link">
-            <li><a href="{% url 'detalhes' pk=aluno.matricula %}">{{ aluno.user.username }}</a></li>
+            <a href="{% url 'detalhes' pk=aluno.matricula %}">{{ aluno.user.username }}</a>
         </div>
         {% endfor %}
     </div>
