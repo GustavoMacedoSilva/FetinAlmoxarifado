@@ -74,7 +74,7 @@
                         {% if equipamentos|length > 0 %}
                             {% for equipamento in equipamentos %}
                                 {% if equipamento.emprestimo == emprestimo %}
-                                    <li>{{ equipamento.nome }}</li>
+                                    <li>{{equipamento.id}} - {{ equipamento.nome }} -</li>
                                 {% endif %}
                             {% endfor %}
                         {% else %}
