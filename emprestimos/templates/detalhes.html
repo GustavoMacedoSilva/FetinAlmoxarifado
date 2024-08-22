@@ -2,12 +2,12 @@
 {% load static %}
 {% load dict_filters %}
 
-
 {% block title %}
 <title>Detalhes</title>
 {% endblock %}
 
 {% block style%}
+    <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'fa/css/all.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/detalhes.css' %}">
     <style>
@@ -15,7 +15,6 @@
         display: grid;
         grid-template-columns: 2fr 12fr ;
         margin-top: 40px;
-        
     }
 
     .emprestimo-detalhes {
@@ -26,7 +25,6 @@
         position: relative;
         background-color: #e5e5e5;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        
     }
 
     .emprestimo-detalhes h2 {
@@ -40,10 +38,25 @@
     .emprestimo-detalhes ul {
         list-style: none;
         padding-left: 0;
-        
+    }
+
+    .card-icons {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+    }
+
+    .card-icons a {
+        margin-right: 10px;
+        color: #000;
+        font-size: 18px;
+    }
+
+    .card-icons a:last-child {
+        margin-right: 0;
     }
     </style>
-    {% endblock %}
+{% endblock %}
 
 {% block content %}
 
@@ -87,8 +100,12 @@
                 </div>
                 {% if pode_editar_deletar %}
                 <div class="card-icons">
-                    <a href="{% url 'delete-emprestimo' emprestimo.id %}"><i class="fa-solid fa-check-double" title="Confirmar Entrega" data-url="{% url 'delete-emprestimo' emprestimo.id %}"></i></a>
-                    <a href="{% url 'edit-emprestimo' emprestimo.id %}"><i class="fas fa-edit" title="Editar Empréstimos" data-url="{% url 'edit-emprestimo' emprestimo.id %}"></i></a>
+                    <a href="#" data-url="{% url 'delete-emprestimo' emprestimo.id %}" class="delete-btn">
+                        <i class="fa-solid fa-check-double" title="Confirmar Entrega"></i>
+                    </a>
+                    <a href="{% url 'edit-emprestimo' emprestimo.id %}">
+                        <i class="fas fa-edit" title="Editar Empréstimos"></i>
+                    </a>
                 </div>
                 {% endif %}
             </div>
@@ -97,10 +114,57 @@
     </div>
 </div>
 
+<!-- Modal de Confirmação -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirmar Deleção</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Tem certeza que deseja deletar este empréstimo?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Sim</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock content %}
 
-{% block script%}
-<script>activePage("detalhes");</script>
+{% block script %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let deleteUrl = "";
+        document.querySelectorAll(".delete-btn").forEach(function(btn) {
+            btn.addEventListener("click", function(event) {
+                event.preventDefault();
+                deleteUrl = this.getAttribute("data-url");
+                var deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+                deleteModal.show();
+            });
+        });
+
+        document.getElementById("confirmDeleteBtn").addEventListener("click", function() {
+            fetch(deleteUrl, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json'
+                },
+            }).then(response => {
+                if (response.ok) {
+                    window.location.reload();
+                } else {
+                    alert("Houve um problema ao deletar o empréstimo.");
+                }
+            });
+        });
+    });
+</script>
 <script src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>
 <script src="{% static 'js/detalhes.js' %}"></script>
 {% endblock %}
