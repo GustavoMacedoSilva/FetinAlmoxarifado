@@ -99,8 +99,8 @@
                 </div>
                 {% if pode_editar_deletar %}
                 <div class="card-icons">
-                    <i class="fa-solid fa-check-double" title="Confirmar Entrega" data-url="{% url 'delete-emprestimo' emprestimo.id %}"></i>
-                    <i class="fas fa-edit" title="Editar Empréstimos" data-url="{% url 'edit-emprestimo' emprestimo.id %}"></i>
+                    <a href="{% url 'delete-emprestimo' emprestimo.id %}"><i class="fa-solid fa-check-double" title="Confirmar Entrega" data-url="{% url 'delete-emprestimo' emprestimo.id %}"></i></a>
+                    <a href="{% url 'edit-emprestimo' emprestimo.id %}"><i class="fas fa-edit" title="Editar Empréstimos" data-url="{% url 'edit-emprestimo' emprestimo.id %}"></i></a>
                 </div>
                 {% endif %}
             </div>
