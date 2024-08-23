@@ -24,19 +24,20 @@
 <body>
     <div class="sidebar">
         <div class = "titul">
-        {% if user.is_funcionario or user.is_superuser %}
+        
         <h5>Empréstimos Recentes</h5>
-            
+         
         </div>
         <div class="link-container">
             <a href="{% url 'emprestimo' %}">Todos</a>
         </div>
-
+        {% if user.is_funcionario or user.is_superuser %}   
         {% for aluno in alunos_com_emprestimos %}
         <div class="aluno-link">
             <a href="{% url 'detalhes' pk=aluno.matricula %}">{{ aluno.user.username }}</a>
         </div>
         {% endfor %}
         {% endif %}
+        
     </div>
 </body>
