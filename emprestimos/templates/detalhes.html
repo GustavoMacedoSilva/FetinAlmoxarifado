@@ -92,7 +92,7 @@
                         {% if componentes|length > 0 %}
                             {% for componente in componentes %}
                                 {% if componente.emprestimo == emprestimo %}
-                                    <li>{{ componente.componente.nome }} - Quantidade: {{ componente.quantidade }}</li>
+                                    <li>{{ componente.componente.nome }} - Quantidade: {{ componente.quantidade }} - {{ componente.componente.valor }} {{ componente.componente.unidade_de_medida }}</li>
                                 {% endif %}
                             {% endfor %}
                         {% else %}
