@@ -79,6 +79,8 @@ def createEmprestimo(request):
             
             if not equipamentoIsEmprestimo:
                 emprestimo = form.save()
+                emprestimo.estado = 'Ativo'
+                emprestimo.save()
                 
                 for equipamento in equipamentos:
                     equipamento.emprestimo = emprestimo

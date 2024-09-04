@@ -11,6 +11,8 @@ def expirationChecker():
     vencimento_hoje = Emprestimo.objects.filter(data_de_devolucao=data_atual) # recebe uma lista com todos os emails de alunos que tem emprestimos que irão vencer no dia 
     vencimento_em_breve = Emprestimo.objects.filter(data_de_devolucao=(data_atual + timedelta(days = 2))) # recebe uma lista com todos os emails de alunos que tem emprestimos que irão vencer no daqui 2 dias
     for emprestimo in vencidos:
+        emprestimo.estado = 'Atrasado'
+        emprestimo.save()
         send_mail(
             'Emprestimo Vencido', # titulo do email
             f'Boa tarde {emprestimo.aluno.user.username} voce tem um emprestimo de numero {emprestimo.id} vencido na data de {emprestimo.data_de_devolucao} registrado em seu nome aqui no almoxarifado do inatel, por favor entre em contato ou venha pessoalmente no almoxarifado do inatel para regularizar seu emprestimo.', # mensagem que sera enviada
