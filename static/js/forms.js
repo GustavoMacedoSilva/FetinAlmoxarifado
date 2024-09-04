@@ -133,13 +133,62 @@ $(document).ready(function () {
 
         });
 
-        $('#alunoReader').on('click', () => {
+        $('#alunoReader').on('click', async () => {
 
             // inicia o modal de leitura de barCodes
-            readerInit();
+            //readerInit();
 
             campo_id = 'id_aluno';
+            // carrega o campo do formulario
+            let campo = $(`#${campo_id}`);
+            let input; // armazena o input responsavel pelo campo selecionado pelo usuario
 
+            $('#rfidReader').css("display","block");
+            $('#close-button-rfid').on('click', () => {
+                $('#rfidReader').css("display","none")
+            });
+            $(window).on('click', (event) => {
+                if(event.target == $('#rfidReader')[0]){
+                    $('#rfidReader').css("display","none");
+                }
+            });
+
+            try {
+                const port = await navigator.serial.requestPort();
+                await port.open({baudRate: 9600});
+
+                const decoder = new TextDecoderStream();
+                const inputDone = port.readable.pipeTo(decoder.writable);
+                const inputStream = decoder.readable;
+
+                const reader = inputStream.getReader();
+
+                while (true) {
+                    const { value, done} = await reader.read();
+                    
+                    if (done) {
+                        break;
+                    }
+                    if (value) {
+                        // abre o campo de inserir equipamentos
+                        campo.select2('open');
+
+                        // encontra o input no html resposavel pela selecao na lista 
+                        input = $(`input[aria-controls='select2-${campo_id}-results']`);
+                
+                        // adiciona a entrada lida no barcode
+                        input.val(value.trim());
+
+                        // aciona um evento para atualizar a lista de busca
+                        input.trigger('input');
+                    }
+                }
+                
+                reader.releaseLock();
+
+            } catch (e) {
+                console.error('Erro ao conectar ao leitor: ',e);
+            }
         });
 
         $('#equipamentoReader').on('click', () => {
