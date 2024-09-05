@@ -1,3 +1,8 @@
+let port; // armazena a porta de conexão serial com o leitor RFID
+let reader; // armazena um reader para a porta serial
+let inputDone;  // Promessa para monitorar o pipeTo
+let inputStream;
+
 function readerInit() {
 
     $('#barCodeReader').css("display","block");
@@ -154,34 +159,51 @@ $(document).ready(function () {
             });
 
             try {
-                const port = await navigator.serial.requestPort();
-                await port.open({baudRate: 9600});
-
-                const decoder = new TextDecoderStream();
-                const inputDone = port.readable.pipeTo(decoder.writable);
-                const inputStream = decoder.readable;
-
-                const reader = inputStream.getReader();
-
-                while (true) {
-                    const { value, done} = await reader.read();
-                    
-                    if (done) {
-                        break;
-                    }
-                    if (value) {
-                        // abre o campo de inserir equipamentos
-                        campo.select2('open');
-
-                        // encontra o input no html resposavel pela selecao na lista 
-                        input = $(`input[aria-controls='select2-${campo_id}-results']`);
                 
-                        // adiciona a entrada lida no barcode
-                        input.val(value.trim());
+                if (!port) {
+                    port = await navigator.serial.requestPort();  // O usuário seleciona a porta uma vez
+                    await port.open({ baudRate: 9600 });
+                    console.log('Porta aberta pela primeira vez');
+                }
+        
+                // Se o reader já existe, libere o bloqueio antes de criar um novo
+                if (reader) {
+                    reader.releaseLock();
+                }
+        
+                // Se a stream de leitura está bloqueada ou já está conectada ao pipeTo
+                if (!inputStream) {
+                    const decoder = new TextDecoderStream();
+                    inputDone = port.readable.pipeTo(decoder.writable);  // Conecta a stream de leitura uma vez
+                    inputStream = decoder.readable;  // Armazena a stream
+                }
+        
+                // Cria o leitor da stream de entrada
+                reader = inputStream.getReader();
 
-                        // aciona um evento para atualizar a lista de busca
-                        input.trigger('input');
-                    }
+                
+                const { value, done} = await reader.read();
+                
+                
+                if (value) {
+
+                    // fecha o modal
+                    $('#rfidReader').css("display","none");
+
+                    console.log(value);
+                    // abre o campo de inserir equipamentos
+                    campo.select2('open');
+
+                    // encontra o input no html resposavel pela selecao na lista 
+                    input = $(`input[aria-controls='select2-${campo_id}-results']`);
+            
+                    // adiciona a entrada lida no barcode
+                    input.val(value.trim());
+
+                    // aciona um evento para atualizar a lista de busca
+                    input.trigger('input');
+
+                    reader.releaseLock();
                 }
                 
                 reader.releaseLock();
