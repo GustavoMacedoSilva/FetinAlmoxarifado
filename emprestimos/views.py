@@ -4,9 +4,10 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib.auth import authenticate, login, logout
 from .models import Emprestimo
-from autenticacao.models import User, Aluno
+from autenticacao.models import User, Aluno, Funcionario
 from inventario.models import Componente, Equipamento, Emprestimo_has_components
 from .forms import createEmprestimoForm
+from django.utils import timezone
 
 def EmprestimoView(request):
     q = request.GET.get('q') if request.GET.get('q') is not None else ''
@@ -69,78 +70,111 @@ def EmprestimoDetalhes(request, pk):
 ########### mexendo com a tabela emprestimo ########### 
 
 def createEmprestimo(request):
-    if request.method == 'POST':
-        form = createEmprestimoForm(request.POST)
-        if form.is_valid():
-            equipamentos = form.cleaned_data['equipamentos']
-            componentes = form.cleaned_data['componentes']
-            # retorna True caso algum dos equipamentos selecionados pelo usuario ja esteja em algum emprestimo
-            equipamentoIsEmprestimo = any(equipamento.emprestimo != None for equipamento in equipamentos)
-            
-            if not equipamentoIsEmprestimo:
-                emprestimo = form.save()
-                emprestimo.estado = 'Ativo'
-                emprestimo.save()
+    if request.user.is_authenticated and request.user.is_funcionario:
+        if request.method == 'POST':
+            form = createEmprestimoForm(request.POST)
+            if form.is_valid():
+                equipamentos = form.cleaned_data['equipamentos']
+                componentes = form.cleaned_data['componentes']
+                # retorna True caso algum dos equipamentos selecionados pelo usuario ja esteja em algum emprestimo
+                equipamentoIsEmprestimo = any(equipamento.emprestimo != None for equipamento in equipamentos)
                 
-                for equipamento in equipamentos:
-                    equipamento.emprestimo = emprestimo
-                    equipamento.save()
-                
-                for componente in componentes:
-                    quantidade = request.POST.get(f'quantidade_{componente.id}', 1)
-                    Emprestimo_has_components.objects.create(
-                        emprestimo = emprestimo,
-                        componente = componente,
-                        quantidade = quantidade
-                    )
+                if not equipamentoIsEmprestimo:
+                    emprestimo = form.save(commit=False)
+                    funcionario = Funcionario.objects.get(user=request.user)
+                    emprestimo.funcionario = funcionario
+                    emprestimo.estado = 'Ativo'
+                    emprestimo.save()
+                    
+                    for equipamento in equipamentos:
+                        equipamento.emprestimo = emprestimo
+                        equipamento.save()
+                    
+                    for componente in componentes:
+                        quantidade = request.POST.get(f'quantidade_{componente.id}', 1)
+                        Emprestimo_has_components.objects.create(
+                            emprestimo = emprestimo,
+                            componente = componente,
+                            quantidade = quantidade
+                        )
 
-                return redirect('emprestimo')
-            else:
-                form.add_error('equipamentos', 'Um ou mais equipamentos selecionados ja estão em algum emprestimo, por favor remova-os ou troque')
+                    return redirect('emprestimo')
+                else:
+                    form.add_error('equipamentos', 'Um ou mais equipamentos selecionados ja estão em algum emprestimo, por favor remova-os ou troque')
+        else:
+            form = createEmprestimoForm()
+        return render(request, 'formularios/createEmprestimoForm.html', {'form': form})
     else:
-        form = createEmprestimoForm()
-    return render(request, 'formularios/createEmprestimoForm.html', {'form': form})
+        return redirect('home_page')
+    
 
 def editEmprestimo(request, pk):
-    emprestimo = Emprestimo.objects.get(id=pk)
-    
-    if request.method == 'POST':
-        form = createEmprestimoForm(request.POST, instance=emprestimo)
-        if form.is_valid():
-            equipamentos = form.cleaned_data['equipamentos']
-            componentes = form.cleaned_data['componentes']
-            
-            equipamentoIsEmprestimo = any(equipamento.emprestimo != None for equipamento in equipamentos)
-            
-            if not equipamentoIsEmprestimo:
-                emprestimo = form.save()
+    if request.user.is_authenticated and request.user.is_funcionario:
+        emprestimo = Emprestimo.objects.get(id=pk)
+        
+        if request.method == 'POST':
+            form = createEmprestimoForm(request.POST, instance=emprestimo)
+            if form.is_valid():
+                equipamentos = form.cleaned_data['equipamentos']
+                componentes = form.cleaned_data['componentes']
                 
-                for equipamento in equipamentos:
-                    equipamento.emprestimo = emprestimo
-                    equipamento.save()
+                equipamentoIsEmprestimo = any(equipamento.emprestimo != None and equipamento.emprestimo != emprestimo for equipamento in equipamentos)
                 
-                for componente in componentes:
-                    quantidade = request.POST.get(f'quantidade_{componente.id}', 1)
-                    Emprestimo_has_components.objects.create(
-                        emprestimo=emprestimo,
-                        componente=componente,
-                        quantidade=quantidade
+                if not equipamentoIsEmprestimo:
+                    newEmprestimo = form.save(commit=False)
+                    funcionario = Funcionario.objects.get(user=request.user)
+                    newEmprestimo.funcionario = funcionario
+                    if newEmprestimo.data_de_devolucao < timezone.now().date():
+                        newEmprestimo.estado = 'Atrasado'
+                    else:
+                        newEmprestimo.estado = 'Ativo'
+                    newEmprestimo.save()
+                    
+                    equipamentosRemove = Equipamento.objects.filter(emprestimo=emprestimo)
+
+                    componentesRemove = Emprestimo_has_components.objects.filter(
+                        emprestimo=emprestimo
                     )
 
-                return redirect('emprestimo')
-            else:
-                form.add_error('equipamentos', 'Um ou mais equipamentos selecionados já estão em algum empréstimo, por favor remova-os ou troque')
-    else:
-        form = createEmprestimoForm(instance=emprestimo)
+                    for equipamento in equipamentosRemove:
+                        equipamento.emprestimo = None
+                        equipamento.save()
 
-    return render(request, 'formularios/editEmprestimoForm.html', {'form': form})
+                    for componente in componentesRemove:
+                        componente.delete()
+
+                    for equipamento in equipamentos:
+                        equipamento.emprestimo = emprestimo
+                        equipamento.save()
+                    
+                    for componente in componentes:
+                        quantidade = request.POST.get(f'quantidade_{componente.id}', 1)
+                        Emprestimo_has_components.objects.create(
+                            emprestimo=newEmprestimo,
+                            componente=componente,
+                            quantidade=quantidade
+                        )
+
+                    return redirect('emprestimo')
+                else:
+                    form.add_error('equipamentos', 'Um ou mais equipamentos selecionados já estão em algum empréstimo, por favor remova-os ou troque')
+        else:
+            form = createEmprestimoForm(instance=emprestimo)
+
+        return render(request, 'formularios/editEmprestimoForm.html', {'form': form})
+    
+    else:
+        return redirect('home_page')
 
 def deleteEmprestimo(request, pk):
-    emprestimo = Emprestimo.objects.get(id=pk)
-    if request.method == 'POST':
-        emprestimo.delete()
-        return redirect('emprestimo') 
-    return render(request, 'delete.html',{'obj':emprestimo})
+    if request.user.is_authenticated and request.user.is_funcionario:
+        emprestimo = Emprestimo.objects.get(id=pk)
+        if request.method == 'POST':
+            emprestimo.delete()
+            return redirect('emprestimo') 
+        return render(request, 'delete.html',{'obj':emprestimo})
+    else:
+        return redirect('home_page')
 
 ########### Card ###########
 def emprestimosCard(request):

@@ -1,7 +1,7 @@
 from django.forms import ModelForm
 from django import forms
 from .models import Emprestimo
-from autenticacao.models import Funcionario, Aluno
+from autenticacao.models import Aluno
 from inventario.models import Equipamento, Componente
 from django.forms.widgets import NumberInput
 
@@ -12,10 +12,7 @@ class createEmprestimoForm(ModelForm):
     #    ]
     #estado = forms.ChoiceField(choices=ESTADOS,widget=forms.RadioSelect)
     data_de_devolucao = forms.DateField(widget=NumberInput(attrs={'type': 'date'}),required=True)
-    funcionario = forms.ModelChoiceField(
-        queryset=Funcionario.objects.all(),
-        widget=forms.Select(),
-    )
+
     aluno = forms.ModelChoiceField(
         queryset=Aluno.objects.all(),
         widget=forms.Select(),
@@ -32,7 +29,7 @@ class createEmprestimoForm(ModelForm):
     )
     class Meta:
         model = Emprestimo
-        fields = ['data_de_devolucao','aluno','funcionario']
+        fields = ['data_de_devolucao','aluno']
 
 #class createEmprestimoForm(ModelForm):
 #    estado = forms.CharField(required=True)
