@@ -1,0 +1,94 @@
+{% load static %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    
+    .container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 400px;
+    }
+    
+    h3 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+    }
+    
+    .pular {
+        display: inline-block;
+        margin-top: 20px;
+        text-align: center;
+        width: 100%;
+        padding: 10px;
+        background-color: #f8d7da;
+        color: #721c24;
+        text-decoration: none;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+    
+    .pular:hover {
+        background-color: #f5c6cb;
+        color: #491217;
+    }
+
+    .associar {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        background-color: #007BFF;
+        color: #fff;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    
+    .associar:hover {
+        background-color: #0056b3;
+    }
+    </style>
+    
+    <html lang="pt-br">
+    <head>
+        <title>Registrar Usuário</title>
+        <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'fa/css/all.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/form.css' %}">
+    </head>
+    <body>
+        <div class="container">
+            
+            <h3>Deseja Associar este usuario à uma carteira?</h3>
+            
+            <button id="reader" class="associar" matricula = "{{ matricula }}">Associar</button>
+            <a class="pular" href="{% url 'home_page' %}">Pular</a>
+        
+            
+        </div>
+        <!-- Modal para leitura de carteiras RFID -->
+    <div id="rfidReader" class="modal">
+        <div class="modal-content">
+            <span id="close-button-rfid" class="close-button">&times;</span>
+            <h3>Aprixime a carteira do aluno do leitor</h3>
+            <div class="modal-icon">
+                <i class="fa-brands fa-nfc-directional icon-large"></i>
+            </div>
+        </div>
+    </div>
+    <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/associarCarteira.js' %}"></script>
+    </body>
+    </html>
+    

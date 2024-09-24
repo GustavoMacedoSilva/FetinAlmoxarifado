@@ -49,10 +49,14 @@ def createUserAluno(request):
                 matricula=matricula,
                 curso=curso,
             )
-            return redirect('home_page')
+            request.session['matricula'] = matricula
+            return redirect('associarCarteira')
     context = {'form': form}
     return render(request, 'autenticacao/create_user.html', context)
 
+def associarCarteira(request):
+    matricula = request.session.get('matricula', None)
+    return render(request,'autenticacao/associar_carteira.html',{'matricula': matricula})
 
 def createUserAlmoxarife(request):
     form = creationUserFormFuncionario()

@@ -1,7 +1,8 @@
 let port; // armazena a porta de conexão serial com o leitor RFID
-let reader; // armazena um reader para a porta serial
-let inputDone;  // Promessa para monitorar o pipeTo
-let inputStream;
+
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 function readerInit() {
 
@@ -129,88 +130,97 @@ $(document).ready(function () {
             }
         });
         
-        $('#funcionarioReader').on('click', () => {
+        /*$('#funcionarioReader').on('click', () => {
             
             // inicia o modal de leitura de barCodes
             readerInit();
             
             campo_id = 'id_funcionario';
 
-        });
+        });*/
 
         $('#alunoReader').on('click', async () => {
-
-            // inicia o modal de leitura de barCodes
-            //readerInit();
 
             campo_id = 'id_aluno';
             // carrega o campo do formulario
             let campo = $(`#${campo_id}`);
             let input; // armazena o input responsavel pelo campo selecionado pelo usuario
 
-            $('#rfidReader').css("display","block");
-            $('#close-button-rfid').on('click', () => {
-                $('#rfidReader').css("display","none")
-            });
-            $(window).on('click', (event) => {
-                if(event.target == $('#rfidReader')[0]){
-                    $('#rfidReader').css("display","none");
-                }
-            });
-
             try {
                 
                 if (!port) {
                     port = await navigator.serial.requestPort();  // O usuário seleciona a porta uma vez
                     await port.open({ baudRate: 9600 });
-                    console.log('Porta aberta pela primeira vez');
+                    console.log('Abrindo Porta!');
+                    // Adiciona um delay de 500ms (meio segundo) antes de enviar o comando
+                    await delay(2000);  
                 }
-        
-                // Se o reader já existe, libere o bloqueio antes de criar um novo
-                if (reader) {
+                
+                $('#rfidReader').css("display","block");
+                $('#close-button-rfid').on('click', () => {
+                    $('#rfidReader').css("display","none")
+                });
+                $(window).on('click', (event) => {
+                    if(event.target == $('#rfidReader')[0]){
+                        $('#rfidReader').css("display","none");
+                    }
+                });
+
+                const encoder = new TextEncoder();
+                const writer = port.writable.getWriter();
+
+                await writer.write(encoder.encode("READ\n"));
+                writer.releaseLock();
+                
+
+                const decoder = new TextDecoder();
+                const reader = port.readable.getReader();
+                let reading = ''; // inicia a string de leitura
+                
+                // le e constroi a string enviada pelo arduino
+                while (true) {
+                    const { value, done} = await reader.read();
+                    if (done) {
+                        console.log('conexão cortada')
+                        reader.releaseLock();
+                        break;
+                    }
+                    let temp = decoder.decode(value);
+                    temp.trim();
+                    if (temp == '-1') {
+                        alert('Erro na leitura da carteira, por favor tente novamente!');
+                        return;
+                    }
+                    if (temp != '\0') {
+                        reading += temp;
+                        continue;
+                    }
+                
                     reader.releaseLock();
+                    break;
                 }
+                
+                reading = reading.replace(/\0/g,''); // limpa os caracteres nulos e o lixo na entrada do buffer da serial
+
+                // fecha o modal
+                $('#rfidReader').css("display","none");
+
+                // abre o campo de inserir equipamentos
+                campo.select2('open');
+
+                // encontra o input no html resposavel pela selecao na lista 
+                input = $(`input[aria-controls='select2-${campo_id}-results']`);
         
-                // Se a stream de leitura está bloqueada ou já está conectada ao pipeTo
-                if (!inputStream) {
-                    const decoder = new TextDecoderStream();
-                    inputDone = port.readable.pipeTo(decoder.writable);  // Conecta a stream de leitura uma vez
-                    inputStream = decoder.readable;  // Armazena a stream
-                }
-        
-                // Cria o leitor da stream de entrada
-                reader = inputStream.getReader();
+                // adiciona a entrada lida no barcode
+                input.val(reading);
 
+                // aciona um evento para atualizar a lista de busca
+                input.trigger('input');
                 
-                const { value, done} = await reader.read();
-                
-                
-                if (value) {
-
-                    // fecha o modal
-                    $('#rfidReader').css("display","none");
-
-                    console.log(value);
-                    // abre o campo de inserir equipamentos
-                    campo.select2('open');
-
-                    // encontra o input no html resposavel pela selecao na lista 
-                    input = $(`input[aria-controls='select2-${campo_id}-results']`);
-            
-                    // adiciona a entrada lida no barcode
-                    input.val(value.trim());
-
-                    // aciona um evento para atualizar a lista de busca
-                    input.trigger('input');
-
-                    reader.releaseLock();
-                }
-                
-                reader.releaseLock();
 
             } catch (e) {
                 console.error('Erro ao conectar ao leitor: ',e);
-            }
+            } 
         });
 
         $('#equipamentoReader').on('click', () => {
