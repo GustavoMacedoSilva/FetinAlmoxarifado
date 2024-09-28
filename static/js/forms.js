@@ -187,7 +187,7 @@ $(document).ready(function () {
                     }
                     let temp = decoder.decode(value);
                     temp.trim();
-                    if (temp == '-1') {
+                    if (temp === '-1') {
                         alert('Erro na leitura da carteira, por favor tente novamente!');
                         return;
                     }
